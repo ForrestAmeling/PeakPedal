@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 1,
             name: 'Diamondback YOWIE 3',
             image: 'assets/YOWIE3/yowie-3-1.webp',
-            images:[
+            images: [
                 'assets/YOWIE3/yowie-3-1.webp',
                 'assets/YOWIE3/yowie-3-2.webp',
                 'assets/YOWIE3/yowie-3-3.webp',
