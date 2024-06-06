@@ -398,3 +398,35 @@ body {
     font-size: 1rem;
     color: #777;
 }
+
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .overlay h2 {
+        font-size: 72px;
+    }
+
+    .overlay p {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .overlay h2 {
+        font-size: 48px;
+    }
+
+    .overlay p {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overlay h2 {
+        font-size: 36px;
+    }
+
+    .overlay p {
+        font-size: 18px;
+    }
+}
