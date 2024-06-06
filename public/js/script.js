@@ -28,16 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 2,
             name: 'Diamondback RELEASE 5C',
-            image: 'assets/release5c/release5c-1.webp',
+            image: 'assets/RELEASE5C/release5c-1.webp',
             images: [
-                'assets/release5c/release5c-1.webp',
-                'assets/release5c/release5c-2.webp',
-                'assets/release5c/release5c-3.webp',
-                'assets/release5c/release5c-4.webp',
-                'assets/release5c/release5c-5.webp',
-                'assets/release5c/release5c-6.webp',
-                'assets/release5c/release5c-7.webp',
-                'assets/release5c/release5c-8.webp'
+                'assets/RELEASE5C/release5c-1.webp',
+                'assets/RELEASE5C/release5c-2.webp',
+                'assets/RELEASE5C/release5c-3.webp',
+                'assets/RELEASE5C/release5c-4.webp',
+                'assets/RELEASE5C/release5c-5.webp',
+                'assets/RELEASE5C/release5c-6.webp',
+                'assets/RELEASE5C/release5c-7.webp',
+                'assets/RELEASE5C/release5c-8.webp'
             ],
             description: 'Level Link design equals 130mm of efficient yet supple rear suspension\nLight and stiff carbon frame with Boost 148x12mm Maxle dropout\nFox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension\nPowerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)\nSRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing',
             price: '$5,850.00'
@@ -45,17 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 3,
             name: 'Diamondback RELEASE 4C',
-            image: 'assets/release4c/release4c-1.webp',
+            image: 'assets/RELEASE4C/release4c-1.webp',
             images: [
-                'assets/release4c/release4c-1.webp',
-                'assets/release4c/release4c-2.webp',
-                'assets/release4c/release4c-3.webp',
-                'assets/release4c/release4c-4.webp',
-                'assets/release4c/release4c-5.webp',
-                'assets/release4c/release4c-6.webp',
-                'assets/release4c/release4c-7.webp',
-                'assets/release4c/release4c-8.webp',
-                'assets/release4c/release4c-9.jpg'
+                'assets/RELEASE4C/release4c-1.webp',
+                'assets/RELEASE4C/release4c-2.webp',
+                'assets/RELEASE4C/release4c-3.webp',
+                'assets/RELEASE4C/release4c-4.webp',
+                'assets/RELEASE4C/release4c-5.webp',
+                'assets/RELEASE4C/release4c-6.webp',
+                'assets/RELEASE4C/release4c-7.webp',
+                'assets/RELEASE4C/release4c-8.webp',
+                'assets/RELEASE4C/release4c-9.jpg'
             ],
             description: 'Level Link design equals 130mm of efficient yet supple rear suspension\nLight and stiff carbon frame with Boost 148x12mm Maxle dropout\nKS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents\nFox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)\nPlenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain',
             price: '$4,750.00'
@@ -63,20 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 4,
             name: 'Diamondback RELEASE 29 3',
-            image: 'assets/release293/release293-1.webp',
+            image: 'assets/RELEASE293/release293-1.webp',
             images: [
-                'assets/release293/release293-1.webp',
-                'assets/release293/release293-2.webp',
-                'assets/release293/release293-3.webp',
-                'assets/release293/release293-4.webp',
-                'assets/release293/release293-5.webp',
-                'assets/release293/release293-6.webp',
-                'assets/release293/release293-7.webp',
-                'assets/release293/release293-8.webp',
-                'assets/release293/release293-9.webp',
-                'assets/release293/release293-10.jpg',
-                'assets/release293/release293-11.webp',
-                'assets/release293/release293-12.jpg'
+                'assets/RELEASE293/release293-1.webp',
+                'assets/RELEASE293/release293-2.webp',
+                'assets/RELEASE293/release293-3.webp',
+                'assets/RELEASE293/release293-4.webp',
+                'assets/RELEASE293/release293-5.webp',
+                'assets/RELEASE293/release293-6.webp',
+                'assets/RELEASE293/release293-7.webp',
+                'assets/RELEASE293/release293-8.webp',
+                'assets/RELEASE293/release293-9.webp',
+                'assets/RELEASE293/release293-10.jpg',
+                'assets/RELEASE293/release293-11.webp',
+                'assets/RELEASE293/release293-12.jpg'
             ],
             description: '130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension\nFox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range\n140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel\nSram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting\nShimano XT hydraulic disc brakes offer excellent power and modulation',
             price: '$4,550.00'
@@ -84,17 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 5,
             name: 'Diamondback RELEASE 29 2',
-            image: 'assets/release292/release292-1.webp',
+            image: 'assets/RELEASE292/release292-1.webp',
             images: [
-                'assets/release292/release292-1.webp',
-                'assets/release292/release292-2.webp',
-                'assets/release292/release292-3.webp',
-                'assets/release292/release292-4.webp',
-                'assets/release292/release292-5.webp',
-                'assets/release292/release292-6.webp',
-                'assets/release292/release292-7.webp',
-                'assets/release292/release292-8.webp',
-                'assets/release292/release292-9.jpg'
+                'assets/RELEASE292/release292-1.webp',
+                'assets/RELEASE292/release292-2.webp',
+                'assets/RELEASE292/release292-3.webp',
+                'assets/RELEASE292/release292-4.webp',
+                'assets/RELEASE292/release292-5.webp',
+                'assets/RELEASE292/release292-6.webp',
+                'assets/RELEASE292/release292-7.webp',
+                'assets/RELEASE292/release292-8.webp',
+                'assets/RELEASE292/release292-9.jpg'
             ],
             description: '130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension\nFox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range\n140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel\nSram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting\nShimano XT hydraulic disc brakes offer excellent power and modulation',
             price: '$3,675.00'
@@ -102,17 +102,17 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 6,
             name: 'Diamondback RELEASE 29 1',
-            image: 'assets/release291/release291-1.webp',
+            image: 'assets/RELEASE291/release291-1.webp',
             images: [
-                'assets/release291/release291-1.webp',
-                'assets/release291/release291-2.webp',
-                'assets/release291/release291-3.webp',
-                'assets/release291/release291-4.webp',
-                'assets/release291/release291-5.webp',
-                'assets/release291/release291-6.webp',
-                'assets/release291/release291-7.webp',
-                'assets/release291/release291-8.webp',
-                'assets/release291/release291-9.jpg'
+                'assets/RELEASE291/release291-1.webp',
+                'assets/RELEASE291/release291-2.webp',
+                'assets/RELEASE291/release291-3.webp',
+                'assets/RELEASE291/release291-4.webp',
+                'assets/RELEASE291/release291-5.webp',
+                'assets/RELEASE291/release291-6.webp',
+                'assets/RELEASE291/release291-7.webp',
+                'assets/RELEASE291/release291-8.webp',
+                'assets/RELEASE291/release291-9.jpg'
             ],
             description: 'Level Link design equals 130mm of efficient yet supple rear suspension in a 29er frame\nBoost 148x12mm “Maxle” thru-axle and Boost 110 fork add stiffness\nRockShox 35 Silver fork and RockShox Monarch R shock for 140mm front / 130mm rear suspension\nSram SX Eagle 1x12 drivetrain with Sram SX cranks brings single-ring drivetrains to a more affordable level\nDiamondback Blanchard 28R wheels make it easy to go tubeless',
             price: '$2,850.00'
