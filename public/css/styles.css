@@ -94,7 +94,7 @@ body {
     margin-bottom: 10px;
     line-height: .9;
     letter-spacing: -3px;
-    font-family: 'Kenyan Coffee','Libre Baskerville', sans-serif;
+    font-family: 'Anton','Libre Baskerville', sans-serif;
     /*'Kenyan Coffee' Fallback font added */
     height: 100%;
 }
@@ -103,7 +103,7 @@ body {
     font-size: 24px;
     margin: 20px 0;
     letter-spacing: 2px;
-    font-family: 'Overused Grotesk','Roboto Slab', sans-serif;
+    font-family: 'Montserrat','Roboto Slab', sans-serif;
     /* 'Overused Grotesk' Fallback font added */
     height: 100%;
 }
