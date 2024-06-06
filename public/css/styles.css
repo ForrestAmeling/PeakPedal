@@ -82,10 +82,8 @@ body {
     position: absolute;
     top: 50%;
     left: 0;
-    /* Adjusted position to move text to the left edge */
     transform: translate(0, -50%);
     padding: 0 20px;
-    /* Add padding to the text */
     color: #fff;
     z-index: 1;
 }
@@ -96,7 +94,7 @@ body {
     margin-bottom: 10px;
     line-height: .9;
     letter-spacing: -3px;
-    font-family: 'Libre Baskerville', sans-serif;
+    font-family: 'Kenyan Coffee','Libre Baskerville', sans-serif;
     /*'Kenyan Coffee' Fallback font added */
     height: 100%;
 }
@@ -105,7 +103,7 @@ body {
     font-size: 24px;
     margin: 20px 0;
     letter-spacing: 2px;
-    font-family: 'Roboto Slab', sans-serif;
+    font-family: 'Overused Grotesk','Roboto Slab', sans-serif;
     /* 'Overused Grotesk' Fallback font added */
     height: 100%;
 }
