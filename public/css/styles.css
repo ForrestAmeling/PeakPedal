@@ -91,20 +91,18 @@ body {
 /* Adjust text styles */
 .overlay h2 {
     font-size: 144px;
-    margin-bottom: 10px;
+    margin: 10px 0;
     line-height: .9;
     letter-spacing: -3px;
-    font-family: 'Anton','Libre Baskerville', sans-serif;
-    /*'Kenyan Coffee' Fallback font added */
+    font-family: 'Anton', sans-serif;
     height: 100%;
 }
 
 .overlay p {
-    font-size: 24px;
-    margin: 20px 0;
+    font-size: 36px;
+    margin: 24px 0;
     letter-spacing: 2px;
-    font-family: 'Montserrat','Roboto Slab', sans-serif;
-    /* 'Overused Grotesk' Fallback font added */
+    font-family: 'Montserrat', sans-serif;
     height: 100%;
 }
 
