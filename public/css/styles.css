@@ -96,8 +96,8 @@ body {
     margin-bottom: 10px;
     line-height: .9;
     letter-spacing: -3px;
-    font-family: 'Kenyan Coffee', sans-serif;
-    /* Fallback font added */
+    font-family: 'Libre Baskerville', sans-serif;
+    /*'Kenyan Coffee' Fallback font added */
     height: 100%;
 }
 
@@ -105,8 +105,8 @@ body {
     font-size: 24px;
     margin: 20px 0;
     letter-spacing: 2px;
-    font-family: 'Overused Grotesk', sans-serif;
-    /* Fallback font added */
+    font-family: 'Roboto Slab', sans-serif;
+    /* 'Overused Grotesk' Fallback font added */
     height: 100%;
 }
 
@@ -140,6 +140,14 @@ body {
 #learn-button:hover {
     background-color: #e65c00;
     /* Darker orange on hover */
+}
+
+#shop-button:active,
+#learn-button:active,
+.buy-now:active,
+.add-to-cart:active {
+    background-color: #cc5200;
+    /* Even darker on click */
 }
 
 /* Spotlight styles */
@@ -203,6 +211,7 @@ body {
 .spotlight .add-to-cart:hover {
     background-color: #333 !important;
 }
+
 
 /* Aligning size, quantity, and buttons */
 .spotlight select,
