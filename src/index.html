@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeakPedal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/styles.css"> <!-- Add your custom styles -->
+<link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script> <!-- Add defer to load JS after HTML -->
+
+    <style>
+        /* Inline CSS for quick testing */
+        .overlay h2 {
+            font-size: 90px;
+            margin: 10px 0;
+            /* Reduce top and bottom margin */
+            line-height: 0.9;
+            /* Reduce line height */
+        }
+
+        .overlay p {
+            font-size: 36px;
+            margin: 24px 0;
+            /* Reduce top and bottom margin */
+        }
+
+        .highlight-text {
+            color: orange;
+            margin: 24px 0;
+            /* Reduce top and bottom margin */
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-header">
+        <h1 class="logo">PeakPedal</h1>
+        <div class="cart"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</div>
+    </header>
+
+    <section class="hero">
+        <div class="carousel">
+            <img class="slide" src="assets/10.jpg" alt="Banner Image">
+            <div class="overlay">
+                <p class="highlight-text">Great Bikes For Less</p>
+                <h2>Discover Your<br>Next Adventure</h2>
+                <p>Find the perfect bike for your outdoor journey.</p>
+                <div class="buttons">
+                    <button id="shop-button">Shop Bikes</button>
+                    <button id="learn-button">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="company-cards" id="why-us">
+    <h2 class="section-header">Why Us</h2>
+    <div class="company-card">
+        <i class="fa-solid fa-tag icon"></i>
+        <h3>Shop Confidently</h3>
+        <p>We buy our bikes directly from Diamondback at a wholesale price. Product ships directly from Diamondback.
+            It is the same bike you would buy off of their website, just discounted!</p>
+    </div>
+    <div class="company-card">
+        <i class="fa-solid fa-piggy-bank icon"></i>
+        <h3>Save</h3>
+        <p>Because we get our bikes discounted, we pass on our savings by reducing our sale price!</p>
+    </div>
+    <div class="company-card">
+        <i class="fa-solid fa-check icon"></i>
+        <h3>Returns</h3>
+        <p>Returns follow Diamondbacks return policy. Product is in new condition, returned within 90 days after
+            delivery, and is in original packaging. If bike is delivered damaged, pictures of damages will be
+            required.</p>
+    </div>
+</section>
+
+
+
+
+    <section class="spotlight">
+        <!-- Bike spotlight will be dynamically filled here -->
+        <div class="spotlight-content">
+            <!-- Bike spotlight content will be dynamically filled here -->
+        </div>
+    </section>
+
+<section class="bikes">
+    <h2>Bikes</h2>
+    <div class="bikes-grid">
+        <!-- Bike grid content will be dynamically filled here -->
+    </div>
+</section>
+
+    <footer>
+        <p>&copy; 2024 PeakPedal</p>
+    </footer>
+</body>
+
+</html>
