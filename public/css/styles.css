@@ -129,13 +129,11 @@ body {
     z-index: 1;
     cursor: pointer;
     border-radius: 10px;
-    /* Match the border radius of the button */
     padding: 10px 20px;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
     text-align: center;
     line-height: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to right, #ff7b00, #ffba00);
 }
 
 #learn-button::before {
@@ -145,19 +143,24 @@ body {
     left: 3px;
     right: 3px;
     bottom: 3px;
-    background: white;
+    background: rgba(255, 255, 255, 0.5);
+    /* Set semi-transparent white background */
     border-radius: 12px;
-    /* Match the border radius of the button */
     z-index: -1;
+    transition: opacity 0.3s ease;
+    /* Smooth transition for opacity */
 }
 
 #learn-button:hover {
     background: linear-gradient(to right, #ff7b00, #ffba00);
+    color: #fff;
+    /* Ensure text color stays white on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 #learn-button:hover::before {
     opacity: 0;
+    /* Hide the semi-transparent background on hover */
 }
 
 /* Spotlight styles */
