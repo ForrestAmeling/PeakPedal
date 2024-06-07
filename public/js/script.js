@@ -264,3 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
         whyUsSection.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const payNowButton = document.querySelector('.pay-now-button');
+
+    payNowButton.addEventListener('click', () => {
+        alert('Payment processing...');
+    });
+});
