@@ -22,7 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/YOWIE3/yowie-3-8.webp',
                 'assets/YOWIE3/yowie-3-9.webp'
             ],
-            description: 'Hydroformed aluminum frame featuring Level Link system for 110mm of efficient yet supple suspension combines with a Fox 34 Performance Float fork for 130mm of front travel\nFox Float DPS Performance Elite Float rear shock (110mm travel) has excellent small-bump sensitivity plus improved adjustment range\n130mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel\nSRAM Stylo cranks and SRAM GX Eagle 1x12-speed drivetrain for light weight and smooth shifting\nShimano SLX hydraulic disc brakes offer excellent power and modulation',
+            description: ['Hydroformed aluminum frame featuring Level Link system for 110mm of efficient yet supple suspension combines with a Fox 34 Performance Float fork for 130mm of front travel',
+                'Fox Float DPS Performance Elite Float rear shock (110mm travel) has excellent small-bump sensitivity plus improved adjustment range',
+                '130mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
+                'SRAM Stylo cranks and SRAM GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
+                'Shimano SLX hydraulic disc brakes offer excellent power and modulation'],
             price: '$4,150.00'
         },
         {
@@ -39,7 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE5C/release5c-7.webp',
                 'assets/RELEASE5C/release5c-8.webp'
             ],
-            description: 'Level Link design equals 130mm of efficient yet supple rear suspension\nLight and stiff carbon frame with Boost 148x12mm Maxle dropout\nFox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension\nPowerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)\nSRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing',
+            description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
+            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+            'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
+            'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
+            'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
             price: '$5,850.00'
         },
         {
@@ -57,7 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE4C/release4c-8.webp',
                 'assets/RELEASE4C/release4c-9.jpg'
             ],
-            description: 'Level Link design equals 130mm of efficient yet supple rear suspension\nLight and stiff carbon frame with Boost 148x12mm Maxle dropout\nKS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents\nFox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)\nPlenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain',
+            description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
+            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+            'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
+            'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
+            'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
             price: '$4,750.00'
         },
         {
@@ -78,7 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE293/release293-11.webp',
                 'assets/RELEASE293/release293-12.jpg'
             ],
-            description: '130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension\nFox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range\n140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel\nSram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting\nShimano XT hydraulic disc brakes offer excellent power and modulation',
+            description: ['130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension',
+                'Fox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range',
+                '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
+                'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
+                'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
             price: '$4,550.00'
         },
         {
@@ -96,7 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE292/release292-8.webp',
                 'assets/RELEASE292/release292-9.jpg'
             ],
-            description: '130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension\nFox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range\n140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel\nSram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting\nShimano XT hydraulic disc brakes offer excellent power and modulation',
+            description: ['130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension',
+                'Fox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range',
+                '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
+                'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
+                'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
             price: '$3,675.00'
         },
         {
@@ -114,7 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE291/release291-8.webp',
                 'assets/RELEASE291/release291-9.jpg'
             ],
-            description: 'Level Link design equals 130mm of efficient yet supple rear suspension in a 29er frame\nBoost 148x12mm “Maxle” thru-axle and Boost 110 fork add stiffness\nRockShox 35 Silver fork and RockShox Monarch R shock for 140mm front / 130mm rear suspension\nSram SX Eagle 1x12 drivetrain with Sram SX cranks brings single-ring drivetrains to a more affordable level\nDiamondback Blanchard 28R wheels make it easy to go tubeless',
+            description: ['Level Link design equals 130mm of efficient yet supple rear suspension in a 29er frame',
+                'Boost 148x12mm “Maxle” thru-axle and Boost 110 fork add stiffness',
+                'RockShox 35 Silver fork and RockShox Monarch R shock for 140mm front / 130mm rear suspension',
+                'Sram SX Eagle 1x12 drivetrain with Sram SX cranks brings single-ring drivetrains to a more affordable level',
+                'Diamondback Blanchard 28R wheels make it easy to go tubeless'],
             price: '$2,850.00'
         }
     ];
@@ -179,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <h2>${bike.name}</h2>
         ${spotlightMainImage}
         ${spotlightControls}
-        <ul>${bike.description}</ul>
+         <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
         <p><del>MSRP: ${bike.price}</del></p>
         <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
         <label for="size-select">Size:</label>
