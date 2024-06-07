@@ -99,13 +99,24 @@ body {
     z-index: 1;
 }
 
-#shop-button {
+#shop-button,
+#learn-button {
     padding: 10px 20px;
     font-size: 1rem;
+    border-radius: 5px;
+    width: 150px;
+    /* Adjust to desired width */
+    height: 50px;
+    /* Adjust to desired height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#shop-button {
     background: linear-gradient(to right, #ff7b00, #ffba00);
     color: #fff;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -117,23 +128,27 @@ body {
 }
 
 /* Gradient border button styles */
-/* Gradient border button styles */
 #learn-button {
-    padding: 10px 20px;
-    font-size: 1rem;
     background: none;
     color: #fff;
-    border: 2px solid;
-    border-image-slice: 1;
-    border-width: 2px;
-    border-image-source: linear-gradient(to right, #ff7b00, #ffba00);
-    border-radius: 5px;
+    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1;
-    background-clip: padding-box;
-    /* Ensure the background gradient doesn't cover the border */
+}
+
+#learn-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(to right, #ff7b00, #ffba00);
+    border-radius: 5px;
+    z-index: -1;
 }
 
 #learn-button:hover {
