@@ -508,7 +508,7 @@ body {
         /* Prevent buttons from wrapping */
         justify-content: center;
         gap: 10px;
-        margin-left: -30px;
+        margin-left: -40px;
         /* Add some space between buttons */
     }
 
