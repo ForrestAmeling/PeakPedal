@@ -99,21 +99,16 @@ body {
     z-index: 1;
 }
 
-#shop-button,
-#learn-button {
+#shop-button {
     padding: 10px 20px;
     font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Shop button */
-#shop-button {
     background: linear-gradient(to right, #ff7b00, #ffba00);
     color: #fff;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #shop-button:hover {
@@ -121,12 +116,19 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Learn button with gradient border */
+/* Gradient border button styles */
 #learn-button {
+    padding: 10px 20px;
+    font-size: 1rem;
     background: none;
     color: #fff;
     border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
+    z-index: 1;
 }
 
 #learn-button::before {
@@ -137,13 +139,13 @@ body {
     right: -2px;
     bottom: -2px;
     background: linear-gradient(to right, #ff7b00, #ffba00);
-    z-index: -1;
     border-radius: 5px;
+    z-index: -1;
 }
 
 #learn-button:hover {
-    background: linear-gradient(to right, #ff7b00, #ffba00);
     color: #fff;
+    background: linear-gradient(to right, #ff7b00, #ffba00);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -418,7 +420,6 @@ body {
     font-size: 1rem;
     color: #777;
 }
-
 
 /* Media Queries */
 @media (max-width: 1024px) {

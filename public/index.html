@@ -43,36 +43,39 @@
         }
 
         /* Media Queries */
-@media (max-width: 1168px) {
-    .overlay h2 {
-        font-size: 72px;
-    }
-    .overlay p {
-        font-size: 28px;
-    }
-}
+        @media (max-width: 1168px) {
+            .overlay h2 {
+                font-size: 72px;
+            }
 
-@media (max-width: 768px) {
-    .overlay h2 {
-        font-size: 48px;
-        margin: 5px 0;
-    }
-    .overlay p {
-        font-size: 24px;
-        margin: 12px 0;
-    }
-}
+            .overlay p {
+                font-size: 28px;
+            }
+        }
 
-@media (max-width: 480px) {
-    .overlay h2 {
-        font-size: 24px;
-        margin: 5px 0;
-    }
-    .overlay p {
-        font-size: 12px;
-        margin: 12px 0;
-    }
-}
+        @media (max-width: 768px) {
+            .overlay h2 {
+                font-size: 48px;
+                margin: 5px 0;
+            }
+
+            .overlay p {
+                font-size: 24px;
+                margin: 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overlay h2 {
+                font-size: 24px;
+                margin: 5px 0;
+            }
+
+            .overlay p {
+                font-size: 12px;
+                margin: 12px 0;
+            }
+        }
     </style>
 </head>
 
@@ -91,7 +94,7 @@
                 <p>Find the perfect bike for your outdoor journey.</p>
                 <div class="buttons">
                     <button id="shop-button">Shop Bikes</button>
-                    <button id="learn-button">Learn More</button>
+                    <button id="learn-button" class="gradient-border">Learn More</button>
                 </div>
             </div>
         </div>
