@@ -171,6 +171,14 @@ body {
     margin: 10px 0;
 }
 
+.spotlight ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px auto;
+    max-width: 100%;
+    text-align: center;
+}
+
 .spotlight del {
     font-size: 1.2rem;
     color: #999;
