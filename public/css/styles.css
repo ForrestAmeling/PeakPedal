@@ -347,7 +347,6 @@ body {
 .bikes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* Ensure this is set to 2 columns */
     grid-gap: 20px;
 }
 
