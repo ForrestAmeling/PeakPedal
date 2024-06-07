@@ -502,16 +502,12 @@ body {
         font-size: 18px;
     }
 
-    #shop-button {
-        width: 144px;
-        height: 30px;
-        line-height: 40px;
-    }
-
+    #shop-button,
     #learn-button {
         width: 144px;
-        height: 30px;
-        line-height:40px;
+        height: 40px;
+        font-size: 0.875rem;
+        line-height: 40px;
     }
 
     #quantity-input {
