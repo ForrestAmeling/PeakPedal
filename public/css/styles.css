@@ -502,12 +502,21 @@ body {
         font-size: 18px;
     }
 
+    .buttons {
+        display: flex;
+        flex-wrap: nowrap;
+        /* Prevent buttons from wrapping */
+        justify-content: center;
+        gap: 10px;
+        /* Add some space between buttons */
+    }
+
     #shop-button,
     #learn-button {
         width: 144px;
         height: 40px;
         font-size: 0.875rem;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         padding: 0;
