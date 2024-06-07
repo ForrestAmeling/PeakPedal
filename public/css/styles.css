@@ -94,6 +94,12 @@ body {
 }
 
 /* Base button styles to ensure consistency */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
 .buttons button {
     display: inline-block;
     width: 180px;
@@ -161,7 +167,7 @@ body {
     left: 3px;
     right: 3px;
     bottom: 3px;
-    background: rgba(255, 255, 255, 0.2);
+    background: transparent;
     border-radius: 10px;
     z-index: -1;
     transition: opacity 0.3s ease;
