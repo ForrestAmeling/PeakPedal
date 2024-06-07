@@ -507,7 +507,10 @@ body {
         width: 144px;
         height: 40px;
         font-size: 0.875rem;
-        line-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
     }
 
     #quantity-input {
