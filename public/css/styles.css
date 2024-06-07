@@ -314,18 +314,11 @@ body {
     margin: 0 auto;
 }
 
-.spotlight-carousel {
-    display: none;
-    /* Ensure carousel is hidden */
-}
-
 .spotlight-main-image img {
     display: block;
     margin: 0 auto;
     width: 80%;
-    /* Adjust the width as needed */
     max-width: 800px;
-    /* Ensure it doesn't exceed a maximum width */
     height: auto;
 }
 
@@ -379,7 +372,6 @@ body {
 .bikes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* Ensure this is set to 2 columns */
     grid-gap: 20px;
 }
 
@@ -505,11 +497,9 @@ body {
     .buttons {
         display: flex;
         flex-wrap: nowrap;
-        /* Prevent buttons from wrapping */
         justify-content: center;
         gap: 10px;
         margin-left: -40px;
-        /* Add some space between buttons */
     }
 
     #shop-button,
