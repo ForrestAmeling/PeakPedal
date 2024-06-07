@@ -129,7 +129,6 @@ body {
     z-index: 1;
     cursor: pointer;
     border-radius: 10px;
-    /* Match the border radius of the button */
     padding: 10px 20px;
     transition: background 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
@@ -146,7 +145,6 @@ body {
     bottom: -2px;
     background: linear-gradient(to right, #ff7b00, #ffba00);
     border-radius: 12px;
-    /* Match the border radius of the button */
     z-index: -1;
 }
 
@@ -157,8 +155,7 @@ body {
     left: 3px;
     right: 3px;
     bottom: 3px;
-    background: white;
-    opacity: 0.2;
+    background: rgba(255, 255, 255, 0.2);
     /* Set initial opacity */
     border-radius: 10px;
     /* Match the border radius of the button */
