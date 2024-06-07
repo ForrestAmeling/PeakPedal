@@ -117,29 +117,23 @@ body {
 }
 
 /* Gradient border button styles */
+/* Gradient border button styles */
 #learn-button {
     padding: 10px 20px;
     font-size: 1rem;
     background: none;
     color: #fff;
-    border: 2px solid transparent;
+    border: 2px solid;
+    border-image-slice: 1;
+    border-width: 2px;
+    border-image-source: linear-gradient(to right, #ff7b00, #ffba00);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     z-index: 1;
-}
-
-#learn-button::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(to right, #ff7b00, #ffba00);
-    border-radius: 5px;
-    z-index: -1;
+    background-clip: padding-box;
+    /* Ensure the background gradient doesn't cover the border */
 }
 
 #learn-button:hover {
