@@ -93,7 +93,12 @@ body {
     margin: 10px 0;
 }
 
-/* Base button styles to ensure consistency */
+/* Adjust button positioning */
+.buttons {
+    margin-top: 20px;
+    z-index: 1;
+}
+
 .buttons button {
     display: inline-block;
     width: 180px;
@@ -175,7 +180,7 @@ body {
 #learn-button:hover::after {
     opacity: 0;
 }
-}
+
 /* Spotlight styles */
 .spotlight {
     text-align: center;
@@ -443,6 +448,7 @@ body {
     font-size: 1rem;
     color: #777;
 }
+
 
 /* Media Queries */
 @media (max-width: 1024px) {
