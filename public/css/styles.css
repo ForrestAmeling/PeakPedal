@@ -144,6 +144,7 @@ body {
     width: 240px;
     height: 60px;
 }
+
 #learn-button::before {
     content: '';
     position: absolute;
@@ -480,6 +481,16 @@ body {
     .overlay p {
         font-size: 24px;
     }
+
+    #shop-button {
+        width: 192px;
+        height: 48px;
+    }
+
+    #learn-button {
+        width: 192px;
+        height: 48px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -489,6 +500,16 @@ body {
 
     .overlay p {
         font-size: 18px;
+    }
+
+    #shop-button {
+        width: 144px;
+        height: 30px;
+    }
+
+    #learn-button {
+        width: 144px;
+        height: 30px;
     }
 
     #quantity-input {
