@@ -216,12 +216,14 @@ body {
     background: linear-gradient(to right, #4facfe, #00f2fe);
 }
 
-.spotlight .buy-now:hover,
-.spotlight .add-to-cart:hover {
-    background-color: #333 !important;
+.spotlight .buy-now:hover {
+        background: linear-gradient(to right, #ff5000, #ff7b00);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
+.spotlight .add-to-cart:hover {
+    background: linear-gradient(to right, #0388fe, #4facfe);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 
 /* Aligning size, quantity, and buttons */
 #quantity-input {
