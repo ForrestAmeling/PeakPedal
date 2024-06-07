@@ -68,6 +68,9 @@ body {
     padding: 0 20px;
     color: #fff;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+
 }
 
 /* Adjust text styles */
@@ -96,8 +99,11 @@ body {
 /* Base button styles to ensure consistency */
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 10px;
+    margin-top: 20px;
+
 }
 
 .buttons button {
@@ -182,6 +188,7 @@ body {
     opacity: 0;
 }
 }
+
 /* Spotlight styles */
 .spotlight {
     text-align: center;
