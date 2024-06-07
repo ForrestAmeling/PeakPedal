@@ -136,15 +136,19 @@ body {
     line-height: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: linear-gradient(to right, #ff7b00, #ffba00);
+        top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
 }
 
 #learn-button::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
     background: white;
     border-radius: 12px;
     /* Match the border radius of the button */
