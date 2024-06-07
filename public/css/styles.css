@@ -113,8 +113,7 @@ body {
     z-index: 1;
 }
 
-#shop-button,
-#learn-button {
+#shop-button {
     padding: 10px 20px;
     font-size: 1rem;
     background: linear-gradient(to right, #ff7b00, #ffba00);
@@ -126,10 +125,55 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#shop-button:hover,
-#learn-button:hover {
+#shop-button:hover{
     background: linear-gradient(to right, #e65c00, #ff9000);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Existing styles */
+
+#learn-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: none;
+    /* Remove background color */
+    color: #fff;
+    border: 2px solid transparent;
+    /* Create a transparent border initially */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Transition for all properties */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#learn-button::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(to right, #ff7b00, #ffba00);
+    /* Add your gradient here */
+    z-index: -1;
+    border-radius: 5px;
+    /* Match the border radius */
+}
+
+#learn-button:hover {
+    background: linear-gradient(to right, #ff7b00, #ffba00);
+    /* Add your gradient here */
+    color: #fff;
+    /* Ensure text stays white */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+#learn-button:hover::before {
+    opacity: 0;
+    /* Hide the gradient border on hover to show the gradient background */
 }
 
 /* Spotlight styles */
