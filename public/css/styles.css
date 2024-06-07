@@ -505,13 +505,13 @@ body {
     #shop-button {
         width: 144px;
         height: 30px;
-        line-height: 30px;
+        line-height: 40px;
     }
 
     #learn-button {
         width: 144px;
         height: 30px;
-        line-height:30px;
+        line-height:40px;
     }
 
     #quantity-input {
