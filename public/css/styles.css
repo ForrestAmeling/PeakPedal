@@ -143,11 +143,11 @@ body {
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background: linear-gradient(to right, #ff7b00, #ffba00);
+    /* background: linear-gradient(to right, #ff7b00, #ffba00); */
     border-radius: 12px;
     z-index: -1;
 }
-
+faile
 #learn-button::after {
     content: '';
     position: absolute;
