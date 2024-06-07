@@ -93,32 +93,21 @@ body {
     margin: 10px 0;
 }
 
-/* Adjust button positioning */
-.buttons {
-    margin-top: 20px;
-    z-index: 1;
-}
-
-#shop-button,
-#learn-button {
+/* Adjust button styles */
+.buttons button {
     padding: 10px 20px;
     font-size: 1rem;
-    border-radius: 5px;
-    width: 150px;
-    /* Adjust to desired width */
-    height: 50px;
-    /* Adjust to desired height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 200px;
+    height: 60px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 #shop-button {
     background: linear-gradient(to right, #ff7b00, #ffba00);
     color: #fff;
     border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -127,16 +116,13 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Gradient border button styles */
 #learn-button {
     background: none;
     color: #fff;
     border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #learn-button::before {
@@ -147,7 +133,7 @@ body {
     right: -2px;
     bottom: -2px;
     background: linear-gradient(to right, #ff7b00, #ffba00);
-    border-radius: 5px;
+    border-radius: 10px;
     z-index: -1;
 }
 
@@ -347,6 +333,7 @@ body {
 .bikes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    /* Ensure this is set to 2 columns */
     grid-gap: 20px;
 }
 
