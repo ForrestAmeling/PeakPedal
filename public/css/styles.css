@@ -125,22 +125,24 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.6), 2px 2px 5px rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Add a small drop shadow */
 }
 
 #shop-button:hover,
 #learn-button:hover {
     background-color: #e65c00;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     /* Darker orange on hover */
 }
 
-#shop-button:active,
+/* #shop-button:active,
 #learn-button:active,
 .buy-now:active,
 .add-to-cart:active {
     background-color: #cc5200;
-    /* Even darker on click */
-}
+} */
 
 /* Spotlight styles */
 .spotlight {
@@ -202,7 +204,8 @@ body {
     font-size: 1rem;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .spotlight .buy-now {
@@ -216,6 +219,7 @@ body {
 .spotlight .buy-now:hover,
 .spotlight .add-to-cart:hover {
     background-color: #333 !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -295,12 +299,9 @@ body {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 24px;
-    /* Adjust the size as needed */
     line-height: 1;
     width: 50px;
-    /* Adjust the size as needed */
     height: 50px;
-    /* Adjust the size as needed */
     display: flex;
     align-items: center;
     justify-content: center;
