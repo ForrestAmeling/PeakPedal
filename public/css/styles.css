@@ -111,7 +111,6 @@ body {
 .buttons {
     margin-top: 20px;
     z-index: 1;
-    /* Ensure buttons are on top of the overlay */
 }
 
 #shop-button,
@@ -123,20 +122,15 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.6), 2px 2px 5px rgba(0, 0, 0, 0.7);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Add a small drop shadow */
 }
 
 #shop-button:hover,
 #learn-button:hover {
-    background-color: #e65c00;
+    background: linear-gradient(to right, #e65c00, #ff5000);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    /* Darker orange on hover */
 }
-
 /* #shop-button:active,
 #learn-button:active,
 .buy-now:active,
