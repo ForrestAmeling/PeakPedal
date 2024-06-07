@@ -263,6 +263,14 @@ body {
 }
 
 /* Aligning size, quantity, and buttons */
+.size-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 #quantity-input {
     width: 50px;
 }
