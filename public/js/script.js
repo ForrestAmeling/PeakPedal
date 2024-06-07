@@ -206,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
          <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
         <p><del>MSRP: ${bike.price}</del></p>
         <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
-        <div class="size-quantity">
         <label for="size-select">Size:</label>
         <select id="size-select">
             <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
@@ -219,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <br>
         <button class="buy-now">Buy Now</button>
         <button class="add-to-cart">Add to Cart</button>
-        </div>
+
     `;
 
         // Add event listeners for the next and previous buttons
