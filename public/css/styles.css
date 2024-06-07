@@ -94,18 +94,6 @@ body {
 }
 
 /* Base button styles to ensure consistency */
-.buttons {
-    display: flex;
-    justify-content: flex-start;
-    /* Align buttons to the left */
-    align-items: flex-start;
-    /* Align items to the start */
-    gap: 10px;
-    /* Add space between buttons */
-    margin-top: 20px;
-
-}
-
 .buttons button {
     display: inline-block;
     width: 180px;
