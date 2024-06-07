@@ -224,6 +224,10 @@ body {
 
 
 /* Aligning size, quantity, and buttons */
+#quantity-input {
+    width: 50px;
+}
+
 .spotlight select,
 .spotlight input {
     display: inline-block;
@@ -443,4 +447,9 @@ body {
     .overlay p {
         font-size: 18px;
     }
+
+        #quantity-input {
+            width: 30px;
+        }
 }
+
