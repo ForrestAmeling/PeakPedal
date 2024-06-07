@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE5C/release5c-8.webp'
             ],
             description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-            'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
-            'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
-            'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
+                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+                'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
+                'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
+                'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
             price: '$5,850.00'
         },
         {
@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE4C/release4c-9.jpg'
             ],
             description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-            'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
-            'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
-            'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
+                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+                'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
+                'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
+                'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
             price: '$4,750.00'
         },
         {
@@ -216,8 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </select>
         <label for="quantity-input">Quantity:</label>
         <input type="number" id="quantity-input" name="quantity" min="1" value="1">
+        <div class="buttons">
         <button class="buy-now">Buy Now</button>
         <button class="add-to-cart">Add to Cart</button>
+        </div>
         </div>
     `;
 
