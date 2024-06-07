@@ -149,7 +149,6 @@ body {
     border-radius: 12px;
     /* Match the border radius of the button */
     z-index: -1;
-    opacity: 0;
 }
 
 #learn-button:hover {
