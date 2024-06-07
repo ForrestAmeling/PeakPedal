@@ -204,7 +204,7 @@ body {
     font-size: 1rem;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -217,9 +217,10 @@ body {
 }
 
 .spotlight .buy-now:hover {
-        background: linear-gradient(to right, #ff5000, #ff7b00);
+    background: linear-gradient(to right, #ff5000, #ff7b00);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 .spotlight .add-to-cart:hover {
     background: linear-gradient(to right, #0388fe, #4facfe);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -258,10 +259,6 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.spotlight-controls button:hover {
-    background-color: #e65c00;
 }
 
 .spotlight-main-image img {
