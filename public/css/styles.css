@@ -128,15 +128,9 @@ body {
 
 #shop-button:hover,
 #learn-button:hover {
-    background: linear-gradient(to right, #e65c00, #ff5000);
+    background: linear-gradient(to right, #e65c00, #ff9000);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-/* #shop-button:active,
-#learn-button:active,
-.buy-now:active,
-.add-to-cart:active {
-    background-color: #cc5200;
-} */
 
 /* Spotlight styles */
 .spotlight {
@@ -169,7 +163,6 @@ body {
     margin: 10px auto;
     max-width: 100%;
     text-align: left;
-
 }
 
 .spotlight ul li {
@@ -211,7 +204,7 @@ body {
 }
 
 .spotlight .buy-now:hover {
-    background: linear-gradient(to right, #ff5000, #ff7b00);
+    background: linear-gradient(to right, #ff5000, #ff9000);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -407,7 +400,6 @@ body {
     color: #777;
 }
 
-
 /* Media Queries */
 @media (max-width: 1024px) {
     .overlay h2 {
@@ -438,8 +430,7 @@ body {
         font-size: 18px;
     }
 
-        #quantity-input {
-            width: 30px;
-        }
+    #quantity-input {
+        width: 30px;
+    }
 }
-
