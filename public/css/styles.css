@@ -136,10 +136,6 @@ body {
     line-height: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: linear-gradient(to right, #ff7b00, #ffba00);
-        top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
 }
 
 #learn-button::before {
