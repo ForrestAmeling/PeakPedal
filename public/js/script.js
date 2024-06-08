@@ -1,3 +1,18 @@
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+    authDomain: "peakpedal-9af93.firebaseapp.com",
+    projectId: "peakpedal-9af93",
+    storageBucket: "peakpedal-9af93.appspot.com",
+    messagingSenderId: "344619285656",
+    appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+    measurementId: "G-0S424MKF14"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 document.addEventListener('DOMContentLoaded', () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -44,10 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE5C/release5c-8.webp'
             ],
             description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-            'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
-            'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
-            'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
+                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+                'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
+                'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
+                'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
             price: '$5,850.00'
         },
         {
@@ -66,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/RELEASE4C/release4c-9.jpg'
             ],
             description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-            'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-            'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
-            'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
-            'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
+                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
+                'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
+                'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
+                'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
             price: '$4,750.00'
         },
         {
@@ -178,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return bikeElement;
     }
 
-
     function updateSpotlight(bike) {
         // Calculate Our Price
         const msrp = parseFloat(bike.price.replace('$', '').replace(',', ''));
@@ -187,39 +201,38 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
 
         const spotlightMainImage = `
-        <div class="spotlight-main-image">
-            <img src="${bike.images[currentIndex]}" alt="${bike.name}">
-        </div>
-    `;
+            <div class="spotlight-main-image">
+                <img src="${bike.images[currentIndex]}" alt="${bike.name}">
+            </div>
+        `;
 
         const spotlightControls = `
-        <div class="spotlight-controls">
-            <button id="prev-button" class="arrow-button">&larr;</button>
-            <button id="next-button" class="arrow-button">&rarr;</button>
-        </div>
-    `;
+            <div class="spotlight-controls">
+                <button id="prev-button" class="arrow-button">&larr;</button>
+                <button id="next-button" class="arrow-button">&rarr;</button>
+            </div>
+        `;
 
         spotlightSection.innerHTML = `
-        <h2>${bike.name}</h2>
-        ${spotlightMainImage}
-        ${spotlightControls}
-         <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
-        <p><del>MSRP: ${bike.price}</del></p>
-        <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
-        <label for="size-select">Size:</label>
-        <select id="size-select">
-            <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
-            <option value="MD/17">MD/17 5'7"-5'10"</option>
-            <option value="LG/19">LG/19 5'10"-6'2"</option>
-            <option value="XL/21">XL/21 6'2"-6'6"</option>
-        </select>
-        <label for="quantity-input">Quantity:</label>
-        <input type="number" id="quantity-input" name="quantity" min="1" value="1">
-        <br>
-        <button class="buy-now">Buy Now</button>
-        <button class="add-to-cart">Add to Cart</button>
-
-    `;
+            <h2>${bike.name}</h2>
+            ${spotlightMainImage}
+            ${spotlightControls}
+            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
+            <p><del>MSRP: ${bike.price}</del></p>
+            <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
+            <label for="size-select">Size:</label>
+            <select id="size-select">
+                <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
+                <option value="MD/17">MD/17 5'7"-5'10"</option>
+                <option value="LG/19">LG/19 5'10"-6'2"</option>
+                <option value="XL/21">XL/21 6'2"-6'6"</option>
+            </select>
+            <label for="quantity-input">Quantity:</label>
+            <input type="number" id="quantity-input" name="quantity" min="1" value="1">
+            <br>
+            <button class="buy-now" onclick='handleBuyNow(${JSON.stringify(bike)})'>Buy Now</button>
+            <button class="add-to-cart" onclick='handleAddToCart(${JSON.stringify(bike)})'>Add to Cart</button>
+        `;
 
         // Add event listeners for the next and previous buttons
         document.getElementById('next-button').addEventListener('click', () => {
@@ -232,8 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
         });
     }
-
-
 
     // Function to handle click on a bike
     function bikeClickHandler(event) {
@@ -265,35 +276,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Function to add item to cart
+function addToCart(bike) {
+    const quantity = parseInt(document.getElementById('quantity-input').value);
+    const size = document.getElementById('size-select').value;
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     const payNowButton = document.querySelector('.pay-now-button');
-
-//     payNowButton.addEventListener('click', () => {
-//         alert('Payment processing...');
-//     });
-// });
-
-// Function to add item to Firestore cart collection
-async function addItemToCart(bikeId) {
-    const bike = bikesData.find(bike => bike.id == bikeId);
-    try {
-        const docRef = await addDoc(collection(db, "cart"), {
-            bikeId: bike.id,
-            name: bike.name,
-            price: bike.price,
-            quantity: 1
-        });
-        console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-        console.error("Error adding document: ", e);
-    }
+    db.collection('carts').add({
+        ...bike,
+        quantity: quantity,
+        size: size
+    }).then(() => {
+        console.log("Item added to cart");
+    }).catch((error) => {
+        console.error("Error adding item to cart: ", error);
+    });
 }
 
-// Event listener for "Add to Cart" button
-document.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('add-to-cart')) {
-        const bikeId = e.target.getAttribute('data-id');
-        addItemToCart(bikeId);
-    }
-});
+// Function to handle "Add to Cart" button click
+function handleAddToCart(bike) {
+    addToCart(bike);
+}
+
+// Function to handle "Buy Now" button click
+function handleBuyNow(bike) {
+    addToCart(bike);
+    window.location.href = 'checkout.html';
+}
