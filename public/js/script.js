@@ -201,38 +201,38 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
 
         const spotlightMainImage = `
-        <div class="spotlight-main-image">
-            <img src="${bike.images[currentIndex]}" alt="${bike.name}">
-        </div>
-    `;
+            <div class="spotlight-main-image">
+                <img src="${bike.images[currentIndex]}" alt="${bike.name}">
+            </div>
+        `;
 
         const spotlightControls = `
-        <div class="spotlight-controls">
-            <button id="prev-button" class="arrow-button">&larr;</button>
-            <button id="next-button" class="arrow-button">&rarr;</button>
-        </div>
-    `;
+            <div class="spotlight-controls">
+                <button id="prev-button" class="arrow-button">&larr;</button>
+                <button id="next-button" class="arrow-button">&rarr;</button>
+            </div>
+        `;
 
         spotlightSection.innerHTML = `
-        <h2>${bike.name}</h2>
-        ${spotlightMainImage}
-        ${spotlightControls}
-         <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
-        <p><del>MSRP: ${bike.price}</del></p>
-        <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
-        <label for="size-select">Size:</label>
-        <select id="size-select">
-            <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
-            <option value="MD/17">MD/17 5'7"-5'10"</option>
-            <option value="LG/19">LG/19 5'10"-6'2"</option>
-            <option value="XL/21">XL/21 6'2"-6'6"</option>
-        </select>
-        <label for="quantity-input">Quantity:</label>
-        <input type="number" id="quantity-input" name="quantity" min="1" value="1">
-        <br>
-        <button class="buy-now">Buy Now</button>
-        <button class="add-to-cart">Add to Cart</button>
-    `;
+            <h2>${bike.name}</h2>
+            ${spotlightMainImage}
+            ${spotlightControls}
+            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
+            <p><del>MSRP: ${bike.price}</del></p>
+            <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
+            <label for="size-select">Size:</label>
+            <select id="size-select">
+                <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
+                <option value="MD/17">MD/17 5'7"-5'10"</option>
+                <option value="LG/19">LG/19 5'10"-6'2"</option>
+                <option value="XL/21">XL/21 6'2"-6'6"</option>
+            </select>
+            <label for="quantity-input">Quantity:</label>
+            <input type="number" id="quantity-input" name="quantity" min="1" value="1">
+            <br>
+            <button class="buy-now">Buy Now</button>
+            <button class="add-to-cart">Add to Cart</button>
+        `;
 
         // Add event listeners for the next and previous buttons
         document.getElementById('next-button').addEventListener('click', () => {
