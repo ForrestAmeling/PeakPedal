@@ -266,10 +266,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const payNowButton = document.querySelector('.pay-now-button');
+// document.addEventListener('DOMContentLoaded', () => {
+//     const payNowButton = document.querySelector('.pay-now-button');
 
-    payNowButton.addEventListener('click', () => {
-        alert('Payment processing...');
-    });
+//     payNowButton.addEventListener('click', () => {
+//         alert('Payment processing...');
+//     });
+// });
+
+// Function to add item to Firestore cart collection
+async function addItemToCart(bikeId) {
+    const bike = bikesData.find(bike => bike.id == bikeId);
+    try {
+        const docRef = await addDoc(collection(db, "cart"), {
+            bikeId: bike.id,
+            name: bike.name,
+            price: bike.price,
+            quantity: 1
+        });
+        console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+
+// Event listener for "Add to Cart" button
+document.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('add-to-cart')) {
+        const bikeId = e.target.getAttribute('data-id');
+        addItemToCart(bikeId);
+    }
 });

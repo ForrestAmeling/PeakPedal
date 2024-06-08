@@ -4,81 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - PeakPedal</title>
+    <title>Checkout</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css"> <!-- Add your custom styles -->
+    <script src="js/checkout.js" defer></script> <!-- Separate script for checkout -->
 </head>
 
 <body>
     <header class="top-header">
         <h1 class="logo">PeakPedal</h1>
-        <div class="cart"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</div>
     </header>
 
-    <div class="checkout-container">
-        <div class="checkout-form">
-            <h2>Contact</h2>
-            <input type="email" placeholder="Email" required>
+    <main>
+        <section class="checkout">
+            <h2>Checkout</h2>
+            <div class="cart-items">
+                <!-- Cart items will be dynamically filled here -->
+            </div>
 
-            <h2>Delivery</h2>
-            <select required>
-                <option value="United States">United States</option>
-                <!-- Add more options as needed -->
-            </select>
-            <div class="name-fields">
-                <input type="text" placeholder="First name" required>
-                <input type="text" placeholder="Last name" required>
-            </div>
-            <input type="text" placeholder="Address" required>
-            <input type="text" placeholder="Apartment, suite, etc. (optional)">
-            <div class="location-fields">
-                <input type="text" placeholder="City" required>
-                <select required>
-                    <option value="Virginia">Virginia</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <input type="text" placeholder="ZIP code" required>
-            </div>
-            <input type="tel" placeholder="Phone">
+            <!-- Form for contact and payment information -->
+            <form id="checkout-form">
 
-            <h2>Payment</h2>
-            <div class="payment-methods">
-                <div>
-                    <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked>
-                    <label for="credit-card">Credit card</label>
-                </div>
-                <div>
-                    <input type="radio" name="payment-method" value="paypal" id="paypal">
-                    <label for="paypal">PayPal</label>
-                </div>
-            </div>
-            <div class="credit-card-info">
-                <input type="text" placeholder="Card number" required>
-                <input type="text" placeholder="Expiration date (MM / YY)" required>
-                <input type="text" placeholder="Security code" required>
-                <input type="text" placeholder="Name on card" required>
-            </div>
-            <div class="billing-address">
-                <input type="checkbox" id="billing-same-as-shipping" checked>
-                <label for="billing-same-as-shipping">Use shipping address as billing address</label>
-            </div>
-            <button class="pay-now-button">Pay now</button>
-        </div>
+                <div class="checkout-container">
+                    <div class="checkout-form">
+                        <h2>Contact</h2>
+                        <input type="email" name="email" placeholder="Email" required>
 
-        <div class="order-summary">
-            <h2>Order Summary</h2>
-            <div class="order-summary-item">
-                <img src="assets/YOWIE3/yowie-3-1.webp" alt="Bike Image">
-                <div>
-                    <p>Diamondback YOWIE 3</p>
-                    <p>$2,429.99</p>
+                        <h2>Delivery</h2>
+                        <select name="country" required>
+                            <option value="United States">United States</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                        <div class="name-fields">
+                            <input type="text" name="first-name" placeholder="First name" required>
+                            <input type="text" name="last-name" placeholder="Last name" required>
+                        </div>
+                        <input type="text" name="address" placeholder="Address" required>
+                        <input type="text" name="apartment" placeholder="Apartment, suite, etc. (optional)">
+                        <div class="location-fields">
+                            <input type="text" name="city" placeholder="City" required>
+                            <select name="state" required>
+                                <option value="Virginia">Virginia</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <input type="text" name="zip-code" placeholder="ZIP code" required>
+                        </div>
+                        <input type="tel" name="phone" placeholder="Phone">
+
+                        <h2>Payment</h2>
+                        <div class="payment-methods">
+                            <div>
+                                <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked>
+                                <label for="credit-card">Credit card</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="payment-method" value="paypal" id="paypal">
+                                <label for="paypal">PayPal</label>
+                            </div>
+                        </div>
+                        <div class="credit-card-info">
+                            <input type="text" name="card-number" placeholder="Card number" required>
+                            <input type="text" name="expiration-date" placeholder="Expiration date (MM / YY)" required>
+                            <input type="text" name="security-code" placeholder="Security code" required>
+                            <input type="text" name="name-on-card" placeholder="Name on card" required>
+                        </div>
+                        <div class="billing-address">
+                            <input type="checkbox" id="billing-same-as-shipping" checked>
+                            <label for="billing-same-as-shipping">Use shipping address as billing address</label>
+                        </div>
+                        <button class="pay-now-button">Pay now</button>
+                    </div>
+
+                    <div class="order-summary">
+                        <h2>Order Summary</h2>
+                        <div class="order-summary-items" id="order-summary-items">
+                            <!-- Order summary items will be dynamically filled here -->
+                        </div>
+                        <p class="total">Total: $<span id="order-total"></span></p>
+                    </div>
                 </div>
-            </div>
-            <p class="total">Total: $2,429.99</p>
-        </div>
-    </div>
+            </form>
+        </section>
+    </main>
 
     <script src="js/script.js" defer></script> <!-- Add your JavaScript file -->
 </body>
