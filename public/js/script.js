@@ -10,10 +10,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Function to fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
-        const querySnapshot = await db.collection('Bikes').get();
-        querySnapshot.forEach((doc) => {
-            bikesData.push(doc.data());
-        });
+        try {
+            const querySnapshot = await db.collection('Bikes').get();
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data()); // Log each document data to ensure data is fetched correctly
+                bikesData.push(doc.data());
+            });
+        } catch (error) {
+            console.error("Error fetching bikes data: ", error);
+        }
         return bikesData;
     }
 
@@ -57,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         spotlightSection.innerHTML = `
-                        <h2>${bike.BikeName}</h2>
+            <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
             <ul>${bike.Description.map(line => `<li>${line}</li>`).join('')}</ul>
@@ -100,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const bikesData = await fetchBikes();
+    console.log(bikesData); // Log the fetched bikes data to ensure it's correct
 
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
@@ -107,7 +113,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         bikesSection.appendChild(bikeElement);
     });
 
-    updateSpotlight(bikesData[0]);
+    if (bikesData.length > 0) {
+        updateSpotlight(bikesData[0]);
+    }
 
     shopButton.addEventListener('click', () => {
         bikesSection.scrollIntoView({ behavior: 'smooth' });
@@ -147,4 +155,3 @@ function handleBuyNow(bike) {
     addToCart(bike);
     window.location.href = 'checkout.html';
 }
-
