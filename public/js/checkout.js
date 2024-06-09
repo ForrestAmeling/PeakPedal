@@ -28,8 +28,10 @@ function loadCartItems() {
 
     // Fetch cart items from Firestore
     db.collection('carts').get().then((querySnapshot) => {
+        console.log('Query snapshot size:', querySnapshot.size);
         querySnapshot.forEach((doc) => {
             const cartItem = doc.data();
+            console.log('Cart item:', cartItem);
             total += cartItem.price * cartItem.quantity;
 
             // Create cart item element
