@@ -1,168 +1,30 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
-    const bikesSection = document.querySelector('.bikes-grid'); // Make sure this targets .bikes-grid
+    const bikesSection = document.querySelector('.bikes-grid');
     const spotlightSection = document.querySelector('.spotlight-content');
-    const whyUsSection = document.getElementById('why-us'); // Target the "Why Us" section
+    const whyUsSection = document.getElementById('why-us');
 
-    // Define bike data
-    const bikesData = [
-        {
-            BikeId: 0001,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'YOWIE 3',
-            image: 'assets/YOWIE3/yowie-3-1.webp',
-            images: [
-                'assets/YOWIE3/yowie-3-1.webp',
-                'assets/YOWIE3/yowie-3-2.webp',
-                'assets/YOWIE3/yowie-3-3.webp',
-                'assets/YOWIE3/yowie-3-4.webp',
-                'assets/YOWIE3/yowie-3-5.webp',
-                'assets/YOWIE3/yowie-3-6.webp',
-                'assets/YOWIE3/yowie-3-7.webp',
-                'assets/YOWIE3/yowie-3-8.webp',
-                'assets/YOWIE3/yowie-3-9.webp'
-            ],
-            description: 
-            ['Hydroformed aluminum frame featuring Level Link system for 110mm of efficient yet supple suspension combines with a Fox 34 Performance Float fork for 130mm of front travel',
-                'Fox Float DPS Performance Elite Float rear shock (110mm travel) has excellent small-bump sensitivity plus improved adjustment range',
-                '130mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
-                'SRAM Stylo cranks and SRAM GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
-                'Shimano SLX hydraulic disc brakes offer excellent power and modulation'],
-            MSRP: '$4,150.00',
-            OurPrice: '$3999.99'
-        },
-        {
-            BikeId: 2,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'RELEASE 5C',
-            image: 'assets/RELEASE5C/release5c-1.webp',
-            images: [
-                'assets/RELEASE5C/release5c-1.webp',
-                'assets/RELEASE5C/release5c-2.webp',
-                'assets/RELEASE5C/release5c-3.webp',
-                'assets/RELEASE5C/release5c-4.webp',
-                'assets/RELEASE5C/release5c-5.webp',
-                'assets/RELEASE5C/release5c-6.webp',
-                'assets/RELEASE5C/release5c-7.webp',
-                'assets/RELEASE5C/release5c-8.webp'
-            ],
-            description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-                'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
-                'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
-                'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
-            MSRP: '$5,850.00'
-        },
-        {
-            BikeId: 3,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'RELEASE 4C',
-            image: 'assets/RELEASE4C/release4c-1.webp',
-            images: [
-                'assets/RELEASE4C/release4c-1.webp',
-                'assets/RELEASE4C/release4c-2.webp',
-                'assets/RELEASE4C/release4c-3.webp',
-                'assets/RELEASE4C/release4c-4.webp',
-                'assets/RELEASE4C/release4c-5.webp',
-                'assets/RELEASE4C/release4c-6.webp',
-                'assets/RELEASE4C/release4c-7.webp',
-                'assets/RELEASE4C/release4c-8.webp',
-                'assets/RELEASE4C/release4c-9.jpg'
-            ],
-            description: ['Level Link design equals 130mm of efficient yet supple rear suspension',
-                'Light and stiff carbon frame with Boost 148x12mm Maxle dropout',
-                'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
-                'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
-                'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
-            MSRP: '$4,750.00',
-            OurPrice: '$4599.99'
-        },
-        {
-            BikeId: 4,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'RELEASE 29 3',
-            image: 'assets/RELEASE293/release293-1.webp',
-            images: [
-                'assets/RELEASE293/release293-1.webp',
-                'assets/RELEASE293/release293-2.webp',
-                'assets/RELEASE293/release293-3.webp',
-                'assets/RELEASE293/release293-4.webp',
-                'assets/RELEASE293/release293-5.webp',
-                'assets/RELEASE293/release293-6.webp',
-                'assets/RELEASE293/release293-7.webp',
-                'assets/RELEASE293/release293-8.webp',
-                'assets/RELEASE293/release293-9.webp',
-                'assets/RELEASE293/release293-10.jpg',
-                'assets/RELEASE293/release293-11.webp',
-                'assets/RELEASE293/release293-12.jpg'
-            ],
-            description: ['130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension',
-                'Fox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range',
-                '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
-                'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
-                'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
-            MSRP: '$4,550.00',
-            OurPrice: '$4399.99'
-        },
-        {
-            BikeId: 5,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'RELEASE 29 2',
-            image: 'assets/RELEASE292/release292-1.webp',
-            images: [
-                'assets/RELEASE292/release292-1.webp',
-                'assets/RELEASE292/release292-2.webp',
-                'assets/RELEASE292/release292-3.webp',
-                'assets/RELEASE292/release292-4.webp',
-                'assets/RELEASE292/release292-5.webp',
-                'assets/RELEASE292/release292-6.webp',
-                'assets/RELEASE292/release292-7.webp',
-                'assets/RELEASE292/release292-8.webp',
-                'assets/RELEASE292/release292-9.jpg'
-            ],
-            description: ['130mm travel hydroformed aluminum frame features Level Link system for efficient yet supple suspension',
-                'Fox Performance Elite Float DPS rear shock has excellent small-bump sensitivity plus improved adjustment range',
-                '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
-                'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
-                'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
-            MSRP: '$3,675.00',
-            OurPrice: '$3524.99'
-        },
-        {
-            BikeId: 6,
-            BikeManufacturer: 'Diamondback',
-            BikeName: 'RELEASE 29 1',
-            image: 'assets/RELEASE291/release291-1.webp',
-            images: [
-                'assets/RELEASE291/release291-1.webp',
-                'assets/RELEASE291/release291-2.webp',
-                'assets/RELEASE291/release291-3.webp',
-                'assets/RELEASE291/release291-4.webp',
-                'assets/RELEASE291/release291-5.webp',
-                'assets/RELEASE291/release291-6.webp',
-                'assets/RELEASE291/release291-7.webp',
-                'assets/RELEASE291/release291-8.webp',
-                'assets/RELEASE291/release291-9.jpg'
-            ],
-            description: ['Level Link design equals 130mm of efficient yet supple rear suspension in a 29er frame',
-                'Boost 148x12mm “Maxle” thru-axle and Boost 110 fork add stiffness',
-                'RockShox 35 Silver fork and RockShox Monarch R shock for 140mm front / 130mm rear suspension',
-                'Sram SX Eagle 1x12 drivetrain with Sram SX cranks brings single-ring drivetrains to a more affordable level',
-                'Diamondback Blanchard 28R wheels make it easy to go tubeless'],
-            MSRP: '$2,850.00',
-            OurPrice: '$2699.99'
-        }
-    ];
+    const db = firebase.firestore();
 
-    // Function to create bike element with optimized image
+    // Function to fetch bikes data from Firestore
+    async function fetchBikes() {
+        const bikesData = [];
+        const querySnapshot = await db.collection('Bikes').get();
+        querySnapshot.forEach((doc) => {
+            bikesData.push(doc.data());
+        });
+        return bikesData;
+    }
+
+    // Function to create bike element
     function createBikeElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
         bikeElement.setAttribute('data-id', bike.BikeId);
 
         const imgElement = document.createElement('img');
-        imgElement.src = bike.image;
+        imgElement.src = bike.images[0];
         imgElement.alt = bike.BikeName;
         imgElement.width = 300;
         imgElement.height = 200;
@@ -174,16 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
         `;
 
-        // Apply CSS styles
-        const msrpElement = bikeElement.querySelector('del');
-        msrpElement.style.textDecoration = 'line-through';
-
-        const ourPriceElement = bikeElement.querySelector('strong');
-        ourPriceElement.style.fontWeight = 'bold';
-
         return bikeElement;
     }
 
+    // Function to update spotlight
     function updateSpotlight(bike) {
         let currentIndex = 0;
 
@@ -201,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         spotlightSection.innerHTML = `
-            <h2>${bike.BikeName}</h2>
+                        <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
-            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
+            <ul>${bike.Description.map(line => `<li>${line}</li>`).join('')}</ul>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
             <label for="size-select">Size:</label>
@@ -243,6 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
         spotlightSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    const bikesData = await fetchBikes();
+
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
         bikeElement.addEventListener('click', bikeClickHandler);
@@ -265,11 +123,11 @@ async function addToCart(bike) {
     const size = document.getElementById('size-select').value;
 
     try {
-        await addDoc(collection(db, 'carts'), {
+        await addDoc(collection(db, 'Carts'), {
             BikeId: bike.BikeId,
-            BikeManufacturer: bike.BikeManufacturer,
             BikeName: bike.BikeName,
-            image: bike.image,
+            BikeManufacturer: bike.BikeManufacturer,
+            image: bike.images[0],
             price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
             quantity: quantity,
             size: size
@@ -289,3 +147,4 @@ function handleBuyNow(bike) {
     addToCart(bike);
     window.location.href = 'checkout.html';
 }
+
