@@ -1,4 +1,3 @@
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
     authDomain: "peakpedal-9af93.firebaseapp.com",
@@ -9,75 +8,62 @@ const firebaseConfig = {
     measurementId: "G-0S424MKF14"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Function to generate a unique order number
 function generateOrderNumber() {
     const timestamp = Date.now();
     const randomNum = Math.floor(Math.random() * 100000);
     return `ORD-${timestamp}-${randomNum}`;
 }
 
-// Load cart items
 function loadCartItems() {
     const cartItemsContainer = document.querySelector('.cart-items');
     const orderSummaryItems = document.getElementById('order-summary-items');
     let total = 0;
 
-    // Fetch cart items from Firestore
     db.collection('carts').get().then((querySnapshot) => {
-        console.log('Query snapshot size:', querySnapshot.size);
         querySnapshot.forEach((doc) => {
             const cartItem = doc.data();
-            console.log('Cart item:', cartItem);
             total += cartItem.price * cartItem.quantity;
 
-            // Create cart item element
             const cartItemElement = document.createElement('div');
             cartItemElement.classList.add('cart-item');
             cartItemElement.innerHTML = `
-                <img src="${cartItem.image}" alt="${cartItem.name}">
+                <img src="${cartItem.image}" alt="${cartItem.BikeName}">
                 <div>
-                    <p>${cartItem.name}</p>
+                    <p>${cartItem.BikeName}</p>
                     <p>Quantity: ${cartItem.quantity}</p>
                     <p>Price: $${cartItem.price.toFixed(2)}</p>
                 </div>
             `;
             cartItemsContainer.appendChild(cartItemElement);
 
-            // Create order summary item element
             const orderSummaryItem = document.createElement('div');
             orderSummaryItem.classList.add('order-summary-item');
             orderSummaryItem.innerHTML = `
-                <img src="${cartItem.image}" alt="${cartItem.name}">
+                <img src="${cartItem.image}" alt="${cartItem.BikeName}">
                 <div>
-                    <p>${cartItem.name}</p>
+                    <p>${cartItem.BikeName}</p>
                     <p>$${cartItem.price.toFixed(2)}</p>
                 </div>
             `;
             orderSummaryItems.appendChild(orderSummaryItem);
         });
 
-        // Update total
         document.getElementById('order-total').textContent = total.toFixed(2);
     }).catch((error) => {
         console.error("Error loading cart items: ", error);
     });
 }
 
-// Load cart items when the page loads
 document.addEventListener('DOMContentLoaded', loadCartItems);
 
-// Handle form submission
 document.getElementById('checkout-form').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    // Generate a unique order number
     const orderNumber = generateOrderNumber();
 
-    // Collect form data
     const formData = new FormData(event.target);
     const contact = formData.get('email');
     const delivery = {
@@ -99,7 +85,6 @@ document.getElementById('checkout-form').addEventListener('submit', function (ev
         nameOnCard: formData.get('name-on-card')
     };
 
-    // Store order details in Firestore
     db.collection('orders').add({
         orderNumber,
         contact,
@@ -108,7 +93,6 @@ document.getElementById('checkout-form').addEventListener('submit', function (ev
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
         alert(`Order placed successfully! Your order number is ${orderNumber}`);
-        // Redirect to confirmation page or clear the form
         window.location.href = 'confirmation.html';
     }).catch((error) => {
         console.error("Error placing order: ", error);

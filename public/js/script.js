@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define bike data
     const bikesData = [
         {
-            id: 1,
-            name: 'Diamondback YOWIE 3',
+            BikeId: 0001,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'YOWIE 3',
             image: 'assets/YOWIE3/yowie-3-1.webp',
             images: [
                 'assets/YOWIE3/yowie-3-1.webp',
@@ -22,16 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 'assets/YOWIE3/yowie-3-8.webp',
                 'assets/YOWIE3/yowie-3-9.webp'
             ],
-            description: ['Hydroformed aluminum frame featuring Level Link system for 110mm of efficient yet supple suspension combines with a Fox 34 Performance Float fork for 130mm of front travel',
+            description: 
+            ['Hydroformed aluminum frame featuring Level Link system for 110mm of efficient yet supple suspension combines with a Fox 34 Performance Float fork for 130mm of front travel',
                 'Fox Float DPS Performance Elite Float rear shock (110mm travel) has excellent small-bump sensitivity plus improved adjustment range',
                 '130mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
                 'SRAM Stylo cranks and SRAM GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
                 'Shimano SLX hydraulic disc brakes offer excellent power and modulation'],
-            price: '$4,150.00'
+            MSRP: '$4,150.00',
+            OurPrice: '$3999.99'
         },
         {
-            id: 2,
-            name: 'Diamondback RELEASE 5C',
+            BikeId: 2,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'RELEASE 5C',
             image: 'assets/RELEASE5C/release5c-1.webp',
             images: [
                 'assets/RELEASE5C/release5c-1.webp',
@@ -48,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Fox 36 Factory Float suspension fork and Fox Factory Float DPS shock provide 150/130mm of top-tier suspension',
                 'Powerful and easy-to-adjust SRAM G2 RS hydraulic disc brakes (180mm rotors)',
                 'SRAM GX Eagle 12-speed drivetrain is durable and makes easy work of the steepest climbs with its ultra-wide gearing'],
-            price: '$5,850.00'
+            MSRP: '$5,850.00'
         },
         {
-            id: 3,
-            name: 'Diamondback RELEASE 4C',
+            BikeId: 3,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'RELEASE 4C',
             image: 'assets/RELEASE4C/release4c-1.webp',
             images: [
                 'assets/RELEASE4C/release4c-1.webp',
@@ -70,11 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 'KS Rage-I dropper post (w/ Southpaw remote lever) adds maneuverability on descents',
                 'Fox 36 Performance Float and Fox Float DPS EVOL LV rear shock provide supple suspension travel (150/130mm, front and rear)',
                 'Plenty of gearing to tackle steep climbs, thanks to SRAM NX Eagle 11-50T, single-ring drivetrain'],
-            price: '$4,750.00'
+            MSRP: '$4,750.00',
+            OurPrice: '$4599.99'
         },
         {
-            id: 4,
-            name: 'Diamondback RELEASE 29 3',
+            BikeId: 4,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'RELEASE 29 3',
             image: 'assets/RELEASE293/release293-1.webp',
             images: [
                 'assets/RELEASE293/release293-1.webp',
@@ -95,11 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
                 'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
                 'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
-            price: '$4,550.00'
+            MSRP: '$4,550.00',
+            OurPrice: '$4399.99'
         },
         {
-            id: 5,
-            name: 'Diamondback RELEASE 29 2',
+            BikeId: 5,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'RELEASE 29 2',
             image: 'assets/RELEASE292/release292-1.webp',
             images: [
                 'assets/RELEASE292/release292-1.webp',
@@ -117,11 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 '140mm travel Fox 34 Performance Float fork features Grip damper for more consistent feel',
                 'Sram Stylo cranks and Sram GX Eagle 1x12-speed drivetrain for light weight and smooth shifting',
                 'Shimano XT hydraulic disc brakes offer excellent power and modulation'],
-            price: '$3,675.00'
+            MSRP: '$3,675.00',
+            OurPrice: '$3524.99'
         },
         {
-            id: 6,
-            name: 'Diamondback RELEASE 29 1',
+            BikeId: 6,
+            BikeManufacturer: 'Diamondback',
+            BikeName: 'RELEASE 29 1',
             image: 'assets/RELEASE291/release291-1.webp',
             images: [
                 'assets/RELEASE291/release291-1.webp',
@@ -139,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 'RockShox 35 Silver fork and RockShox Monarch R shock for 140mm front / 130mm rear suspension',
                 'Sram SX Eagle 1x12 drivetrain with Sram SX cranks brings single-ring drivetrains to a more affordable level',
                 'Diamondback Blanchard 28R wheels make it easy to go tubeless'],
-            price: '$2,850.00'
+            MSRP: '$2,850.00',
+            OurPrice: '$2699.99'
         }
     ];
 
@@ -147,25 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function createBikeElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
-        bikeElement.setAttribute('data-id', bike.id);
+        bikeElement.setAttribute('data-id', bike.BikeId);
 
-        // Create image element
         const imgElement = document.createElement('img');
         imgElement.src = bike.image;
-        imgElement.alt = bike.name;
-        imgElement.width = 300; // Set the width (adjust as needed)
-        imgElement.height = 200; // Set the height (adjust as needed)
+        imgElement.alt = bike.BikeName;
+        imgElement.width = 300;
+        imgElement.height = 200;
 
-        // Calculate Our Price
-        const msrp = parseFloat(bike.price.replace('$', '').replace(',', ''));
-        const ourPrice = msrp - 150.01;
-
-        // Append image, MSRP, and Our Price to bike element
         bikeElement.appendChild(imgElement);
         bikeElement.innerHTML += `
-            <h3>${bike.name}</h3>
-            <p><del>MSRP: ${bike.price}</del></p>
-            <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
+            <h3>${bike.BikeName}</h3>
+            <p><del>MSRP: ${bike.MSRP}</del></p>
+            <p><strong>Our Price: ${bike.OurPrice}</strong></p>
         `;
 
         // Apply CSS styles
@@ -179,15 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateSpotlight(bike) {
-        // Calculate Our Price
-        const msrp = parseFloat(bike.price.replace('$', '').replace(',', ''));
-        const ourPrice = msrp - 150.01;
-
         let currentIndex = 0;
 
         const spotlightMainImage = `
             <div class="spotlight-main-image">
-                <img src="${bike.images[currentIndex]}" alt="${bike.name}">
+                <img src="${bike.images[currentIndex]}" alt="${bike.BikeName}">
             </div>
         `;
 
@@ -199,12 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         spotlightSection.innerHTML = `
-            <h2>${bike.name}</h2>
+            <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
             <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
-            <p><del>MSRP: ${bike.price}</del></p>
-            <p><strong>Our Price: $${ourPrice.toFixed(2)}</strong></p>
+            <p><del>MSRP: ${bike.MSRP}</del></p>
+            <p><strong>Our Price: ${bike.OurPrice}</strong></p>
             <label for="size-select">Size:</label>
             <select id="size-select">
                 <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
@@ -219,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="add-to-cart">Add to Cart</button>
         `;
 
-        // Add event listeners for the next and previous buttons
         document.getElementById('next-button').addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % bike.images.length;
             document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
@@ -230,53 +231,46 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
         });
 
-        // Add event listeners for Add to Cart and Buy Now buttons
         document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
         document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
     }
 
-    // Function to handle click on a bike
     function bikeClickHandler(event) {
         const bikeId = event.currentTarget.getAttribute('data-id');
-        const selectedBike = bikesData.find(bike => bike.id == bikeId);
+        const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
         updateSpotlight(selectedBike);
 
-        // Scroll to the spotlight section
         spotlightSection.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Populate bikes section with bike data
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
         bikeElement.addEventListener('click', bikeClickHandler);
         bikesSection.appendChild(bikeElement);
     });
 
-    // Default spotlight to first bike
     updateSpotlight(bikesData[0]);
 
-    // Scroll to bikes section when "Shop Bikes" button is clicked
     shopButton.addEventListener('click', () => {
         bikesSection.scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Scroll to "Why Us" section when "Learn More" button is clicked
     learnButton.addEventListener('click', () => {
         whyUsSection.scrollIntoView({ behavior: 'smooth' });
     });
 });
 
-// Function to add item to cart
 async function addToCart(bike) {
     const quantity = parseInt(document.getElementById('quantity-input').value);
     const size = document.getElementById('size-select').value;
 
     try {
         await addDoc(collection(db, 'carts'), {
-            bikeId: bike.id,
-            name: bike.name,
+            BikeId: bike.BikeId,
+            BikeManufacturer: bike.BikeManufacturer,
+            BikeName: bike.BikeName,
             image: bike.image,
-            price: parseFloat(bike.price.replace('$', '').replace(',', '')),
+            price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
             quantity: quantity,
             size: size
         });
@@ -287,12 +281,10 @@ async function addToCart(bike) {
     }
 }
 
-// Function to handle "Add to Cart" button click
 function handleAddToCart(bike) {
     addToCart(bike);
 }
 
-// Function to handle "Buy Now" button click
 function handleBuyNow(bike) {
     addToCart(bike);
     window.location.href = 'checkout.html';
