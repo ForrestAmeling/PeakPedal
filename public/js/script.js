@@ -1,3 +1,5 @@
+import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -5,13 +7,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const spotlightSection = document.querySelector('.spotlight-content');
     const whyUsSection = document.getElementById('why-us');
 
-    const db = firebase.firestore();
+    const db = window.db; // Ensure db is globally available
 
     // Function to fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await db.collection('Bikes').get();
+            const querySnapshot = await getDocs(collection(db, 'Bikes'));
             querySnapshot.forEach((doc) => {
                 console.log(doc.data()); // Log each document data to ensure data is fetched correctly
                 bikesData.push(doc.data());
@@ -105,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const bikesData = await fetchBikes();
-    console.log(bikesData); // Log the fetched bikes data to ensure it's correct
+    console.log(bikesData); // Log bikesData to ensure it's populated
 
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);

@@ -14,8 +14,6 @@
         rel="stylesheet">
     <style>
         /* Inline CSS for quick testing */
-
-
         .overlay h2 {
             font-size: 144px;
             margin: 10px 0;
@@ -129,20 +127,27 @@
         <p>&copy; 2024 PeakPedal</p>
     </footer>
     <script type="module">
-        // Import Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-        const firebaseConfig = {
-            apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
-            authDomain: "peakpedal-9af93.firebaseapp.com",
-            projectId: "peakpedal-9af93",
-            storageBucket: "peakpedal-9af93.appspot.com",
-            messagingSenderId: "344619285656",
-            appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
-            measurementId: "G-0S424MKF14"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+        authDomain: "peakpedal-9af93.firebaseapp.com",
+        projectId: "peakpedal-9af93",
+        storageBucket: "peakpedal-9af93.appspot.com",
+        messagingSenderId: "344619285656",
+        appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+        measurementId: "G-0S424MKF14"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
 
         // Ensure Firebase db is available globally
         window.db = db;
