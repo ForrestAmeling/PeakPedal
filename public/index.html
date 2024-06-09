@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Add your custom styles -->
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Roboto+Slab:wght@400&display=swap"
         rel="stylesheet">
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-    <script src="js/script.js" defer></script>
+    <script src="js/script.js" defer></script> <!-- Add defer to load JS after HTML -->
 
     <style>
         /* Inline CSS for quick testing */
+
 
         .overlay h2 {
             font-size: 144px;
@@ -40,8 +39,10 @@
         .highlight-text {
             color: orange;
             margin: 24px 0;
+            /* Reduce top and bottom margin */
         }
 
+        /* Media Queries */
         @media (max-width: 1168px) {
             .overlay h2 {
                 font-size: 72px;
@@ -79,12 +80,13 @@
 </head>
 
 <body>
-    <header class="top-header">
-        <h1 class="logo">PeakPedal</h1>
-        <div class="cart">
-            <a href="checkout.html"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</a>
-        </div>
-    </header>
+<header class="top-header">
+    <h1 class="logo">PeakPedal</h1>
+    <div class="cart">
+        <a href="checkout.html"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</a>
+    </div>
+</header>
+
 
     <section class="hero">
         <div class="carousel">
@@ -97,6 +99,7 @@
                     <button id="shop-button">Shop Bikes</button>
                     <button id="learn-button" class="gradient-border">Learn More</button>
                 </div>
+
             </div>
         </div>
     </section>
@@ -123,20 +126,51 @@
         </div>
     </section>
 
+
+
+
     <section class="spotlight">
+        <!-- Bike spotlight will be dynamically filled here -->
         <div class="spotlight-content">
+            <!-- Bike spotlight content will be dynamically filled here -->
         </div>
     </section>
 
     <section class="bikes">
         <h2>Bikes</h2>
         <div class="bikes-grid">
+            <!-- Bike grid content will be dynamically filled here -->
         </div>
     </section>
 
     <footer>
         <p>&copy; 2024 PeakPedal</p>
     </footer>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+            authDomain: "peakpedal-9af93.firebaseapp.com",
+            projectId: "peakpedal-9af93",
+            storageBucket: "peakpedal-9af93.appspot.com",
+            messagingSenderId: "344619285656",
+            appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+            measurementId: "G-0S424MKF14"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+    </script>
 </body>
 
 </html>
