@@ -1,24 +1,9 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
-    authDomain: "peakpedal-9af93.firebaseapp.com",
-    projectId: "peakpedal-9af93",
-    storageBucket: "peakpedal-9af93.appspot.com",
-    messagingSenderId: "344619285656",
-    appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
-    measurementId: "G-0S424MKF14"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
 document.addEventListener('DOMContentLoaded', () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
-    const bikesSection = document.querySelector('.bikes-grid');
+    const bikesSection = document.querySelector('.bikes-grid'); // Make sure this targets .bikes-grid
     const spotlightSection = document.querySelector('.spotlight-content');
-    const whyUsSection = document.getElementById('why-us');
+    const whyUsSection = document.getElementById('why-us'); // Target the "Why Us" section
 
     // Define bike data
     const bikesData = [
