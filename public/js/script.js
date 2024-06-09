@@ -133,7 +133,7 @@ async function addToCart(bike) {
     const size = document.getElementById('size-select').value;
 
     try {
-        await addDoc(collection(db, 'Carts'), {
+        await addDoc(collection(window.db, 'Carts'), {
             BikeId: bike.BikeId,
             BikeName: bike.BikeName,
             BikeManufacturer: bike.BikeManufacturer,
