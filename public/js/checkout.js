@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <img src="${cartItem.image}" alt="${cartItem.BikeName}">
                         <div>
                             <p>${cartItem.BikeName}</p>
-                            <p>$${cartItem.price.toFixed(2)}</p>
+                            <p>Size: ${cartItem.size}</p>
+                            <p>Quantity: ${cartItem.quantity}</p>
+                            <p>Price: $${cartItem.price.toFixed(2)}</p>
                         </div>
                     `;
                     orderSummaryItems.appendChild(orderSummaryItem);
