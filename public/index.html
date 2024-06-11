@@ -4,15 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Discover the perfect bike for your outdoor journey with PeakPedal. Great bikes for less!">
-    <meta property="og:title" content="PeakPedal">
-    <meta property="og:description"
-        content="Discover the perfect bike for your outdoor journey with PeakPedal. Great bikes for less!">
-    <meta property="og:image" content="assets/10.jpg">
-    <meta property="og:url" content="https://yourwebsite.com">
-    <meta name="twitter:card" content="summary_large_image">
-
     <title>PeakPedal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -21,11 +12,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Roboto+Slab:wght@400&display=swap"
         rel="stylesheet">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-
     <style>
         /* Inline CSS for quick testing */
         .overlay h2 {
@@ -142,10 +128,11 @@
     </footer>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
     <script>
-        // Your web app's Firebase configuration
+        // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
             authDomain: "peakpedal-9af93.firebaseapp.com",
@@ -156,7 +143,6 @@
             measurementId: "G-0S424MKF14"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
