@@ -58,11 +58,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
 
+        // Check if bike.description exists and is an array
+        const descriptionList = Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
+
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
-            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
+            <ul>${descriptionList}</ul>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
             <label for="size-select">Size:</label>
