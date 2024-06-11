@@ -15,10 +15,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const db = firebase.firestore();
 
     async function loadCartItems() {
-        const cartItemsContainer = document.querySelector('.cart-items');
         const orderSummaryItems = document.getElementById('order-summary-items');
-        cartItemsContainer.innerHTML = '';
-        orderSummaryItems.innerHTML = '';
+        orderSummaryItems.innerHTML = ''; // Clear previous items
         let total = 0;
 
         try {
@@ -27,19 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const cartItem = doc.data();
                 if (cartItem.price && cartItem.quantity) {
                     total += cartItem.price * cartItem.quantity;
-
-                    const cartItemElement = document.createElement('div');
-                    cartItemElement.classList.add('cart-item');
-                    cartItemElement.innerHTML = `
-                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                        <div>
-                            <p>${cartItem.BikeName}</p>
-                            <p>Quantity: ${cartItem.quantity}</p>
-                            <p>Price: $${cartItem.price.toFixed(2)}</p>
-                            <button class="remove-item" data-id="${doc.id}">Remove</button>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(cartItemElement);
 
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
@@ -50,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p>Size: ${cartItem.size}</p>
                             <p>Quantity: ${cartItem.quantity}</p>
                             <p>Price: $${cartItem.price.toFixed(2)}</p>
+                            <button class="remove-item" data-id="${doc.id}">Remove</button>
                         </div>
                     `;
                     orderSummaryItems.appendChild(orderSummaryItem);
@@ -73,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadCartItems();
 
-    document.querySelector('.cart-items').addEventListener('click', (event) => {
+    document.querySelector('.order-summary-items').addEventListener('click', (event) => {
         if (event.target.classList.contains('remove-item')) {
             const itemId = event.target.getAttribute('data-id');
             removeItemFromCart(itemId);
