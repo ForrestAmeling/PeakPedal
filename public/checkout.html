@@ -9,6 +9,21 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css"> <!-- Add your custom styles -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+            authDomain: "peakpedal-9af93.firebaseapp.com",
+            projectId: "peakpedal-9af93",
+            storageBucket: "peakpedal-9af93.appspot.com",
+            messagingSenderId: "344619285656",
+            appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+            measurementId: "G-0S424MKF14"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="js/checkout.js" defer></script> <!-- Separate script for checkout -->
 </head>
 

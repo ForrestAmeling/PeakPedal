@@ -23,30 +23,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             const querySnapshot = await db.collection('Carts').get();
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
-                total += cartItem.price * cartItem.quantity;
+                if (cartItem.price && cartItem.quantity) {
+                    total += cartItem.price * cartItem.quantity;
 
-                const cartItemElement = document.createElement('div');
-                cartItemElement.classList.add('cart-item');
-                cartItemElement.innerHTML = `
-                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                    <div>
-                        <p>${cartItem.BikeName}</p>
-                        <p>Quantity: ${cartItem.quantity}</p>
-                        <p>Price: $${cartItem.price.toFixed(2)}</p>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(cartItemElement);
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.classList.add('cart-item');
+                    cartItemElement.innerHTML = `
+                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div>
+                            <p>${cartItem.BikeName}</p>
+                            <p>Quantity: ${cartItem.quantity}</p>
+                            <p>Price: $${cartItem.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemElement);
 
-                const orderSummaryItem = document.createElement('div');
-                orderSummaryItem.classList.add('order-summary-item');
-                orderSummaryItem.innerHTML = `
-                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                    <div>
-                        <p>${cartItem.BikeName}</p>
-                        <p>$${cartItem.price.toFixed(2)}</p>
-                    </div>
-                `;
-                orderSummaryItems.appendChild(orderSummaryItem);
+                    const orderSummaryItem = document.createElement('div');
+                    orderSummaryItem.classList.add('order-summary-item');
+                    orderSummaryItem.innerHTML = `
+                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div>
+                            <p>${cartItem.BikeName}</p>
+                            <p>$${cartItem.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                    orderSummaryItems.appendChild(orderSummaryItem);
+                }
             });
 
             document.getElementById('order-total').textContent = total.toFixed(2);
