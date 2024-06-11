@@ -4,12 +4,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bikesSection = document.querySelector('.bikes-grid');
     const spotlightSection = document.querySelector('.spotlight-content');
     const whyUsSection = document.getElementById('why-us');
+    const cartCountElement = document.getElementById('cart-count'); // Add this line
 
     // Function to fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await window.db.collection('Bikes').get();
+            const querySnapshot = await db.collection('Bikes').get();
             querySnapshot.forEach((doc) => {
                 bikesData.push(doc.data());
             });
@@ -58,14 +59,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
 
-        // Check if bike.description exists and is an array
-        const descriptionList = bike.description && Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
-
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
-            <ul>${descriptionList}</ul>
+            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
             <label for="size-select">Size:</label>
@@ -104,6 +102,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         spotlightSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    async function addToCart(bike) {
+        const quantity = parseInt(document.getElementById('quantity-input').value);
+        const size = document.getElementById('size-select').value;
+
+        try {
+            await db.collection('Carts').add({
+                BikeId: bike.BikeId,
+                BikeName: bike.BikeName,
+                BikeManufacturer: bike.BikeManufacturer,
+                image: bike.images[0],
+                price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
+                quantity: quantity,
+                size: size
+            });
+            console.log("Item added to cart");
+            alert("Item added to cart!");
+            updateCartCount(); // Update the cart count after adding an item
+        } catch (error) {
+            console.error("Error adding item to cart: ", error);
+        }
+    }
+
+    function handleAddToCart(bike) {
+        addToCart(bike);
+    }
+
+    function handleBuyNow(bike) {
+        addToCart(bike);
+        window.location.href = 'checkout.html';
+    }
+
+    async function updateCartCount() {
+        try {
+            const querySnapshot = await db.collection('Carts').get();
+            let totalCount = 0;
+            querySnapshot.forEach((doc) => {
+                const cartItem = doc.data();
+                totalCount += cartItem.quantity;
+            });
+            cartCountElement.textContent = totalCount;
+        } catch (error) {
+            console.error("Error updating cart count: ", error);
+        }
+    }
+
     const bikesData = await fetchBikes();
     console.log(bikesData); // Log bikesData to ensure it's populated
 
@@ -124,34 +167,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     learnButton.addEventListener('click', () => {
         whyUsSection.scrollIntoView({ behavior: 'smooth' });
     });
+
+    updateCartCount(); // Initialize the cart count when the page loads
 });
-
-async function addToCart(bike) {
-    const quantity = parseInt(document.getElementById('quantity-input').value);
-    const size = document.getElementById('size-select').value;
-
-    try {
-        await window.db.collection('Carts').add({
-            BikeId: bike.BikeId,
-            BikeName: bike.BikeName,
-            BikeManufacturer: bike.BikeManufacturer,
-            image: bike.images[0],
-            price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
-            quantity: quantity,
-            size: size
-        });
-        console.log("Item added to cart");
-        alert("Item added to cart!");
-    } catch (error) {
-        console.error("Error adding item to cart: ", error);
-    }
-}
-
-function handleAddToCart(bike) {
-    addToCart(bike);
-}
-
-function handleBuyNow(bike) {
-    addToCart(bike);
-    window.location.href = 'checkout.html';
-}

@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             document.getElementById('order-total').textContent = total.toFixed(2);
+            updateCartCount(); // Update the cart count when loading items
         } catch (error) {
             console.error("Error loading cart items: ", error);
         }
@@ -54,6 +55,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadCartItems(); // Refresh the cart items
         } catch (error) {
             console.error("Error removing item from cart: ", error);
+        }
+    }
+
+    async function updateCartCount() {
+        try {
+            const querySnapshot = await db.collection('Carts').get();
+            let totalCount = 0;
+            querySnapshot.forEach((doc) => {
+                const cartItem = doc.data();
+                totalCount += cartItem.quantity;
+            });
+            document.getElementById('cart-count').textContent = totalCount;
+        } catch (error) {
+            console.error("Error updating cart count: ", error);
         }
     }
 
