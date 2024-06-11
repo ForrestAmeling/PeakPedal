@@ -26,66 +26,66 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 
-   le>
-/* Inline CSS for quick testing */
-.overlay h2 {
-font-size: 144px;
-margin: 10px 0;
-line-height: .9;
-letter-spacing: -3px;
-font-family: 'Anton', sans-serif;
-height: 100%;
-}
+    <style>
+        /* Inline CSS for quick testing */
+        .overlay h2 {
+            font-size: 144px;
+            margin: 10px 0;
+            line-height: .9;
+            letter-spacing: -3px;
+            font-family: 'Anton', sans-serif;
+            height: 100%;
+        }
 
-.overlay p {
-font-size: 36px;
-margin: 24px 0;
-letter-spacing: 2px;
-font-family: 'Montserrat', sans-serif;
-height: 100%;
-}
+        .overlay p {
+            font-size: 36px;
+            margin: 24px 0;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+            height: 100%;
+        }
 
-.highlight-text {
-color: orange;
-margin: 24px 0;
-/* Reduce top and bottom margin */
-}
+        .highlight-text {
+            color: orange;
+            margin: 24px 0;
+            /* Reduce top and bottom margin */
+        }
 
-/* Media Queries */
-@media (max-width: 1168px) {
-.overlay h2 {
-font-size: 72px;
-}
+        /* Media Queries */
+        @media (max-width: 1168px) {
+            .overlay h2 {
+                font-size: 72px;
+            }
 
-.overlay p {
-font-size: 28px;
-}
-}
+            .overlay p {
+                font-size: 28px;
+            }
+        }
 
-@media (max-width: 768px) {
-.overlay h2 {
-font-size: 48px;
-margin: 5px 0;
-}
+        @media (max-width: 768px) {
+            .overlay h2 {
+                font-size: 48px;
+                margin: 5px 0;
+            }
 
-.overlay p {
-font-size: 24px;
-margin: 12px 0;
-}
-}
+            .overlay p {
+                font-size: 24px;
+                margin: 12px 0;
+            }
+        }
 
-@media (max-width: 480px) {
-.overlay h2 {
-font-size: 24px;
-margin: 5px 0;
-}
+        @media (max-width: 480px) {
+            .overlay h2 {
+                font-size: 24px;
+                margin: 5px 0;
+            }
 
-.overlay p {
-font-size: 12px;
-margin: 12px 0;
-}
-}
-</style>
+            .overlay p {
+                font-size: 12px;
+                margin: 12px 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -142,11 +142,10 @@ margin: 12px 0;
     </footer>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
     <script>
-        // Initialize Firebase
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
             authDomain: "peakpedal-9af93.firebaseapp.com",
@@ -157,6 +156,7 @@ margin: 12px 0;
             measurementId: "G-0S424MKF14"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
