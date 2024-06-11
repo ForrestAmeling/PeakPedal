@@ -6,21 +6,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whyUsSection = document.getElementById('why-us');
 
     // Function to fetch bikes data from Firestore
-    async function fetchBikes() {
-        const bikesData = [];
+    const fetchBikes = async () => {
         try {
             const querySnapshot = await db.collection('Bikes').get();
-            querySnapshot.forEach((doc) => {
-                bikesData.push(doc.data());
-            });
+            return querySnapshot.docs.map(doc => doc.data());
         } catch (error) {
             console.error("Error fetching bikes data: ", error);
+            return [];
         }
-        return bikesData;
-    }
+    };
 
     // Function to create bike element
-    function createBikeElement(bike) {
+    const createBikeElement = (bike) => {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
         bikeElement.setAttribute('data-id', bike.BikeId);
@@ -39,10 +36,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         return bikeElement;
-    }
+    };
 
     // Function to update spotlight
-    function updateSpotlight(bike) {
+    const updateSpotlight = (bike) => {
         let currentIndex = 0;
 
         const spotlightMainImage = `
@@ -91,19 +88,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
         document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
-    }
+    };
 
-    function bikeClickHandler(event) {
+    const bikeClickHandler = (event) => {
         const bikeId = event.currentTarget.getAttribute('data-id');
         const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
         updateSpotlight(selectedBike);
 
         spotlightSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    };
 
     const bikesData = await fetchBikes();
-    console.log(bikesData); // Log bikesData to ensure it's populated
-
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
         bikeElement.addEventListener('click', bikeClickHandler);
@@ -123,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-async function addToCart(bike) {
+const addToCart = async (bike) => {
     const quantity = parseInt(document.getElementById('quantity-input').value);
     const size = document.getElementById('size-select').value;
 
@@ -142,13 +137,13 @@ async function addToCart(bike) {
     } catch (error) {
         console.error("Error adding item to cart: ", error);
     }
-}
+};
 
-function handleAddToCart(bike) {
+const handleAddToCart = (bike) => {
     addToCart(bike);
-}
+};
 
-function handleBuyNow(bike) {
+const handleBuyNow = (bike) => {
     addToCart(bike);
     window.location.href = 'checkout.html';
-}
+};
