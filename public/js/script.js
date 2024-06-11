@@ -1,5 +1,3 @@
-import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -7,15 +5,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const spotlightSection = document.querySelector('.spotlight-content');
     const whyUsSection = document.getElementById('why-us');
 
-    const db = window.db; // Ensure db is globally available
-
     // Function to fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await getDocs(collection(db, 'Bikes'));
+            const querySnapshot = await db.collection('Bikes').get();
             querySnapshot.forEach((doc) => {
-                console.log(doc.data()); // Log each document data to ensure data is fetched correctly
                 bikesData.push(doc.data());
             });
         } catch (error) {
@@ -67,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <h2>${bike.BikeName}</h2>
             ${spotlightMainImage}
             ${spotlightControls}
-            <ul>${bike.Description.map(line => `<li>${line}</li>`).join('')}</ul>
+            <ul>${bike.description.map(line => `<li>${line}</li>`).join('')}</ul>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
             <label for="size-select">Size:</label>
