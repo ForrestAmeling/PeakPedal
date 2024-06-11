@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         // Check if bike.description exists and is an array
-        const descriptionList = Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
+        const descriptionList = bike.description && Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
 
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
