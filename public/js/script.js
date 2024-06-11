@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bikesSection = document.querySelector('.bikes-grid');
     const spotlightSection = document.querySelector('.spotlight-content');
     const whyUsSection = document.getElementById('why-us');
-    const cartCountElement = document.getElementById('cart-count'); // Add this line
+    const cartCountElement = document.getElementById('cart-count');
 
     // Function to fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await window.db.collection('Bikes').get();
+            const querySnapshot = await window.db.collection('Bikes').orderBy('BikeId').get(); // Add orderBy clause here
             querySnapshot.forEach((doc) => {
                 bikesData.push(doc.data());
             });
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let totalCount = 0;
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
-                totalCount += parseInt(cartItem.quantity); // Ensure quantity is parsed as an integer
+                totalCount += parseInt(cartItem.quantity) || 0; // Ensure quantity is parsed as an integer and handle NaN
             });
             cartCountElement.textContent = totalCount;
         } catch (error) {
