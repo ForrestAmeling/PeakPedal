@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadCartItems() {
         const cartItemsContainer = document.querySelector('.cart-items');
         const orderSummaryItems = document.getElementById('order-summary-items');
+        cartItemsContainer.innerHTML = '';
+        orderSummaryItems.innerHTML = '';
         let total = 0;
 
         try {
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p>${cartItem.BikeName}</p>
                             <p>Quantity: ${cartItem.quantity}</p>
                             <p>Price: $${cartItem.price.toFixed(2)}</p>
+                            <button class="remove-item" data-id="${doc.id}">Remove</button>
                         </div>
                     `;
                     cartItemsContainer.appendChild(cartItemElement);
@@ -59,7 +62,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    async function removeItemFromCart(itemId) {
+        try {
+            await db.collection('Carts').doc(itemId).delete();
+            loadCartItems(); // Refresh the cart items
+        } catch (error) {
+            console.error("Error removing item from cart: ", error);
+        }
+    }
+
     loadCartItems();
+
+    document.querySelector('.cart-items').addEventListener('click', (event) => {
+        if (event.target.classList.contains('remove-item')) {
+            const itemId = event.target.getAttribute('data-id');
+            removeItemFromCart(itemId);
+        }
+    });
 
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
         event.preventDefault();
