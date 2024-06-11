@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let totalCount = 0;
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
-                totalCount += cartItem.quantity;
+                totalCount += parseInt(cartItem.quantity); // Ensure quantity is parsed as an integer
             });
             document.getElementById('cart-count').textContent = totalCount;
         } catch (error) {
