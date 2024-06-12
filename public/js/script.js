@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 size: size
             });
             console.log("Item added to cart");
-            alert("Item added to cart!");
             updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
