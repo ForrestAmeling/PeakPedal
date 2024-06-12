@@ -1,3 +1,23 @@
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function getUserId() {
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+        userId = generateUUID();
+        localStorage.setItem('userId', userId);
+    }
+    return userId;
+}
+
+const userId = getUserId();
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -112,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const size = document.getElementById('size-select').value;
 
         try {
-            await window.db.collection('Carts').add({
+            await db.collection('Carts').doc(userId).collection('Items').add({
                 BikeId: bike.BikeId,
                 BikeName: bike.BikeName,
                 BikeManufacturer: bike.BikeManufacturer,
@@ -122,37 +142,70 @@ document.addEventListener('DOMContentLoaded', async () => {
                 size: size
             });
             console.log("Item added to cart");
+            alert("Item added to cart!");
             updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
         }
     }
 
-    // Handle Add to Cart button click
-    function handleAddToCart(bike) {
-        addToCart(bike);
+    async function loadCartItems() {
+        const orderSummaryItems = document.getElementById('order-summary-items');
+        orderSummaryItems.innerHTML = '';
+        let total = 0;
+
+        try {
+            const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
+            querySnapshot.forEach((doc) => {
+                const cartItem = doc.data();
+                if (cartItem.price && cartItem.quantity) {
+                    total += cartItem.price * cartItem.quantity;
+
+                    const orderSummaryItem = document.createElement('div');
+                    orderSummaryItem.classList.add('order-summary-item');
+                    orderSummaryItem.innerHTML = `
+                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                    <div class="order-summary-details">
+                        <div class="order-summary-labels">
+                            <p>Bike</p>
+                            <p>Size</p>
+                            <p>Quantity</p>
+                            <p>Price</p>
+                        </div>
+                        <div class="order-summary-values">
+                            <p>${cartItem.BikeName}</p>
+                            <p>${cartItem.size}</p>
+                            <p>${cartItem.quantity}</p>
+                            <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                    <button class="remove-item" data-id="${doc.id}">Remove</button>
+                `;
+                    orderSummaryItems.appendChild(orderSummaryItem);
+                }
+            });
+
+            document.getElementById('order-total').textContent = total.toFixed(2);
+            updateCartCount();
+        } catch (error) {
+            console.error("Error loading cart items: ", error);
+        }
     }
 
-    // Handle Buy Now button click
-    async function handleBuyNow(bike) {
-        await addToCart(bike);
-        window.location.href = 'checkout.html';
-    }
-
-    // Update cart item count
     async function updateCartCount() {
         try {
-            const querySnapshot = await window.db.collection('Carts').get();
+            const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
             let totalCount = 0;
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
                 totalCount += parseInt(cartItem.quantity) || 0;
             });
-            cartCountElement.textContent = totalCount;
+            document.getElementById('cart-count').textContent = totalCount;
         } catch (error) {
             console.error("Error updating cart count: ", error);
         }
     }
+
 
     // Fetch and display bikes data
     const bikesData = await fetchBikes();

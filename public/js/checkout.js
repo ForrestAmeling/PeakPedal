@@ -152,6 +152,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 billing,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
+
+            // Clear the user's cart
+            const cartItems = await db.collection('Carts').doc(userId).collection('Items').get();
+            const batch = db.batch();
+            cartItems.forEach((doc) => {
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+
             alert(`Order placed successfully! Your order number is ${orderNumber}`);
             window.location.href = 'confirmation.html';
         } catch (error) {
@@ -159,11 +168,3 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Error placing order. Please try again.');
         }
     });
-
-    // Generate a unique order number
-    function generateOrderNumber() {
-        const timestamp = Date.now();
-        const randomNum = Math.floor(Math.random() * 100000);
-        return `ORD-${timestamp}-${randomNum}`;
-    }
-});
