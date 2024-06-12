@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const db = firebase.firestore();
 
+    // Load cart items and calculate the total
     async function loadCartItems() {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
@@ -57,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Remove item from cart
     async function removeItemFromCart(itemId) {
         try {
             await db.collection('Carts').doc(itemId).delete();
@@ -66,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Update the cart count displayed in the header
     async function updateCartCount() {
         try {
             const querySnapshot = await db.collection('Carts').get();
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadCartItems();
 
+    // Event listener for removing items from cart
     document.querySelector('.order-summary-items').addEventListener('click', (event) => {
         if (event.target.classList.contains('remove-item')) {
             const itemId = event.target.getAttribute('data-id');
@@ -89,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Toggle billing address fields based on checkbox
     const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
     const billingAddressFields = document.getElementById('billing-address-fields');
 
@@ -100,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Handle form submission
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -154,6 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Generate a unique order number
     function generateOrderNumber() {
         const timestamp = Date.now();
         const randomNum = Math.floor(Math.random() * 100000);

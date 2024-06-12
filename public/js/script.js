@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whyUsSection = document.getElementById('why-us');
     const cartCountElement = document.getElementById('cart-count');
 
-
+    // Fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
         try {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return bikesData;
     }
 
-
+    // Create a bike element for display
     function createBikeElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return bikeElement;
     }
 
-
+    // Update the spotlight section with bike details
     function updateSpotlight(bike) {
         let currentIndex = 0;
 
@@ -59,8 +59,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
 
- 
-        const descriptionList = bike.description && Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
+        const descriptionList = bike.description && Array.isArray(bike.description)
+            ? bike.description.map(line => `<li>${line}</li>`).join('')
+            : '';
 
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
@@ -97,14 +98,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
     }
 
+    // Handle bike click to update spotlight
     function bikeClickHandler(event) {
         const bikeId = event.currentTarget.getAttribute('data-id');
         const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
         updateSpotlight(selectedBike);
-
         spotlightSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Add bike to cart
     async function addToCart(bike) {
         const quantity = parseInt(document.getElementById('quantity-input').value);
         const size = document.getElementById('size-select').value;
@@ -121,20 +123,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             console.log("Item added to cart");
             alert("Item added to cart!");
-            updateCartCount(); 
+            updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
         }
     }
 
+    // Handle Add to Cart button click
     function handleAddToCart(bike) {
         addToCart(bike);
     }
 
+    // Handle Buy Now button click
     async function handleBuyNow(bike) {
-        await addToCart(bike); 
-        window.location.href = 'checkout.html'; 
+        await addToCart(bike);
+        window.location.href = 'checkout.html';
     }
+
+    // Update cart item count
     async function updateCartCount() {
         try {
             const querySnapshot = await window.db.collection('Carts').get();
@@ -149,8 +155,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Fetch and display bikes data
     const bikesData = await fetchBikes();
-    console.log(bikesData); 
+    console.log(bikesData);
 
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
@@ -158,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         bikesSection.appendChild(bikeElement);
     });
 
+    // Initialize spotlight with the first bike
     if (bikesData.length > 0) {
         updateSpotlight(bikesData[0]);
     }
@@ -170,5 +178,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         whyUsSection.scrollIntoView({ behavior: 'smooth' });
     });
 
-    updateCartCount(); 
+    updateCartCount();
 });
