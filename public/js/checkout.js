@@ -116,21 +116,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             securityCode: formData.get('security-code'),
             nameOnCard: formData.get('name-on-card')
         };
-        let billing = null;
 
-        if (!billingSameAsShippingCheckbox.checked) {
-            billing = {
-                country: formData.get('billing-country'),
-                firstName: formData.get('billing-first-name'),
-                lastName: formData.get('billing-last-name'),
-                address: formData.get('billing-address'),
-                apartment: formData.get('billing-apartment'),
-                city: formData.get('billing-city'),
-                state: formData.get('billing-state'),
-                zipCode: formData.get('billing-zip-code'),
-                phone: formData.get('billing-phone')
-            };
-        }
+        const billing = billingSameAsShippingCheckbox.checked ? delivery : {
+            country: formData.get('billing-country'),
+            firstName: formData.get('billing-first-name'),
+            lastName: formData.get('billing-last-name'),
+            address: formData.get('billing-address'),
+            apartment: formData.get('billing-apartment'),
+            city: formData.get('billing-city'),
+            state: formData.get('billing-state'),
+            zipCode: formData.get('billing-zip-code'),
+            phone: formData.get('billing-phone')
+        };
 
         try {
             await db.collection('orders').add({
