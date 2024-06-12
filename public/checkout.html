@@ -66,6 +66,34 @@
                         </div>
                         <input type="tel" name="phone" placeholder="Phone">
 
+                        <div class="billing-address">
+                            <input type="checkbox" id="billing-same-as-shipping" checked>
+                            <label for="billing-same-as-shipping">Use shipping address as billing address</label>
+                        </div>
+
+                        <div id="billing-address-fields" style="display: none;">
+                            <h2>Billing Address</h2>
+                            <select name="billing-country">
+                                <option value="United States">United States</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <div class="name-fields">
+                                <input type="text" name="billing-first-name" placeholder="First name">
+                                <input type="text" name="billing-last-name" placeholder="Last name">
+                            </div>
+                            <input type="text" name="billing-address" placeholder="Address">
+                            <input type="text" name="billing-apartment" placeholder="Apartment, suite, etc. (optional)">
+                            <div class="location-fields">
+                                <input type="text" name="billing-city" placeholder="City">
+                                <select name="billing-state">
+                                    <option value="Virginia">Virginia</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                                <input type="text" name="billing-zip-code" placeholder="ZIP code">
+                            </div>
+                            <input type="tel" name="billing-phone" placeholder="Phone">
+                        </div>
+
                         <h2>Payment</h2>
                         <div class="payment-methods">
                             <div>

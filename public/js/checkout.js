@@ -81,6 +81,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
+    const billingAddressFields = document.getElementById('billing-address-fields');
+
+    billingSameAsShippingCheckbox.addEventListener('change', () => {
+        if (billingSameAsShippingCheckbox.checked) {
+            billingAddressFields.style.display = 'none';
+        } else {
+            billingAddressFields.style.display = 'block';
+        }
+    });
+
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -105,6 +116,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             securityCode: formData.get('security-code'),
             nameOnCard: formData.get('name-on-card')
         };
+        let billing = null;
+
+        if (!billingSameAsShippingCheckbox.checked) {
+            billing = {
+                country: formData.get('billing-country'),
+                firstName: formData.get('billing-first-name'),
+                lastName: formData.get('billing-last-name'),
+                address: formData.get('billing-address'),
+                apartment: formData.get('billing-apartment'),
+                city: formData.get('billing-city'),
+                state: formData.get('billing-state'),
+                zipCode: formData.get('billing-zip-code'),
+                phone: formData.get('billing-phone')
+            };
+        }
 
         try {
             await db.collection('orders').add({
@@ -112,6 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 contact,
                 delivery,
                 payment,
+                billing,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
             alert(`Order placed successfully! Your order number is ${orderNumber}`);
