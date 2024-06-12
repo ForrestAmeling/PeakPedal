@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whyUsSection = document.getElementById('why-us');
     const cartCountElement = document.getElementById('cart-count');
 
-    // Function to fetch bikes data from Firestore
+
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await window.db.collection('Bikes').orderBy('BikeId').get(); // Add orderBy clause here
+            const querySnapshot = await window.db.collection('Bikes').orderBy('BikeId').get();
             querySnapshot.forEach((doc) => {
                 bikesData.push(doc.data());
             });
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return bikesData;
     }
 
-    // Function to create bike element
+
     function createBikeElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return bikeElement;
     }
 
-    // Function to update spotlight
+
     function updateSpotlight(bike) {
         let currentIndex = 0;
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
 
-        // Check if bike.description exists and is an array
+ 
         const descriptionList = bike.description && Array.isArray(bike.description) ? bike.description.map(line => `<li>${line}</li>`).join('') : '';
 
         spotlightSection.innerHTML = `
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             console.log("Item added to cart");
             alert("Item added to cart!");
-            updateCartCount(); // Update the cart count after adding an item
+            updateCartCount(); 
         } catch (error) {
             console.error("Error adding item to cart: ", error);
         }
@@ -131,18 +131,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         addToCart(bike);
     }
 
-    function handleBuyNow(bike) {
-        addToCart(bike);
-        window.location.href = 'checkout.html';
+    async function handleBuyNow(bike) {
+        await addToCart(bike); 
+        window.location.href = 'checkout.html'; 
     }
-
     async function updateCartCount() {
         try {
             const querySnapshot = await window.db.collection('Carts').get();
             let totalCount = 0;
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
-                totalCount += parseInt(cartItem.quantity) || 0; // Ensure quantity is parsed as an integer and handle NaN
+                totalCount += parseInt(cartItem.quantity) || 0;
             });
             cartCountElement.textContent = totalCount;
         } catch (error) {
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const bikesData = await fetchBikes();
-    console.log(bikesData); // Log bikesData to ensure it's populated
+    console.log(bikesData); 
 
     bikesData.forEach(bike => {
         const bikeElement = createBikeElement(bike);
@@ -171,5 +170,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         whyUsSection.scrollIntoView({ behavior: 'smooth' });
     });
 
-    updateCartCount(); // Initialize the cart count when the page loads
+    updateCartCount(); 
 });
