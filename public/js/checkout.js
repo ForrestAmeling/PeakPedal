@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div>
+                            <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        </div>
                         <div>
                             <p>${cartItem.BikeName}</p>
                             <p>Size: ${cartItem.size}</p>
