@@ -41,6 +41,11 @@ body {
     color: #fff;
 }
 
+main {
+    margin-top: 60px;
+    /* Adjust this value if needed to create enough space */
+}
+
 /* Carousel styles */
 .carousel {
     position: relative;
