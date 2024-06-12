@@ -29,16 +29,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                        <div>
-                            <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div class="order-summary-details">
+                            <div class="order-summary-labels">
+                                <p>Bike</p>
+                                <p>Size</p>
+                                <p>Quantity</p>
+                                <p>Price</p>
+                            </div>
+                            <div class="order-summary-values">
+                                <p>${cartItem.BikeName}</p>
+                                <p>${cartItem.size}</p>
+                                <p>${cartItem.quantity}</p>
+                                <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                            </div>
                         </div>
-                        <div>
-                            <p>${cartItem.BikeName}</p>
-                            <p>Size: ${cartItem.size}</p>
-                            <p>Quantity: ${cartItem.quantity}</p>
-                            <p>Price: $${cartItem.price.toFixed(2)}</p>
-                            <button class="remove-item" data-id="${doc.id}">Remove</button>
-                        </div>
+                        <button class="remove-item" data-id="${doc.id}">Remove</button>
                     `;
                     orderSummaryItems.appendChild(orderSummaryItem);
                 }

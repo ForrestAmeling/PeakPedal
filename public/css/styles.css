@@ -541,8 +541,6 @@ main {
 }
 
 
-
-
 /* Checkout container styles */
 .checkout-container {
     display: flex;
@@ -606,9 +604,9 @@ main {
 
 .order-summary-item {
     display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
 }
 
 .order-summary-item img {
@@ -617,9 +615,25 @@ main {
     margin-bottom: 10px;
 }
 
+.order-summary-details {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    row-gap: 5px;
+    width: 100%;
+}
+
+.order-summary-labels p,
+.order-summary-values p {
+    margin: 0;
+}
+
+.order-summary-values p strong {
+    font-weight: bold;
+}
+
 .order-summary-item div {
     text-align: center;
-    /* This centers the text */
 }
 
 .total {
@@ -637,5 +651,3 @@ main {
     cursor: pointer;
     font-size: 1.2rem;
 }
-
-
