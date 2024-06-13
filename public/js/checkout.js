@@ -14,6 +14,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const db = firebase.firestore();
 
+    // Generate or retrieve user ID
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = Math.random() * 16 | 0,
+                v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function getUserId() {
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = generateUUID();
+            localStorage.setItem('userId', userId);
+        }
+        return userId;
+    }
+
+    const userId = getUserId();
+
     // Load cart items and calculate the total
     async function loadCartItems() {
         const orderSummaryItems = document.getElementById('order-summary-items');
@@ -21,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let total = 0;
 
         try {
-            const querySnapshot = await db.collection('Carts').get();
+            const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
                 if (cartItem.price && cartItem.quantity) {
@@ -61,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Remove item from cart
     async function removeItemFromCart(itemId) {
         try {
-            await db.collection('Carts').doc(itemId).delete();
+            await db.collection('Carts').doc(userId).collection('Items').doc(itemId).delete();
             loadCartItems(); // Refresh the cart items
         } catch (error) {
             console.error("Error removing item from cart: ", error);
@@ -71,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update the cart count displayed in the header
     async function updateCartCount() {
         try {
-            const querySnapshot = await db.collection('Carts').get();
+            const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
             let totalCount = 0;
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
@@ -161,3 +181,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // Function to generate a random order number
+    function generateOrderNumber() {
+        const timestamp = Date.now();
+        const randomNum = Math.floor(Math.random() * 100000);
+        return `ORD-${timestamp}-${randomNum}`;
+    }
+
+    // Clear cart after order placement
+    async function clearCart() {
+        const itemsCollection = db.collection('Carts').doc(userId).collection('Items');
+        const querySnapshot = await itemsCollection.get();
+        querySnapshot.forEach(async (doc) => {
+            await doc.ref.delete();
+        });
+        updateCartCount(); // Update the cart count after clearing the cart
+    }
+
+});
