@@ -13,26 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const db = firebase.firestore();
-
-    // Generate or retrieve user ID
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0,
-                v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+    const userId = localStorage.getItem('userId') || generateUUID();
+    if (!localStorage.getItem('userId')) {
+        localStorage.setItem('userId', userId);
     }
-
-    function getUserId() {
-        let userId = localStorage.getItem('userId');
-        if (!userId) {
-            userId = generateUUID();
-            localStorage.setItem('userId', userId);
-        }
-        return userId;
-    }
-
-    const userId = getUserId();
 
     // Load cart items and calculate the total
     async function loadCartItems() {
@@ -197,5 +181,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         updateCartCount(); // Update the cart count after clearing the cart
     }
-
 });

@@ -113,27 +113,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
         });
 
-        // Define handleAddToCart function
-        function handleAddToCart() {
-            addToCart(bike);
-        }
-
-        // Define handleBuyNow function
-        async function handleBuyNow() {
-            await addToCart(bike);
-            window.location.href = 'checkout.html';
-        }
-
         document.querySelector('.buy-now').addEventListener('click', handleBuyNow);
         document.querySelector('.add-to-cart').addEventListener('click', handleAddToCart);
     }
 
-    // Handle bike click to update spotlight
-    function bikeClickHandler(event) {
-        const bikeId = event.currentTarget.getAttribute('data-id');
+    // Handle Add to Cart button click
+    async function handleAddToCart(event) {
+        const bikeId = event.currentTarget.closest('.bike').getAttribute('data-id');
         const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
-        updateSpotlight(selectedBike);
-        spotlightSection.scrollIntoView({ behavior: 'smooth' });
+        await addToCart(selectedBike);
+    }
+
+    // Handle Buy Now button click
+    async function handleBuyNow(event) {
+        const bikeId = event.currentTarget.closest('.bike').getAttribute('data-id');
+        const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
+        await addToCart(selectedBike);
+        window.location.href = 'checkout.html';
     }
 
     // Add bike to cart
