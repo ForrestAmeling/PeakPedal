@@ -113,8 +113,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
         });
 
-        document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
-        document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
+        // Define handleAddToCart function
+        function handleAddToCart() {
+            addToCart(bike);
+        }
+
+        // Define handleBuyNow function
+        async function handleBuyNow() {
+            await addToCart(bike);
+            window.location.href = 'checkout.html';
+        }
+
+        document.querySelector('.buy-now').addEventListener('click', handleBuyNow);
+        document.querySelector('.add-to-cart').addEventListener('click', handleAddToCart);
     }
 
     // Handle bike click to update spotlight
@@ -157,6 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             console.log("Item added to cart successfully");
+            alert("Item added to cart!");
             updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
@@ -228,17 +240,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error("Error updating cart count: ", error);
         }
-    }
-
-    // Define handleAddToCart function
-    function handleAddToCart(bike) {
-        addToCart(bike);
-    }
-
-    // Define handleBuyNow function
-    async function handleBuyNow(bike) {
-        await addToCart(bike);
-        window.location.href = 'checkout.html';
     }
 
     // Fetch and display bikes data
