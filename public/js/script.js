@@ -238,6 +238,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Handle bike click to update spotlight
+    function bikeClickHandler(event) {
+        const bikeId = event.currentTarget.getAttribute('data-id');
+        const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
+        updateSpotlight(selectedBike);
+        spotlightSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
     // Fetch and display bikes data
     const bikesData = await fetchBikes();
     console.log(bikesData);
