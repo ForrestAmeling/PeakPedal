@@ -17,7 +17,6 @@ function getUserId() {
 
 const userId = getUserId();
 
-
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -149,6 +148,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Clear cart after order placement
+    async function clearCart() {
+        const itemsCollection = db.collection('Carts').doc(userId).collection('Items');
+        const querySnapshot = await itemsCollection.get();
+        querySnapshot.forEach(async (doc) => {
+            await doc.ref.delete();
+        });
+        updateCartCount(); // Update the cart count after clearing the cart
+    }
+
     async function loadCartItems() {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = '';
@@ -205,7 +214,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error updating cart count: ", error);
         }
     }
-
 
     // Fetch and display bikes data
     const bikesData = await fetchBikes();
