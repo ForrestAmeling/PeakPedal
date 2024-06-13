@@ -152,19 +152,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 billing,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
-
-            // Clear the user's cart
-            const cartItems = await db.collection('Carts').doc(userId).collection('Items').get();
-            const batch = db.batch();
-            cartItems.forEach((doc) => {
-                batch.delete(doc.ref);
-            });
-            await batch.commit();
-
             alert(`Order placed successfully! Your order number is ${orderNumber}`);
+            await clearCart(); // Clear the cart after placing the order
             window.location.href = 'confirmation.html';
         } catch (error) {
             console.error("Error placing order: ", error);
             alert('Error placing order. Please try again.');
         }
     });
+

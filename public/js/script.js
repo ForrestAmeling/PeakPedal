@@ -131,15 +131,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         const size = document.getElementById('size-select').value;
 
         try {
-            await db.collection('Carts').doc(userId).collection('Items').add({
-                BikeId: bike.BikeId,
-                BikeName: bike.BikeName,
-                BikeManufacturer: bike.BikeManufacturer,
-                image: bike.images[0],
-                price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
-                quantity: quantity,
-                size: size
-            });
+            const cartRef = db.collection('Carts').doc(userId).collection('Items');
+            const existingItemQuery = await cartRef.where('BikeId', '==', bike.BikeId).where('size', '==', size).get();
+
+            if (!existingItemQuery.empty) {
+                existingItemQuery.forEach(async (doc) => {
+                    const existingItem = doc.data();
+                    const newQuantity = existingItem.quantity + quantity;
+                    await doc.ref.update({ quantity: newQuantity });
+                });
+            } else {
+                await cartRef.add({
+                    BikeId: bike.BikeId,
+                    BikeName: bike.BikeName,
+                    BikeManufacturer: bike.BikeManufacturer,
+                    image: bike.images[0],
+                    price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
+                    quantity: quantity,
+                    size: size
+                });
+            }
             console.log("Item added to cart");
             alert("Item added to cart!");
             updateCartCount();
