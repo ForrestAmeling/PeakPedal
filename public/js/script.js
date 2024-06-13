@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <h3>${bike.BikeName}</h3>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
+            <button class="buy-now">Buy Now</button>
+            <button class="add-to-cart">Add to Cart</button>
         `;
 
         bikeElement.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
