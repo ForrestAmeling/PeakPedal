@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+
     // Fetch and display bikes data
     const bikesData = await fetchBikes();
     console.log(bikesData);
