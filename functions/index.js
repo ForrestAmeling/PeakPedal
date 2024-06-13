@@ -1,5 +1,5 @@
 require('dotenv').config();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const strip = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const functions = require('firebase-functions');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); 
