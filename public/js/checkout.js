@@ -113,60 +113,86 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Handle form submission
-    document.getElementById('checkout-form').addEventListener('submit', async (event) => {
+    document.getElementById('checkout-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const orderNumber = generateOrderNumber();
-        const formData = new FormData(event.target);
-        const contact = formData.get('email');
-        const delivery = {
-            country: formData.get('country'),
-            firstName: formData.get('first-name'),
-            lastName: formData.get('last-name'),
-            address: formData.get('address'),
-            apartment: formData.get('apartment'),
-            city: formData.get('city'),
-            state: formData.get('state'),
-            zipCode: formData.get('zip-code'),
-            phone: formData.get('phone')
-        };
-        const payment = {
-            method: formData.get('payment-method'),
-            cardNumber: formData.get('card-number'),
-            expirationDate: formData.get('expiration-date'),
-            securityCode: formData.get('security-code'),
-            nameOnCard: formData.get('name-on-card')
-        };
+        const email = this.email.value;
+        const cardNumber = this['card-number'].value;
+        const expirationDate = this['expiration-date'].value;
+        const securityCode = this['security-code'].value;
+        const phone = this.phone.value;
 
-        const billing = billingSameAsShippingCheckbox.checked ? delivery : {
-            country: formData.get('billing-country'),
-            firstName: formData.get('billing-first-name'),
-            lastName: formData.get('billing-last-name'),
-            address: formData.get('billing-address'),
-            apartment: formData.get('billing-apartment'),
-            city: formData.get('billing-city'),
-            state: formData.get('billing-state'),
-            zipCode: formData.get('billing-zip-code'),
-            phone: formData.get('billing-phone')
-        };
-
-        try {
-            await db.collection('orders').add({
-                orderNumber,
-                contact,
-                delivery,
-                payment,
-                billing,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            alert(`Order placed successfully! Your order number is ${orderNumber}`);
-            await clearCart(); // Clear the cart after placing the order
-            window.location.href = 'confirmation.html';
-        } catch (error) {
-            console.error("Error placing order: ", error);
-            alert('Error placing order. Please try again.');
+        // Email validation
+        if (!validateEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
         }
+
+        // Credit card validation
+        if (!validateCardNumber(cardNumber)) {
+            alert("Please enter a valid card number.");
+            return;
+        }
+
+        if (!validateExpirationDate(expirationDate)) {
+            alert("Please enter a valid expiration date (MM / YY).");
+            return;
+        }
+
+        if (!validateSecurityCode(securityCode)) {
+            alert("Please enter a valid security code.");
+            return;
+        }
+
+        // Phone number validation
+        if (!validatePhoneNumber(phone)) {
+            alert("Please enter a valid phone number.");
+            return;
+        }
+
+        // Perform other validations if needed
+        // If all validations pass, proceed with form submission
+        this.submit();
     });
+
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function validateCardNumber(cardNumber) {
+        // Luhn algorithm for card number validation
+        let sum = 0;
+        let shouldDouble = false;
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+            let digit = parseInt(cardNumber[i]);
+            if (shouldDouble) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            sum += digit;
+            shouldDouble = !shouldDouble;
+        }
+        return sum % 10 === 0;
+    }
+
+    function validateExpirationDate(expirationDate) {
+        const [month, year] = expirationDate.split('/');
+        const expDate = new Date(`20${year}`, month);
+        const currentDate = new Date();
+        return expDate > currentDate;
+    }
+
+    function validateSecurityCode(securityCode) {
+        return /^\d{3,4}$/.test(securityCode);
+    }
+
+    function validatePhoneNumber(phone) {
+        return /^\d{10}$/.test(phone);
+    }
+
 
     // Function to generate a random order number
     function generateOrderNumber() {

@@ -116,7 +116,8 @@
                             </select>
                             <input type="text" name="zip-code" placeholder="ZIP code" required>
                         </div>
-                        <input type="tel" name="phone" placeholder="Phone">
+                        <input type="tel" name="phone" placeholder="Phone" required pattern="\d{10}"
+                            title="Please enter a valid phone number">
 
                         <h2>Payment</h2>
                         <div class="payment-methods">
@@ -130,9 +131,13 @@
                             </div>
                         </div>
                         <div class="credit-card-info">
-                            <input type="text" name="card-number" placeholder="Card number" required>
-                            <input type="text" name="expiration-date" placeholder="Expiration date (MM / YY)" required>
-                            <input type="text" name="security-code" placeholder="Security code" required>
+                            <input type="text" name="card-number" placeholder="Card number" required pattern="\d{16}"
+                                title="Please enter a valid card number">
+                            <input type="text" name="expiration-date" placeholder="Expiration date (MM / YY)" required
+                                pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
+                                title="Please enter a valid expiration date (MM / YY)">
+                            <input type="text" name="security-code" placeholder="Security code" required pattern="\d{3}"
+                                title="Please enter a valid security code">
                             <input type="text" name="name-on-card" placeholder="Name on card" required>
                         </div>
                         <div class="billing-address">
