@@ -4,6 +4,7 @@
   "description": "A website to buy Diamondback mountain bikes at a discount.",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "firebase": "^10.12.2"
   },
   "scripts": {
