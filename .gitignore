@@ -10,6 +10,7 @@ firebase-debug.*.log*
 # Firebase cache
 .firebase/
 .env
+strip.env
 
 # Firebase config
 
