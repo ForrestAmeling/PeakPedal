@@ -81,7 +81,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const cartItem = doc.data();
                 totalCount += parseInt(cartItem.quantity); // Ensure quantity is parsed as an integer
             });
-            document.getElementById('cart-count').textContent = totalCount;
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalCount;
+            }
         } catch (error) {
             console.error("Error updating cart count: ", error);
         }
