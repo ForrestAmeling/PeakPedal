@@ -131,6 +131,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const size = document.getElementById('size-select').value;
 
         try {
+            console.log('Adding to cart:', bike, 'Quantity:', quantity, 'Size:', size);
+            console.log('User ID:', userId);
+
             const cartRef = db.collection('Carts').doc(userId).collection('Items');
             const existingItemQuery = await cartRef.where('BikeId', '==', bike.BikeId).where('size', '==', size).get();
 
@@ -138,9 +141,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 existingItemQuery.forEach(async (doc) => {
                     const existingItem = doc.data();
                     const newQuantity = existingItem.quantity + quantity;
+                    console.log('Updating existing item:', doc.id, 'New Quantity:', newQuantity);
                     await doc.ref.update({ quantity: newQuantity });
                 });
             } else {
+                console.log('Adding new item to cart');
                 await cartRef.add({
                     BikeId: bike.BikeId,
                     BikeName: bike.BikeName,
@@ -151,8 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     size: size
                 });
             }
-            console.log("Item added to cart");
-            alert("Item added to cart!");
+            console.log("Item added to cart successfully");
             updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
@@ -226,6 +230,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Define handleAddToCart function
+    function handleAddToCart(bike) {
+        addToCart(bike);
+    }
+
+    // Define handleBuyNow function
+    async function handleBuyNow(bike) {
+        await addToCart(bike);
+        window.location.href = 'checkout.html';
+    }
 
     // Fetch and display bikes data
     const bikesData = await fetchBikes();
