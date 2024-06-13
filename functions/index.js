@@ -1,19 +1,22 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require('firebase-functions');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); 
+const cors = require('cors')({ origin: true });
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+exports.createPaymentIntent = functions.https.onRequest((req, res) => {
+    cors(req, res, async () => {
+        try {
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: req.body.amount,
+                currency: 'usd',
+            });
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+            res.status(200).send({
+                clientSecret: paymentIntent.client_secret,
+            });
+        } catch (error) {
+            res.status(500).send({
+                error: error.message,
+            });
+        }
+    });
+});
