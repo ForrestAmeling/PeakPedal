@@ -25,6 +25,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whyUsSection = document.getElementById('why-us');
     const cartCountElement = document.getElementById('cart-count');
 
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+        authDomain: "peakpedal-9af93.firebaseapp.com",
+        projectId: "peakpedal-9af93",
+        storageBucket: "peakpedal-9af93.appspot.com",
+        messagingSenderId: "344619285656",
+        appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+        measurementId: "G-0S424MKF14"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     // Firebase Authentication
     const auth = firebase.auth();
     auth.signInAnonymously().catch((error) => {
