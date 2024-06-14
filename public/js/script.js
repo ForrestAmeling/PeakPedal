@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const whyUsSection = document.getElementById('why-us');
     const cartCountElement = document.getElementById('cart-count');
 
+    // Firebase Authentication
+    const auth = firebase.auth();
+    auth.signInAnonymously().catch((error) => {
+        console.error('Error signing in anonymously:', error);
+    });
+
     // Fetch bikes data from Firestore
     async function fetchBikes() {
         const bikesData = [];
