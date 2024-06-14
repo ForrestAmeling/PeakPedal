@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/styles.css"> <!-- Add your custom styles -->
     <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -23,6 +25,7 @@
             measurementId: "G-0S424MKF14"
         };
         firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
     </script>
     <script src="js/checkout.js" defer></script> <!-- Separate script for checkout -->
 </head>
@@ -119,27 +122,6 @@
                         <input type="tel" name="phone" placeholder="Phone" required pattern="\d{10}"
                             title="Please enter a valid phone number">
 
-                        <h2>Payment</h2>
-                        <div class="payment-methods">
-                            <div>
-                                <input type="radio" name="payment-method" value="credit-card" id="credit-card" checked>
-                                <label for="credit-card">Credit card</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="payment-method" value="paypal" id="paypal">
-                                <label for="paypal">PayPal</label>
-                            </div>
-                        </div>
-                        <div class="credit-card-info">
-                            <input type="text" name="card-number" placeholder="Card number" required pattern="\d{16}"
-                                title="Please enter a valid card number">
-                            <input type="text" name="expiration-date" placeholder="Expiration date (MM / YY)" required
-                                pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
-                                title="Please enter a valid expiration date (MM / YY)">
-                            <input type="text" name="security-code" placeholder="Security code" required pattern="\d{3}"
-                                title="Please enter a valid security code">
-                            <input type="text" name="name-on-card" placeholder="Name on card" required>
-                        </div>
                         <div class="billing-address">
                             <input type="checkbox" id="billing-same-as-shipping" checked>
                             <label for="billing-same-as-shipping">Use shipping address as billing address</label>

@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.setItem('userId', userId);
     }
 
-    // Load cart items and calculate the total
-    async function loadCartItems() {
+    const loadCartItems = async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
         let total = 0;
@@ -60,20 +59,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error("Error loading cart items: ", error);
         }
-    }
+    };
 
-    // Remove item from cart
-    async function removeItemFromCart(itemId) {
+    const removeItemFromCart = async (itemId) => {
         try {
             await db.collection('Carts').doc(userId).collection('Items').doc(itemId).delete();
             loadCartItems(); // Refresh the cart items
         } catch (error) {
             console.error("Error removing item from cart: ", error);
         }
-    }
+    };
 
-    // Update the cart count displayed in the header
-    async function updateCartCount() {
+    const updateCartCount = async () => {
         try {
             const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
             let totalCount = 0;
@@ -88,11 +85,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error("Error updating cart count: ", error);
         }
-    }
+    };
+
+    const createCheckoutSession = async () => {
+        const functions = firebase.functions();
+        const createCheckoutSession = functions.httpsCallable('ext-firestore-stripe-payments-createCheckoutSession');
+
+        const { data } = await createCheckoutSession({
+            price: 'your-price-id', // Replace with your actual price ID
+            success_url: window.location.origin,
+            cancel_url: window.location.origin,
+        });
+
+        window.location.href = data.url;
+    };
+
+    document.querySelector('.pay-now-button').addEventListener('click', (event) => {
+        event.preventDefault();
+        createCheckoutSession();
+    });
 
     loadCartItems();
 
-    // Event listener for removing items from cart
     document.querySelector('.order-summary-items').addEventListener('click', (event) => {
         if (event.target.classList.contains('remove-item')) {
             const itemId = event.target.getAttribute('data-id');
@@ -100,7 +114,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Toggle billing address fields based on checkbox
     const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
     const billingAddressFields = document.getElementById('billing-address-fields');
 
@@ -111,103 +124,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             billingAddressFields.style.display = 'block';
         }
     });
-
-    // Handle form submission
-    document.getElementById('checkout-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const email = this.email.value;
-        const cardNumber = this['card-number'].value;
-        const expirationDate = this['expiration-date'].value;
-        const securityCode = this['security-code'].value;
-        const phone = this.phone.value;
-
-        // Email validation
-        if (!validateEmail(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
-
-        // Credit card validation
-        if (!validateCardNumber(cardNumber)) {
-            alert("Please enter a valid card number.");
-            return;
-        }
-
-        if (!validateExpirationDate(expirationDate)) {
-            alert("Please enter a valid expiration date (MM / YY).");
-            return;
-        }
-
-        if (!validateSecurityCode(securityCode)) {
-            alert("Please enter a valid security code.");
-            return;
-        }
-
-        // Phone number validation
-        if (!validatePhoneNumber(phone)) {
-            alert("Please enter a valid phone number.");
-            return;
-        }
-
-        // Perform other validations if needed
-        // If all validations pass, proceed with form submission
-        this.submit();
-    });
-
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
-    }
-
-    function validateCardNumber(cardNumber) {
-        // Luhn algorithm for card number validation
-        let sum = 0;
-        let shouldDouble = false;
-        for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber[i]);
-            if (shouldDouble) {
-                digit *= 2;
-                if (digit > 9) {
-                    digit -= 9;
-                }
-            }
-            sum += digit;
-            shouldDouble = !shouldDouble;
-        }
-        return sum % 10 === 0;
-    }
-
-    function validateExpirationDate(expirationDate) {
-        const [month, year] = expirationDate.split('/');
-        const expDate = new Date(`20${year}`, month);
-        const currentDate = new Date();
-        return expDate > currentDate;
-    }
-
-    function validateSecurityCode(securityCode) {
-        return /^\d{3,4}$/.test(securityCode);
-    }
-
-    function validatePhoneNumber(phone) {
-        return /^\d{10}$/.test(phone);
-    }
-
-
-    // Function to generate a random order number
-    function generateOrderNumber() {
-        const timestamp = Date.now();
-        const randomNum = Math.floor(Math.random() * 100000);
-        return `ORD-${timestamp}-${randomNum}`;
-    }
-
-    // Clear cart after order placement
-    async function clearCart() {
-        const itemsCollection = db.collection('Carts').doc(userId).collection('Items');
-        const querySnapshot = await itemsCollection.get();
-        querySnapshot.forEach(async (doc) => {
-            await doc.ref.delete();
-        });
-        updateCartCount(); // Update the cart count after clearing the cart
-    }
 });
