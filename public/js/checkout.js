@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const db = firebase.firestore();
+    const functions = firebase.functions();
     const userId = localStorage.getItem('userId') || generateUUID();
     if (!localStorage.getItem('userId')) {
         localStorage.setItem('userId', userId);
@@ -88,7 +89,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async () => {
-        const functions = firebase.functions();
         const createCheckoutSession = functions.httpsCallable('ext-firestore-stripe-payments-createCheckoutSession');
 
         const { data } = await createCheckoutSession({
