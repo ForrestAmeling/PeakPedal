@@ -281,3 +281,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     updateCartCount();
 });
+
