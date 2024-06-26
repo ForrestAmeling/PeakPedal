@@ -47,19 +47,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         bikeElement.setAttribute('data-id', bike.ProductId);
 
         const imgElement = document.createElement('img');
-        imgElement.src = bike.images[0];
+        if (bike.images && Array.isArray(bike.images) && bike.images.length > 0) {
+            imgElement.src = bike.images[0];
+        } else {
+            imgElement.src = 'default-image.jpg'; // Fallback image if no images are available
+        }
         imgElement.alt = bike.BikeName;
         imgElement.width = 300;
         imgElement.height = 200;
 
         // Generate size options dynamically
         const sizeSelect = document.createElement('select');
-        bike.sizes.forEach(size => {
-            const option = document.createElement('option');
-            option.value = size;
-            option.textContent = size;
-            sizeSelect.appendChild(option);
-        });
+        if (bike.sizes && Array.isArray(bike.sizes)) {
+            bike.sizes.forEach(size => {
+                const option = document.createElement('option');
+                option.value = size;
+                option.textContent = size;
+                sizeSelect.appendChild(option);
+            });
+        }
 
         bikeElement.appendChild(imgElement);
         bikeElement.innerHTML += `
