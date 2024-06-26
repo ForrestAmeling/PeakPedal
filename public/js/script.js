@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return bikesData;
     }
 
-    // Create a bike element for display
-    function createBikeElement(bike) {
+    // Create a bike element for display in the grid
+    function createBikeGridElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
-        bikeElement.setAttribute('data-id', bike.ProductId);
+        bikeElement.setAttribute('data-id', bike.BikeId);
 
         const imgElement = document.createElement('img');
         if (bike.images && Array.isArray(bike.images) && bike.images.length > 0) {
@@ -56,32 +56,78 @@ document.addEventListener('DOMContentLoaded', async () => {
         imgElement.width = 300;
         imgElement.height = 200;
 
-        // Generate size options dynamically
-        const sizeSelect = document.createElement('select');
-        if (bike.sizes && Array.isArray(bike.sizes)) {
-            bike.sizes.forEach(size => {
-                const option = document.createElement('option');
-                option.value = size;
-                option.textContent = size;
-                sizeSelect.appendChild(option);
-            });
-        }
-
         bikeElement.appendChild(imgElement);
         bikeElement.innerHTML += `
             <h3>${bike.BikeName}</h3>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
-            <label for="size-select-${bike.ProductId}">Size:</label>
-            <select id="size-select-${bike.ProductId}">${sizeSelect.innerHTML}</select>
+            <button class="view-details">View Details</button>
+        `;
+
+        bikeElement.querySelector('.view-details').addEventListener('click', () => handleViewDetails(bike));
+
+        return bikeElement;
+    }
+
+    // Update the spotlight section with bike details
+    function updateSpotlight(bike) {
+        let currentIndex = 0;
+
+        const spotlightMainImage = `
+            <div class="spotlight-main-image">
+                <img src="${bike.images[currentIndex]}" alt="${bike.BikeName}">
+            </div>
+        `;
+
+        const spotlightControls = `
+            <div class="spotlight-controls">
+                <button id="prev-button" class="arrow-button">&larr;</button>
+                <button id="next-button" class="arrow-button">&rarr;</button>
+            </div>
+        `;
+
+        const descriptionList = bike.description && Array.isArray(bike.description)
+            ? bike.description.map(line => `<li>${line}</li>`).join('')
+            : '';
+
+        const sizeOptions = bike.sizes.map(size => `<option value="${size}">${size}</option>`).join('');
+
+        spotlightSection.innerHTML = `
+            <h2>${bike.BikeName}</h2>
+            ${spotlightMainImage}
+            ${spotlightControls}
+            <ul>${descriptionList}</ul>
+            <p><del>MSRP: ${bike.MSRP}</del></p>
+            <p><strong>Our Price: ${bike.OurPrice}</strong></p>
+            <label for="size-select">Size:</label>
+            <select id="size-select">
+                ${sizeOptions}
+            </select>
+            <label for="quantity-input">Quantity:</label>
+            <input type="number" id="quantity-input" name="quantity" min="1" value="1">
+            <br>
             <button class="buy-now">Buy Now</button>
             <button class="add-to-cart">Add to Cart</button>
         `;
 
-        bikeElement.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
-        bikeElement.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
+        document.getElementById('next-button').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % bike.images.length;
+            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
+        });
 
-        return bikeElement;
+        document.getElementById('prev-button').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + bike.images.length) % bike.images.length;
+            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
+        });
+
+        document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
+        document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
+    }
+
+    // Handle View Details button click
+    function handleViewDetails(bike) {
+        updateSpotlight(bike);
+        spotlightSection.scrollIntoView({ behavior: 'smooth' });
     }
 
     // Handle Add to Cart button click
@@ -97,8 +143,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Add bike to cart
     async function addToCart(bike) {
-        const quantity = parseInt(document.querySelector(`#size-select-${bike.ProductId}`).value);
-        const size = document.querySelector(`#size-select-${bike.ProductId}`).value;
+        const quantity = parseInt(document.getElementById('quantity-input').value);
+        const size = document.getElementById('size-select').value;
 
         try {
             console.log('Adding to cart:', bike, 'Quantity:', quantity, 'Size:', size);
@@ -201,21 +247,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Handle bike click to update spotlight
-    function bikeClickHandler(event) {
-        const bikeId = event.currentTarget.getAttribute('data-id');
-        const selectedBike = bikesData.find(bike => bike.BikeId == bikeId);
-        updateSpotlight(selectedBike);
-        spotlightSection.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Fetch and display bikes data
+    // Fetch and display distinct bikes data
     const bikesData = await fetchBikes();
     console.log(bikesData);
 
+    // Create a map to store unique bikes by BikeId
+    const uniqueBikesMap = new Map();
     bikesData.forEach(bike => {
-        const bikeElement = createBikeElement(bike);
-        bikeElement.addEventListener('click', bikeClickHandler);
+        if (!uniqueBikesMap.has(bike.BikeId)) {
+            uniqueBikesMap.set(bike.BikeId, bike);
+        }
+    });
+
+    // Display only unique bikes in the grid
+    uniqueBikesMap.forEach(bike => {
+        const bikeElement = createBikeGridElement(bike);
+        bikeElement.addEventListener('click', () => handleViewDetails(bike));
         bikesSection.appendChild(bikeElement);
     });
 
