@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function fetchBikes() {
         const bikesData = [];
         try {
-            const querySnapshot = await window.db.collection('Bikes').orderBy('BikeId').get();
+            const querySnapshot = await db.collection('Bikes').orderBy('BikeId').get();
             querySnapshot.forEach((doc) => {
                 bikesData.push(doc.data());
             });
@@ -90,7 +90,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? bike.description.map(line => `<li>${line}</li>`).join('')
             : '';
 
-        const sizeOptions = bike.sizes.map(size => `<option value="${size}">${size}</option>`).join('');
+        // Ensure the sizes array is available
+        const sizeOptions = (bike.sizes && Array.isArray(bike.sizes))
+            ? bike.sizes.map(size => `<option value="${size}">${size}</option>`).join('')
+            : '';
 
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
@@ -281,4 +284,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     updateCartCount();
 });
-
