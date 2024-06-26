@@ -1,22 +1,3 @@
-function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-function getUserId() {
-    let userId = localStorage.getItem('userId');
-    if (!userId) {
-        userId = generateUUID();
-        localStorage.setItem('userId', userId);
-    }
-    return userId;
-}
-
-const userId = getUserId();
-
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -63,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function createBikeElement(bike) {
         const bikeElement = document.createElement('div');
         bikeElement.classList.add('bike');
-        bikeElement.setAttribute('data-id', bike.BikeId);
+        bikeElement.setAttribute('data-id', bike.ProductId);
 
         const imgElement = document.createElement('img');
         imgElement.src = bike.images[0];
@@ -71,11 +52,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         imgElement.width = 300;
         imgElement.height = 200;
 
+        // Generate size options dynamically
+        const sizeSelect = document.createElement('select');
+        bike.sizes.forEach(size => {
+            const option = document.createElement('option');
+            option.value = size;
+            option.textContent = size;
+            sizeSelect.appendChild(option);
+        });
+
         bikeElement.appendChild(imgElement);
         bikeElement.innerHTML += `
             <h3>${bike.BikeName}</h3>
             <p><del>MSRP: ${bike.MSRP}</del></p>
             <p><strong>Our Price: ${bike.OurPrice}</strong></p>
+            <label for="size-select-${bike.ProductId}">Size:</label>
+            <select id="size-select-${bike.ProductId}">${sizeSelect.innerHTML}</select>
             <button class="buy-now">Buy Now</button>
             <button class="add-to-cart">Add to Cart</button>
         `;
@@ -84,62 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         bikeElement.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
 
         return bikeElement;
-    }
-
-    // Update the spotlight section with bike details
-    function updateSpotlight(bike) {
-        let currentIndex = 0;
-
-        const spotlightMainImage = `
-            <div class="spotlight-main-image">
-                <img src="${bike.images[currentIndex]}" alt="${bike.BikeName}">
-            </div>
-        `;
-
-        const spotlightControls = `
-            <div class="spotlight-controls">
-                <button id="prev-button" class="arrow-button">&larr;</button>
-                <button id="next-button" class="arrow-button">&rarr;</button>
-            </div>
-        `;
-
-        const descriptionList = bike.description && Array.isArray(bike.description)
-            ? bike.description.map(line => `<li>${line}</li>`).join('')
-            : '';
-
-        spotlightSection.innerHTML = `
-            <h2>${bike.BikeName}</h2>
-            ${spotlightMainImage}
-            ${spotlightControls}
-            <ul>${descriptionList}</ul>
-            <p><del>MSRP: ${bike.MSRP}</del></p>
-            <p><strong>Our Price: ${bike.OurPrice}</strong></p>
-            <label for="size-select">Size:</label>
-            <select id="size-select">
-                <option value="SM/15.5">SM/15.5 5'4"-5'7"</option>
-                <option value="MD/17">MD/17 5'7"-5'10"</option>
-                <option value="LG/19">LG/19 5'10"-6'2"</option>
-                <option value="XL/21">XL/21 6'2"-6'6"</option>
-            </select>
-            <label for="quantity-input">Quantity:</label>
-            <input type="number" id="quantity-input" name="quantity" min="1" value="1">
-            <br>
-            <button class="buy-now">Buy Now</button>
-            <button class="add-to-cart">Add to Cart</button>
-        `;
-
-        document.getElementById('next-button').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % bike.images.length;
-            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
-        });
-
-        document.getElementById('prev-button').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + bike.images.length) % bike.images.length;
-            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
-        });
-
-        document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
-        document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
     }
 
     // Handle Add to Cart button click
@@ -155,8 +91,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Add bike to cart
     async function addToCart(bike) {
-        const quantity = parseInt(document.getElementById('quantity-input').value);
-        const size = document.getElementById('size-select').value;
+        const quantity = parseInt(document.querySelector(`#size-select-${bike.ProductId}`).value);
+        const size = document.querySelector(`#size-select-${bike.ProductId}`).value;
 
         try {
             console.log('Adding to cart:', bike, 'Quantity:', quantity, 'Size:', size);

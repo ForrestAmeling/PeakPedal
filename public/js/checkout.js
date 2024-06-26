@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // Ensure Firebase is initialized properly
     if (!firebase.apps.length) {
         firebase.initializeApp({
             apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const db = firebase.firestore();
-    const functions = firebase.functions();
     const userId = localStorage.getItem('userId') || generateUUID();
     if (!localStorage.getItem('userId')) {
         localStorage.setItem('userId', userId);
@@ -89,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async () => {
+        const functions = firebase.functions();
         const createCheckoutSession = functions.httpsCallable('ext-firestore-stripe-payments-createCheckoutSession');
 
         const { data } = await createCheckoutSession({
