@@ -72,10 +72,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update the spotlight section with bike details
     function updateSpotlight(bike) {
         let currentIndex = 0;
+        const bikeImages = bike.images && Array.isArray(bike.images) && bike.images.length > 0 ? bike.images : ['default-image.jpg'];
 
         const spotlightMainImage = `
             <div class="spotlight-main-image">
-                <img src="${bike.images[currentIndex]}" alt="${bike.BikeName}">
+                <img src="${bikeImages[currentIndex]}" alt="${bike.BikeName}">
             </div>
         `;
 
@@ -114,13 +115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         document.getElementById('next-button').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % bike.images.length;
-            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
+            currentIndex = (currentIndex + 1) % bikeImages.length;
+            document.querySelector('.spotlight-main-image img').src = bikeImages[currentIndex];
         });
 
         document.getElementById('prev-button').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + bike.images.length) % bike.images.length;
-            document.querySelector('.spotlight-main-image img').src = bike.images[currentIndex];
+            currentIndex = (currentIndex - 1 + bikeImages.length) % bikeImages.length;
+            document.querySelector('.spotlight-main-image img').src = bikeImages[currentIndex];
         });
 
         document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
