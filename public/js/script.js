@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
-        document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
+        document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike, bikeImages));
     }
 
     // Handle View Details button click
@@ -164,18 +164,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Handle Add to Cart button click
-    async function handleAddToCart(bike) {
-        await addToCart(bike);
+    async function handleAddToCart(bike, bikeImages) {
+        await addToCart(bike, bikeImages);
     }
 
     // Handle Buy Now button click
     async function handleBuyNow(bike) {
-        await addToCart(bike);
+        const bikeImages = bike.Images && Array.isArray(bike.Images) && bike.Images.length > 0 ? bike.Images : ['default-image.jpg'];
+        await addToCart(bike, bikeImages);
         window.location.href = 'checkout.html';
     }
 
     // Add bike to cart
-    async function addToCart(bike) {
+    async function addToCart(bike, bikeImages) {
         const quantity = parseInt(document.getElementById('quantity-input').value);
         const size = document.getElementById('size-select').value;
 
