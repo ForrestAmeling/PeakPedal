@@ -1,9 +1,15 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const stripe = require('stripe')(functions.config().stripe.secret);
 const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
+
+// Select the Stripe secret key based on the environment
+const stripeSecret = process.env.NODE_ENV === 'production'
+    ? functions.config().stripe.live_secret
+    : functions.config().stripe.test_secret;
+
+const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
