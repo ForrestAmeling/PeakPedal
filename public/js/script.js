@@ -45,18 +45,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error signing in anonymously:', error);
     });
 
-    // Fetch bikes data from Firestore
+    // Fetch bikes data from Firestore and group by BikeId
     async function fetchBikes() {
-        const bikesData = [];
+        const bikesData = {};
         try {
             const querySnapshot = await db.collection('Bikes').orderBy('BikeId').get();
             querySnapshot.forEach((doc) => {
-                bikesData.push(doc.data());
+                const bike = doc.data();
+                if (!bikesData[bike.BikeId]) {
+                    bikesData[bike.BikeId] = {
+                        BikeId: bike.BikeId,
+                        BikeManufacturer: bike.BikeManufacturer,
+                        BikeName: bike.BikeName,
+                        MSRP: bike.MSRP,
+                        OurPrice: bike.OurPrice,
+                        Description: bike.Description,
+                        Images: bike.Images,
+                        Sizes: [],
+                    };
+                }
+                bikesData[bike.BikeId].Sizes.push(bike.BikeSize);
             });
         } catch (error) {
             console.error("Error fetching bikes data: ", error);
         }
-        return bikesData;
+        return Object.values(bikesData);
     }
 
     // Create a bike element for display in the grid
@@ -66,8 +79,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         bikeElement.setAttribute('data-id', bike.BikeId);
 
         const imgElement = document.createElement('img');
-        if (bike.images && Array.isArray(bike.images) && bike.images.length > 0) {
-            imgElement.src = bike.images[0];
+        if (bike.Images && Array.isArray(bike.Images) && bike.Images.length > 0) {
+            imgElement.src = bike.Images[0];
         } else {
             imgElement.src = 'default-image.jpg'; // Fallback image if no images are available
         }
@@ -91,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update the spotlight section with bike details
     function updateSpotlight(bike) {
         let currentIndex = 0;
-        const bikeImages = bike.images && Array.isArray(bike.images) && bike.images.length > 0 ? bike.images : ['default-image.jpg'];
+        const bikeImages = bike.Images && Array.isArray(bike.Images) && bike.Images.length > 0 ? bike.Images : ['default-image.jpg'];
 
         const spotlightMainImage = `
             <div class="spotlight-main-image">
@@ -106,13 +119,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
 
-        const descriptionList = bike.description && Array.isArray(bike.description)
-            ? bike.description.map(line => `<li>${line}</li>`).join('')
+        const descriptionList = bike.Description && Array.isArray(bike.Description)
+            ? bike.Description.map(line => `<li>${line}</li>`).join('')
             : '';
 
-        const sizeOptions = (bike.sizes && Array.isArray(bike.sizes))
-            ? bike.sizes.map(size => `<option value="${size}">${size}</option>`).join('')
-            : '';
+        const sizeOptions = bike.Sizes.map(size => `<option value="${size}">${size}</option>`).join('');
 
         spotlightSection.innerHTML = `
             <h2>${bike.BikeName}</h2>
@@ -273,16 +284,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bikesData = await fetchBikes();
     console.log(bikesData);
 
-    // Create a map to store unique bikes by BikeId
-    const uniqueBikesMap = new Map();
-    bikesData.forEach(bike => {
-        if (!uniqueBikesMap.has(bike.BikeId)) {
-            uniqueBikesMap.set(bike.BikeId, bike);
-        }
-    });
-
     // Display only unique bikes in the grid
-    uniqueBikesMap.forEach(bike => {
+    bikesData.forEach(bike => {
         const bikeElement = createBikeGridElement(bike);
         bikeElement.addEventListener('click', () => handleViewDetails(bike));
         bikesSection.appendChild(bikeElement);
