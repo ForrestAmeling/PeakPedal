@@ -24,7 +24,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 }],
                 mode: 'payment',
                 success_url: success_url,
-                cancel_url: cancel_url,
+                cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
             res.json({ url: session.url });
