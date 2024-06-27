@@ -20,45 +20,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loadCartItems = async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
-        let total = 0;
+        let subtotal = 0;
 
         try {
             const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
             querySnapshot.forEach((doc) => {
                 const cartItem = doc.data();
                 if (cartItem.price && cartItem.quantity) {
-                    total += cartItem.price * cartItem.quantity;
+                    subtotal += cartItem.price * cartItem.quantity;
 
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                        <div class="order-summary-details">
-                            <div class="order-summary-labels">
-                                <p>Bike</p>
-                                <p>Size</p>
-                                <p>Quantity</p>
-                                <p>Price</p>
-                            </div>
-                            <div class="order-summary-values">
-                                <p>${cartItem.BikeName}</p>
-                                <p>${cartItem.size}</p>
-                                <p>${cartItem.quantity}</p>
-                                <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
-                            </div>
+                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                    <div class="order-summary-details">
+                        <div class="order-summary-labels">
+                            <p>Bike</p>
+                            <p>Size</p>
+                            <p>Quantity</p>
+                            <p>Price</p>
                         </div>
-                        <button class="remove-item" data-id="${doc.id}">Remove</button>
-                    `;
+                        <div class="order-summary-values">
+                            <p>${cartItem.BikeName}</p>
+                            <p>${cartItem.size}</p>
+                            <p>${cartItem.quantity}</p>
+                            <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                    <button class="remove-item" data-id="${doc.id}">Remove</button>
+                `;
                     orderSummaryItems.appendChild(orderSummaryItem);
                 }
             });
 
+            const shippingState = document.querySelector('select[name="state"]').value;
+            const taxRate = salesTaxRates[shippingState] || 0;
+            const tax = (subtotal * taxRate) / 100;
+            const total = subtotal + tax;
+            document.querySelector('select[name="state"]').addEventListener('change', loadCartItems);
+            document.getElementById('order-subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('order-tax').textContent = tax.toFixed(2);
             document.getElementById('order-total').textContent = total.toFixed(2);
             updateCartCount(); // Update the cart count when loading items
         } catch (error) {
             console.error("Error loading cart items: ", error);
         }
     };
+
 
     const removeItemFromCart = async (itemId) => {
         try {
@@ -87,17 +95,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async () => {
+        const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
         const functions = firebase.functions();
         const createCheckoutSession = functions.httpsCallable('ext-firestore-stripe-payments-createCheckoutSession');
 
         const { data } = await createCheckoutSession({
-            price: 'your-price-id', // Replace with your actual price ID
+            amount: totalAmount,
+            currency: 'usd',
             success_url: window.location.origin,
             cancel_url: window.location.origin,
         });
 
         window.location.href = data.url;
     };
+
 
     document.querySelector('.pay-now-button').addEventListener('click', (event) => {
         event.preventDefault();
@@ -123,4 +134,58 @@ document.addEventListener('DOMContentLoaded', async () => {
             billingAddressFields.style.display = 'block';
         }
     });
+    const salesTaxRates = {
+        AL: 9.25,
+        AK: 1.76,
+        AZ: 8.37,
+        AR: 9.46,
+        CA: 8.82,
+        CO: 7.78,
+        CT: 6.35,
+        DE: 0,
+        FL: 7.02,
+        GA: 7.4,
+        HI: 4.44,
+        ID: 6.02,
+        IL: 8.82,
+        IN: 7,
+        IA: 6.94,
+        KS: 8.66,
+        KY: 6,
+        LA: 9.55,
+        ME: 5.5,
+        MD: 6,
+        MA: 6.25,
+        MI: 6,
+        MN: 7.48,
+        MS: 7.07,
+        MO: 8.33,
+        MT: 0,
+        NE: 6.95,
+        NV: 8.23,
+        NH: 0,
+        NJ: 6.59,
+        NM: 7.72,
+        NY: 8.52,
+        NC: 6.99,
+        ND: 6.97,
+        OH: 7.24,
+        OK: 8.98,
+        OR: 0,
+        PA: 6.34,
+        RI: 7,
+        SC: 7.43,
+        SD: 6.4,
+        TN: 9.55,
+        TX: 8.2,
+        UT: 7.19,
+        VT: 6.3,
+        VA: 5.75,
+        WA: 8.86,
+        WV: 6.55,
+        WI: 5.43,
+        WY: 5.36,
+        DC: 6
+    };
+
 });
