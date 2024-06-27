@@ -4,6 +4,9 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
+// Log the current environment
+console.log(`Running in ${process.env.NODE_ENV} mode`);
+
 // Select the Stripe secret key based on the environment
 const stripeSecret = process.env.NODE_ENV === 'production'
     ? functions.config().stripe.live_secret
