@@ -8,9 +8,9 @@ admin.initializeApp();
 console.log(`Running in ${process.env.NODE_ENV} mode`);
 
 // Select the Stripe secret key based on the environment
-const stripeSecret = process.env.NODE_ENV === 'production'
-    ? functions.config().stripe.secret // Changed to 'secret' to match your config
-    : functions.config().stripe.test_secret;
+const stripeSecret = process.env.NODE_ENV === 'development'
+    ? functions.config().stripe.test_secret
+    : functions.config().stripe.secret;
 
 const stripe = require('stripe')(stripeSecret);
 
