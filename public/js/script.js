@@ -207,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             console.log("Item added to cart successfully");
-            alert("Item added to cart!");
             updateCartCount();
         } catch (error) {
             console.error("Error adding item to cart: ", error);
