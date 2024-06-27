@@ -1,3 +1,22 @@
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function getUserId() {
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+        userId = generateUUID();
+        localStorage.setItem('userId', userId);
+    }
+    return userId;
+}
+
+const userId = getUserId();
+
 document.addEventListener('DOMContentLoaded', async () => {
     const shopButton = document.getElementById('shop-button');
     const learnButton = document.getElementById('learn-button');
@@ -75,17 +94,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const bikeImages = bike.images && Array.isArray(bike.images) && bike.images.length > 0 ? bike.images : ['default-image.jpg'];
 
         const spotlightMainImage = `
-        <div class="spotlight-main-image">
-            <img src="${bikeImages[currentIndex]}" alt="${bike.BikeName}">
-        </div>
-    `;
+            <div class="spotlight-main-image">
+                <img src="${bikeImages[currentIndex]}" alt="${bike.BikeName}">
+            </div>
+        `;
 
         const spotlightControls = `
-        <div class="spotlight-controls">
-            <button id="prev-button" class="arrow-button">&larr;</button>
-            <button id="next-button" class="arrow-button">&rarr;</button>
-        </div>
-    `;
+            <div class="spotlight-controls">
+                <button id="prev-button" class="arrow-button">&larr;</button>
+                <button id="next-button" class="arrow-button">&rarr;</button>
+            </div>
+        `;
 
         const descriptionList = bike.description && Array.isArray(bike.description)
             ? bike.description.map(line => `<li>${line}</li>`).join('')
@@ -96,22 +115,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             : '';
 
         spotlightSection.innerHTML = `
-        <h2>${bike.BikeName}</h2>
-        ${spotlightMainImage}
-        ${spotlightControls}
-        <ul>${descriptionList}</ul>
-        <p><del>MSRP: ${bike.MSRP}</del></p>
-        <p><strong>Our Price: ${bike.OurPrice}</strong></p>
-        <label for="size-select">Size:</label>
-        <select id="size-select">
-            ${sizeOptions}
-        </select>
-        <label for="quantity-input">Quantity:</label>
-        <input type="number" id="quantity-input" name="quantity" min="1" value="1">
-        <br>
-        <button class="buy-now">Buy Now</button>
-        <button class="add-to-cart">Add to Cart</button>
-    `;
+            <h2>${bike.BikeName}</h2>
+            ${spotlightMainImage}
+            ${spotlightControls}
+            <ul>${descriptionList}</ul>
+            <p><del>MSRP: ${bike.MSRP}</del></p>
+            <p><strong>Our Price: ${bike.OurPrice}</strong></p>
+            <label for="size-select">Size:</label>
+            <select id="size-select">
+                ${sizeOptions}
+            </select>
+            <label for="quantity-input">Quantity:</label>
+            <input type="number" id="quantity-input" name="quantity" min="1" value="1">
+            <br>
+            <button class="buy-now">Buy Now</button>
+            <button class="add-to-cart">Add to Cart</button>
+        `;
 
         document.getElementById('next-button').addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % bikeImages.length;
@@ -126,7 +145,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelector('.buy-now').addEventListener('click', () => handleBuyNow(bike));
         document.querySelector('.add-to-cart').addEventListener('click', () => handleAddToCart(bike));
     }
-
 
     // Handle View Details button click
     function handleViewDetails(bike) {
@@ -170,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     BikeId: bike.BikeId,
                     BikeName: bike.BikeName,
                     BikeManufacturer: bike.BikeManufacturer,
-                    image: bike.images[0],
+                    image: bikeImages[0],
                     price: parseFloat(bike.OurPrice.replace('$', '').replace(',', '')),
                     quantity: quantity,
                     size: size
