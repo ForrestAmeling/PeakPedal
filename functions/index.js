@@ -4,6 +4,11 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
+// Force set NODE_ENV to development for testing purposes
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+}
+
 // Log the current environment
 console.log(`Running in ${process.env.NODE_ENV} mode`);
 
