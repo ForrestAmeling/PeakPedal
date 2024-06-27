@@ -18,6 +18,8 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         const { amount, success_url, cancel_url } = req.body;
 
+        console.log("Request body:", req.body);
+
         try {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -36,6 +38,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
+            console.log("Stripe session created:", session);
             res.json({ url: session.url });
         } catch (error) {
             console.error('Error creating Stripe Checkout session', error);

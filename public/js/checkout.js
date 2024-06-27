@@ -123,14 +123,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             const data = await response.json();
+            console.log("Response from server:", data);
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                console.error('Error in response: ', data);
                 alert('There was an issue with your payment. Please try again.');
             }
         } catch (error) {
             console.error('Error creating checkout session:', error);
+            alert('There was an issue with your payment. Please try again.');
         }
     };
 
