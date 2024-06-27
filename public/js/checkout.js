@@ -32,23 +32,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                    <div class="order-summary-details">
-                        <div class="order-summary-labels">
-                            <p>Bike</p>
-                            <p>Size</p>
-                            <p>Quantity</p>
-                            <p>Price</p>
+                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div class="order-summary-details">
+                            <div class="order-summary-labels">
+                                <p>Bike</p>
+                                <p>Size</p>
+                                <p>Quantity</p>
+                                <p>Price</p>
+                            </div>
+                            <div class="order-summary-values">
+                                <p>${cartItem.BikeName}</p>
+                                <p>${cartItem.size}</p>
+                                <p>${cartItem.quantity}</p>
+                                <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                            </div>
                         </div>
-                        <div class="order-summary-values">
-                            <p>${cartItem.BikeName}</p>
-                            <p>${cartItem.size}</p>
-                            <p>${cartItem.quantity}</p>
-                            <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
-                        </div>
-                    </div>
-                    <button class="remove-item" data-id="${doc.id}">Remove</button>
-                `;
+                        <button class="remove-item" data-id="${doc.id}">Remove</button>
+                    `;
                     orderSummaryItems.appendChild(orderSummaryItem);
                 }
             });
@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error loading cart items: ", error);
         }
     };
-
 
     const removeItemFromCart = async (itemId) => {
         try {
@@ -97,18 +96,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const createCheckoutSession = async () => {
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
         const functions = firebase.functions();
-        const createCheckoutSession = functions.httpsCallable('ext-firestore-stripe-payments-createCheckoutSession');
+        const createCheckoutSession = functions.httpsCallable('createCheckoutSession');
 
-        const { data } = await createCheckoutSession({
-            amount: totalAmount,
-            currency: 'usd',
-            success_url: window.location.origin,
-            cancel_url: window.location.origin,
-        });
+        try {
+            const { data } = await createCheckoutSession({
+                amount: totalAmount,
+                success_url: window.location.origin + '/success.html',
+                cancel_url: window.location.origin + '/cancel.html',
+            });
 
-        window.location.href = data.url;
+            window.location.href = data.url;
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
+        }
     };
-
 
     document.querySelector('.pay-now-button').addEventListener('click', (event) => {
         event.preventDefault();
@@ -187,5 +188,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         WY: 5.36,
         DC: 6
     };
-
 });
