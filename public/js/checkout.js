@@ -17,20 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.setItem('userId', userId);
     }
 
-    const form = document.getElementById('checkout-form');
-    const payNowButton = document.querySelector('.pay-now-button');
-
-    // Function to check form validity
-    const checkFormValidity = () => {
-        payNowButton.disabled = !form.checkValidity();
-    };
-
-    // Attach event listeners to form elements
-    const formElements = form.querySelectorAll('input, select');
-    formElements.forEach(element => {
-        element.addEventListener('input', checkFormValidity);
-    });
-
     const loadCartItems = async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
@@ -118,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({
                     amount: totalAmount,
                     success_url: window.location.origin + '/success.html',
-                    cancel_url: window.location.origin + '/cart.html' // Update to your cart page URL
+                    cancel_url: window.location.origin + '/cancel.html'
                 })
             });
 
@@ -207,7 +193,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         WY: 5.36,
         DC: 6
     };
-
-    // Initial check on page load
-    checkFormValidity();
 });
