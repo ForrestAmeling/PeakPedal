@@ -12,13 +12,15 @@ const stripeSecret = process.env.NODE_ENV === 'production'
     ? functions.config().stripe.live_secret
     : functions.config().stripe.test_secret;
 
+console.log(`Using Stripe secret: ${stripeSecret ? 'Present' : 'Not Present'}`);
+
 const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         const { amount, success_url, cancel_url } = req.body;
 
-        console.log("Request body:", req.body);
+        console.log(`Request received with amount: ${amount}, success_url: ${success_url}, cancel_url: ${cancel_url}`);
 
         try {
             const session = await stripe.checkout.sessions.create({
@@ -38,7 +40,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
-            console.log("Stripe session created:", session);
+            console.log(`Stripe session created: ${session.url}`);
             res.json({ url: session.url });
         } catch (error) {
             console.error('Error creating Stripe Checkout session', error);
