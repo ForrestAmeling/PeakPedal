@@ -122,8 +122,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             });
 
+            if (!response.ok) {
+                const errorDetails = await response.json();
+                throw new Error(errorDetails.error || 'Unknown error occurred');
+            }
+
             const data = await response.json();
-            console.log('Received session URL:', data.url);
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);
