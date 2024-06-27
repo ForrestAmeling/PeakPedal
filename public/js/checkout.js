@@ -95,16 +95,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const createCheckoutSession = async () => {
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
-        const functions = firebase.functions();
-        const createCheckoutSession = functions.httpsCallable('createCheckoutSession');
-
         try {
-            const { data } = await createCheckoutSession({
-                amount: totalAmount,
-                success_url: window.location.origin + '/success.html',
-                cancel_url: window.location.origin + '/cancel.html',
+            const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: totalAmount,
+                    success_url: window.location.origin + '/success.html',
+                    cancel_url: window.location.origin + '/cancel.html'
+                })
             });
 
+            const data = await response.json();
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);
@@ -135,6 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             billingAddressFields.style.display = 'block';
         }
     });
+
     const salesTaxRates = {
         AL: 9.25,
         AK: 1.76,
