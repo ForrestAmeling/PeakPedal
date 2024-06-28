@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error loading cart items: ", error);
         }
 
-        return cartItems; // Return the collected cart items
+        return cartItems;
     };
 
     const removeItemFromCart = async (itemId) => {

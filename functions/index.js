@@ -35,13 +35,13 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 })),
                 mode: 'payment',
                 shipping_address_collection: {
-                    allowed_countries: ['US'], // Add more countries if needed
+                    allowed_countries: ['US'],
                 },
                 shipping_options: [{
                     shipping_rate_data: {
                         type: 'fixed_amount',
                         fixed_amount: {
-                            amount: 0, // Change this if you have shipping fees
+                            amount: 0,
                             currency: 'usd',
                         },
                         display_name: 'Free shipping',
@@ -59,10 +59,8 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 }],
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
-                shipping_address_collection: {
-                    allowed_countries: ['US'],
-                },
                 customer_email: shippingDetails.email,
+                amount_total: amount, // Pass the total amount including tax
             });
 
             res.json({ url: session.url });
