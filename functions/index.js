@@ -4,12 +4,11 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
-// Force set NODE_ENV to development for testing purposes
+// Force set NODE_ENV to development for testing purposes if not already set
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
 }
 
-// Log the current environment
 console.log(`Running in ${process.env.NODE_ENV} mode`);
 
 // Select the Stripe secret key based on the environment
@@ -22,9 +21,6 @@ const stripe = require('stripe')(stripeSecret);
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
         const { amount, success_url, cancel_url } = req.body;
-
-        // Log received data
-        console.log('Received data:', { amount, success_url, cancel_url });
 
         try {
             const session = await stripe.checkout.sessions.create({
@@ -44,13 +40,10 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
-            // Log session creation success
-            console.log('Checkout session created:', session);
             res.json({ url: session.url });
         } catch (error) {
-            // Log the error details
             console.error('Error creating Stripe Checkout session', error);
-            res.status(500).send({ error: 'Unable to create Stripe Checkout session', details: error.message });
+            res.status(500).send({ error: 'Unable to create Stripe Checkout session' });
         }
     });
 });
