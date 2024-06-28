@@ -14,25 +14,37 @@ const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { amount, items, shippingDetails, success_url, cancel_url } = req.body;
+        const { items, taxAmount, shippingDetails, success_url, cancel_url } = req.body;
 
         try {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
-                line_items: items.map(item => ({
-                    price_data: {
-                        currency: 'usd',
-                        product_data: {
-                            name: item.name,
-                            images: [item.image],
-                            metadata: {
-                                size: item.size
-                            }
+                line_items: [
+                    ...items.map(item => ({
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: item.name,
+                                images: [item.image],
+                                metadata: {
+                                    size: item.size
+                                }
+                            },
+                            unit_amount: item.price,
                         },
-                        unit_amount: item.price,
-                    },
-                    quantity: item.quantity,
-                })),
+                        quantity: item.quantity,
+                    })),
+                    {
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: 'Sales Tax',
+                            },
+                            unit_amount: taxAmount,
+                        },
+                        quantity: 1,
+                    }
+                ],
                 mode: 'payment',
                 shipping_address_collection: {
                     allowed_countries: ['US'],

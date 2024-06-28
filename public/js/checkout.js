@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error loading cart items: ", error);
         }
 
-        return cartItems;
+        return { cartItems, tax: parseFloat(document.getElementById('order-tax').textContent) * 100 };
     };
 
     const removeItemFromCart = async (itemId) => {
@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const createCheckoutSession = async (cartItems) => {
+    const createCheckoutSession = async () => {
+        const { cartItems, tax } = await loadCartItems();
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
 
         const shippingDetails = {
@@ -142,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({
                     amount: totalAmount,
                     items: cartItems,
+                    taxAmount: tax,
                     shippingDetails: shippingDetails,
                     success_url: window.location.origin + '/success.html',
                     cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
@@ -163,8 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
         event.preventDefault();
-        const cartItems = await loadCartItems(); // Collect the cart items
-        createCheckoutSession(cartItems); // Create the checkout session with the collected items
+        createCheckoutSession();
     });
 
     loadCartItems();
