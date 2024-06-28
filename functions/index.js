@@ -7,13 +7,13 @@ admin.initializeApp();
 console.log(`Running in simplified mode`);
 
 const stripeSecret = functions.config().stripe.secret;
-
 console.log(`Using Stripe key: ${stripeSecret}`);
 
 const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
+        console.log('Request body:', req.body);
         const { items, taxAmount, shippingDetails, success_url, cancel_url } = req.body;
 
         try {
@@ -85,10 +85,45 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 },
             });
 
+            console.log('Session created:', session);
             res.json({ url: session.url });
         } catch (error) {
             console.error('Error creating Stripe Checkout session', error);
             res.status(500).send({ error: 'Unable to create Stripe Checkout session' });
         }
     });
+});
+
+exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    const endpointSecret = functions.config().stripe.endpoint_secret;
+
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+    } catch (err) {
+        console.error('⚠️  Webhook signature verification failed.', err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+
+        // Clear the cart after successful payment
+        const userId = session.client_reference_id;
+
+        try {
+            const cartRef = admin.firestore().collection('Carts').doc(userId).collection('Items');
+            const cartSnapshot = await cartRef.get();
+            cartSnapshot.forEach(doc => {
+                doc.ref.delete();
+            });
+            console.log(`Successfully cleared cart for user: ${userId}`);
+        } catch (error) {
+            console.error(`Error clearing cart for user: ${userId}`, error);
+        }
+    }
+
+    res.status(200).send('Event received');
 });

@@ -134,6 +134,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             phone: form.querySelector('input[name="phone"]').value
         };
 
+        console.log('Creating checkout session with:', {
+            items: cartItems,
+            taxAmount: tax,
+            shippingDetails,
+            totalAmount,
+        });
+
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
                 method: 'POST',
@@ -141,7 +148,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    amount: totalAmount,
                     items: cartItems,
                     taxAmount: tax,
                     shippingDetails: shippingDetails,
