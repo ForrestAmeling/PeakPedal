@@ -118,7 +118,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const createCheckoutSession = async (items) => {
+    const createCheckoutSession = async () => {
+        // Collect the cart items and their details
+        const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
+
+        const cartItems = await loadCartItems(); // Collect the cart items
+        const items = cartItems.map(item => ({
+            name: item.name,
+            size: item.size,
+            image: item.image,
+            price: item.price, // Already in cents
+            quantity: item.quantity
+        }));
+
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
                 method: 'POST',
@@ -127,6 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: JSON.stringify({
                     items,
+                    amount: totalAmount,
                     success_url: window.location.origin + '/success.html',
                     cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
                 })
@@ -141,8 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
         event.preventDefault();
-        const cartItems = await loadCartItems(); // Collect the cart items
-        createCheckoutSession(cartItems); // Create the checkout session with the collected items
+        createCheckoutSession(); // Create the checkout session with the collected items
     });
 
     loadCartItems();

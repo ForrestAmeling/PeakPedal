@@ -4,21 +4,12 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
-// Log the current environment
-console.log(`Running in simplified mode`);
-
-// Select the Stripe secret key from the Firebase configuration
-const stripeSecret = functions.config().stripe.secret;
-
-console.log(`Using Stripe key: ${stripeSecret}`);
-
-const stripe = require('stripe')(stripeSecret);
+const stripe = require('stripe')(functions.config().stripe.secret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { items, success_url, cancel_url } = req.body;
+        const { items, amount, success_url, cancel_url } = req.body;
 
-        // items should be an array of objects with product details
         try {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -27,8 +18,10 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                         currency: 'usd',
                         product_data: {
                             name: item.name,
-                            description: `Size: ${item.size}`,
-                            images: [item.image]
+                            images: [item.image],
+                            metadata: {
+                                size: item.size
+                            }
                         },
                         unit_amount: item.price,
                     },
