@@ -4,11 +4,17 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
-const stripe = require('stripe')(functions.config().stripe.secret);
+console.log(`Running in simplified mode`);
+
+const stripeSecret = functions.config().stripe.secret;
+
+console.log(`Using Stripe key: ${stripeSecret}`);
+
+const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { amount, items, success_url, cancel_url } = req.body;
+        const { amount, items, shippingDetails, success_url, cancel_url } = req.body;
 
         try {
             const session = await stripe.checkout.sessions.create({
@@ -28,8 +34,35 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                     quantity: item.quantity,
                 })),
                 mode: 'payment',
+                shipping_address_collection: {
+                    allowed_countries: ['US'], // Add more countries if needed
+                },
+                shipping_options: [{
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 0, // Change this if you have shipping fees
+                            currency: 'usd',
+                        },
+                        display_name: 'Free shipping',
+                        delivery_estimate: {
+                            minimum: {
+                                unit: 'business_day',
+                                value: 5,
+                            },
+                            maximum: {
+                                unit: 'business_day',
+                                value: 7,
+                            },
+                        },
+                    },
+                }],
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
+                shipping_address_collection: {
+                    allowed_countries: ['US'],
+                },
+                customer_email: shippingDetails.email,
             });
 
             res.json({ url: session.url });
