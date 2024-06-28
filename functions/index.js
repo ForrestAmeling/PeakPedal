@@ -64,7 +64,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                             },
                             maximum: {
                                 unit: 'business_day',
-                                value: 7,
+                                value: 10,
                             },
                         },
                     },
@@ -72,6 +72,17 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
                 customer_email: shippingDetails.email,
+                shipping: {
+                    name: shippingDetails.name,
+                    address: {
+                        line1: shippingDetails.address.line1,
+                        line2: shippingDetails.address.line2,
+                        city: shippingDetails.address.city,
+                        state: shippingDetails.address.state,
+                        postal_code: shippingDetails.address.postal_code,
+                        country: shippingDetails.address.country,
+                    },
+                },
             });
 
             res.json({ url: session.url });
