@@ -20,10 +20,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('checkout-form');
     const payNowButton = document.querySelector('.pay-now-button');
 
+    // Function to check form validity
     const checkFormValidity = () => {
         payNowButton.disabled = !form.checkValidity();
     };
 
+    // Attach event listeners to form elements
     const formElements = form.querySelectorAll('input, select');
     formElements.forEach(element => {
         element.addEventListener('input', checkFormValidity);
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
         let subtotal = 0;
-        const cartItems = [];
+        const cartItems = []; // Array to hold cart items
 
         try {
             const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
@@ -116,22 +118,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const createCheckoutSession = async (cartItems) => {
+    const createCheckoutSession = async () => {
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
-
-        const shippingDetails = {
-            name: form.querySelector('input[name="first-name"]').value + ' ' + form.querySelector('input[name="last-name"]').value,
-            address: {
-                line1: form.querySelector('input[name="address"]').value,
-                line2: form.querySelector('input[name="apartment"]').value || '',
-                city: form.querySelector('input[name="city"]').value,
-                state: form.querySelector('select[name="state"]').value,
-                postal_code: form.querySelector('input[name="zip-code"]').value,
-                country: form.querySelector('select[name="country"]').value,
-            },
-            email: form.querySelector('input[name="email"]').value,
-            phone: form.querySelector('input[name="phone"]').value
-        };
+        const cartItems = await loadCartItems(); // Collect the cart items
 
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
@@ -142,7 +131,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify({
                     amount: totalAmount,
                     items: cartItems,
-                    shippingDetails: shippingDetails,
                     success_url: window.location.origin + '/success.html',
                     cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
                 })
@@ -163,8 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
         event.preventDefault();
-        const cartItems = await loadCartItems(); // Collect the cart items
-        createCheckoutSession(cartItems); // Create the checkout session with the collected items
+        await createCheckoutSession();
     });
 
     loadCartItems();
@@ -208,38 +195,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         LA: 9.55,
         ME: 5.5,
         MD: 6,
-        MA: 6.25,
-        MI: 6,
-        MN: 7.48,
-        MS: 7.07,
-        MO: 8.33,
-        MT: 0,
-        NE: 6.95,
-        NV: 8.23,
-        NH: 0,
-        NJ: 6.59,
-        NM: 7.72,
-        NY: 8.52,
-        NC: 6.99,
-        ND: 6.97,
-        OH: 7.24,
-        OK: 8.98,
-        OR: 0,
-        PA: 6.34,
-        RI: 7,
-        SC: 7.43,
-        SD: 6.4,
-        TN: 9.55,
-        TX: 8.2,
-        UT: 7.19,
-        VT: 6.3,
-        VA: 5.75,
-        WA: 8.86,
-        WV: 6.55,
-        WI: 5.43,
-        WY: 5.36,
-        DC: 6
-    };
-
-    checkFormValidity();
-});
+        MA: 6.25
