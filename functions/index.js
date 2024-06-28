@@ -4,9 +4,12 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
+// Log the current environment
+console.log(`Running in ${process.env.NODE_ENV} mode`);
+
 // Force set NODE_ENV to development for testing purposes if not already set
 if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
+    process.env.NODE_ENV = functions.config().env.mode || 'development';
 }
 
 console.log(`Running in ${process.env.NODE_ENV} mode`);
@@ -15,6 +18,8 @@ console.log(`Running in ${process.env.NODE_ENV} mode`);
 const stripeSecret = process.env.NODE_ENV === 'development'
     ? functions.config().stripe.test_secret
     : functions.config().stripe.secret;
+
+console.log(`Using Stripe key: ${stripeSecret}`);
 
 const stripe = require('stripe')(stripeSecret);
 
