@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
         let subtotal = 0;
+        const cartItems = []; // Array to hold cart items
 
         try {
             const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
@@ -43,26 +44,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (cartItem.price && cartItem.quantity) {
                     subtotal += cartItem.price * cartItem.quantity;
 
+                    cartItems.push({
+                        name: cartItem.BikeName,
+                        size: cartItem.size,
+                        image: cartItem.image,
+                        price: parseFloat(cartItem.price) * 100, // Convert to cents
+                        quantity: cartItem.quantity
+                    });
+
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                        <div class="order-summary-details">
-                            <div class="order-summary-labels">
-                                <p>Bike</p>
-                                <p>Size</p>
-                                <p>Quantity</p>
-                                <p>Price</p>
-                            </div>
-                            <div class="order-summary-values">
-                                <p>${cartItem.BikeName}</p>
-                                <p>${cartItem.size}</p>
-                                <p>${cartItem.quantity}</p>
-                                <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
-                            </div>
+                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                    <div class="order-summary-details">
+                        <div class="order-summary-labels">
+                            <p>Bike</p>
+                            <p>Size</p>
+                            <p>Quantity</p>
+                            <p>Price</p>
                         </div>
-                        <button class="remove-item" data-id="${doc.id}">Remove</button>
-                    `;
+                        <div class="order-summary-values">
+                            <p>${cartItem.BikeName}</p>
+                            <p>${cartItem.size}</p>
+                            <p>${cartItem.quantity}</p>
+                            <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                    <button class="remove-item" data-id="${doc.id}">Remove</button>
+                `;
                     orderSummaryItems.appendChild(orderSummaryItem);
                 }
             });
@@ -79,6 +88,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error("Error loading cart items: ", error);
         }
+
+        return cartItems; // Return the collected cart items
     };
 
     const removeItemFromCart = async (itemId) => {
@@ -107,8 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const createCheckoutSession = async () => {
-        const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
+    const createCheckoutSession = async (items) => {
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
                 method: 'POST',
@@ -116,28 +126,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    amount: totalAmount,
+                    items,
                     success_url: window.location.origin + '/success.html',
-                    cancel_url: window.location.origin + '/cart.html' // Update to your cart page URL
+                    cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
                 })
             });
-
-            if (!response.ok) {
-                const errorDetails = await response.json();
-                throw new Error(errorDetails.error || 'Unknown error occurred');
-            }
 
             const data = await response.json();
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);
-            alert('There was an issue with your payment. Please try again.');
         }
     };
 
-    document.querySelector('.pay-now-button').addEventListener('click', (event) => {
+    document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
         event.preventDefault();
-        createCheckoutSession();
+        const cartItems = await loadCartItems(); // Collect the cart items
+        createCheckoutSession(cartItems); // Create the checkout session with the collected items
     });
 
     loadCartItems();

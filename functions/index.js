@@ -4,6 +4,9 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
+// Log the current environment
+console.log(`Running in simplified mode`);
+
 // Select the Stripe secret key from the Firebase configuration
 const stripeSecret = functions.config().stripe.secret;
 
@@ -13,21 +16,24 @@ const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { amount, success_url, cancel_url } = req.body;
+        const { items, success_url, cancel_url } = req.body;
 
+        // items should be an array of objects with product details
         try {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
-                line_items: [{
+                line_items: items.map(item => ({
                     price_data: {
                         currency: 'usd',
                         product_data: {
-                            name: 'Bike Purchase',
+                            name: item.name,
+                            description: `Size: ${item.size}`,
+                            images: [item.image]
                         },
-                        unit_amount: amount,
+                        unit_amount: item.price,
                     },
-                    quantity: 1,
-                }],
+                    quantity: item.quantity,
+                })),
                 mode: 'payment',
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
