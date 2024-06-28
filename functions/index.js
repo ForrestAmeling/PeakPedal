@@ -8,7 +8,7 @@ const stripe = require('stripe')(functions.config().stripe.secret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { items, amount, success_url, cancel_url } = req.body;
+        const { amount, items, success_url, cancel_url } = req.body;
 
         try {
             const session = await stripe.checkout.sessions.create({

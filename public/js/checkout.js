@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return cartItems; // Return the collected cart items
     };
 
+
     const removeItemFromCart = async (itemId) => {
         try {
             await db.collection('Carts').doc(userId).collection('Items').doc(itemId).delete();
@@ -118,16 +119,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    const createCheckoutSession = async () => {
-        // Collect the cart items and their details
-        const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
+    const createCheckoutSession = async (cartItems) => {
+        const subtotal = parseFloat(document.getElementById('order-subtotal').textContent) * 100; // Convert to cents
+        const tax = parseFloat(document.getElementById('order-tax').textContent) * 100; // Convert to cents
+        const totalAmount = subtotal + tax;
 
-        const cartItems = await loadCartItems(); // Collect the cart items
         const items = cartItems.map(item => ({
             name: item.name,
             size: item.size,
             image: item.image,
-            price: item.price, // Already in cents
+            price: parseFloat(item.price) * 100, // Convert to cents
             quantity: item.quantity
         }));
 
@@ -138,10 +139,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    items,
                     amount: totalAmount,
+                    items,
                     success_url: window.location.origin + '/success.html',
-                    cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
+                    cancel_url: window.location.origin + '/checkout.html'
                 })
             });
 
@@ -154,8 +155,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
         event.preventDefault();
-        createCheckoutSession(); // Create the checkout session with the collected items
+        const cartItems = await loadCartItems(); // Collect the cart items
+        createCheckoutSession(cartItems); // Create the checkout session with the collected items
     });
+
 
     loadCartItems();
 
