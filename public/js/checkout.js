@@ -20,12 +20,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('checkout-form');
     const payNowButton = document.querySelector('.pay-now-button');
 
-    // Function to check form validity
     const checkFormValidity = () => {
         payNowButton.disabled = !form.checkValidity();
     };
 
-    // Attach event listeners to form elements
     const formElements = form.querySelectorAll('input, select');
     formElements.forEach(element => {
         element.addEventListener('input', checkFormValidity);
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const orderSummaryItems = document.getElementById('order-summary-items');
         orderSummaryItems.innerHTML = ''; // Clear previous items
         let subtotal = 0;
-        const cartItems = []; // Array to hold cart items
+        const cartItems = [];
 
         try {
             const querySnapshot = await db.collection('Carts').doc(userId).collection('Items').get();
@@ -55,23 +53,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const orderSummaryItem = document.createElement('div');
                     orderSummaryItem.classList.add('order-summary-item');
                     orderSummaryItem.innerHTML = `
-                    <img src="${cartItem.image}" alt="${cartItem.BikeName}">
-                    <div class="order-summary-details">
-                        <div class="order-summary-labels">
-                            <p>Bike</p>
-                            <p>Size</p>
-                            <p>Quantity</p>
-                            <p>Price</p>
+                        <img src="${cartItem.image}" alt="${cartItem.BikeName}">
+                        <div class="order-summary-details">
+                            <div class="order-summary-labels">
+                                <p>Bike</p>
+                                <p>Size</p>
+                                <p>Quantity</p>
+                                <p>Price</p>
+                            </div>
+                            <div class="order-summary-values">
+                                <p>${cartItem.BikeName}</p>
+                                <p>${cartItem.size}</p>
+                                <p>${cartItem.quantity}</p>
+                                <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
+                            </div>
                         </div>
-                        <div class="order-summary-values">
-                            <p>${cartItem.BikeName}</p>
-                            <p>${cartItem.size}</p>
-                            <p>${cartItem.quantity}</p>
-                            <p><strong>$${cartItem.price.toFixed(2)}</strong></p>
-                        </div>
-                    </div>
-                    <button class="remove-item" data-id="${doc.id}">Remove</button>
-                `;
+                        <button class="remove-item" data-id="${doc.id}">Remove</button>
+                    `;
                     orderSummaryItems.appendChild(orderSummaryItem);
                 }
             });
@@ -91,7 +89,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return cartItems; // Return the collected cart items
     };
-
 
     const removeItemFromCart = async (itemId) => {
         try {
@@ -120,17 +117,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async (cartItems) => {
-        const subtotal = parseFloat(document.getElementById('order-subtotal').textContent) * 100; // Convert to cents
-        const tax = parseFloat(document.getElementById('order-tax').textContent) * 100; // Convert to cents
-        const totalAmount = subtotal + tax;
+        const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
 
-        const items = cartItems.map(item => ({
-            name: item.name,
-            size: item.size,
-            image: item.image,
-            price: parseFloat(item.price) * 100, // Convert to cents
-            quantity: item.quantity
-        }));
+        const shippingDetails = {
+            name: form.querySelector('input[name="first-name"]').value + ' ' + form.querySelector('input[name="last-name"]').value,
+            address: {
+                line1: form.querySelector('input[name="address"]').value,
+                line2: form.querySelector('input[name="apartment"]').value || '',
+                city: form.querySelector('input[name="city"]').value,
+                state: form.querySelector('select[name="state"]').value,
+                postal_code: form.querySelector('input[name="zip-code"]').value,
+                country: form.querySelector('select[name="country"]').value,
+            },
+            email: form.querySelector('input[name="email"]').value,
+            phone: form.querySelector('input[name="phone"]').value
+        };
 
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
@@ -140,16 +141,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: JSON.stringify({
                     amount: totalAmount,
-                    items,
+                    items: cartItems,
+                    shippingDetails: shippingDetails,
                     success_url: window.location.origin + '/success.html',
-                    cancel_url: window.location.origin + '/checkout.html'
+                    cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
                 })
             });
+
+            if (!response.ok) {
+                const errorDetails = await response.json();
+                throw new Error(errorDetails.error || 'Unknown error occurred');
+            }
 
             const data = await response.json();
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);
+            alert('There was an issue with your payment. Please try again.');
         }
     };
 
@@ -158,7 +166,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cartItems = await loadCartItems(); // Collect the cart items
         createCheckoutSession(cartItems); // Create the checkout session with the collected items
     });
-
 
     loadCartItems();
 
@@ -234,6 +241,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         DC: 6
     };
 
-    // Initial check on page load
     checkFormValidity();
 });
