@@ -60,7 +60,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
                 customer_email: shippingDetails.email,
-                amount_total: amount, // Pass the total amount including tax
             });
 
             res.json({ url: session.url });
