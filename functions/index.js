@@ -27,9 +27,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 },
             });
 
-            // Generate metadata for items
-            const itemMetadata = items.map(item => `Bike: ${item.name}, Size: ${item.size}`).join('; ');
-
             // Create a checkout session
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -38,7 +35,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                         price_data: {
                             currency: 'usd',
                             product_data: {
-                                name: item.name,
+                                name: `${item.name} ${item.size}`, // Concatenate bike name with size
                                 images: [item.image],
                                 metadata: {
                                     size: item.size
@@ -75,7 +72,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                     },
                     metadata: {
                         order_number: orderNumber,
-                        items: itemMetadata, // Add items metadata here
                     },
                 },
                 customer: customer.id,
@@ -110,4 +106,3 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
         }
     });
 });
-
