@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -23,34 +25,32 @@
             }
 
             try {
-                console.log('Attempting to clear cart for user:', userId);
-
-                const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/clearCartAfterCheckout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ userId: userId })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                const firebaseConfig = {
+                    apiKey: "AIzaSyAiw364-i1UvdCUBz3qeq31tLd06rXM140",
+                    authDomain: "peakpedal-9af93.firebaseapp.com",
+                    projectId: "peakpedal-9af93",
+                    storageBucket: "peakpedal-9af93.appspot.com",
+                    messagingSenderId: "344619285656",
+                    appId: "1:344619285656:web:7de2229b7d80d5f91d24ed",
+                    measurementId: "G-0S424MKF14"
+                };
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
                 }
+                const db = firebase.firestore();
 
-                const result = await response.json();
-                console.log('API response:', result);
+                const cartRef = db.collection('Carts').doc(userId).collection('Items');
+                const cartSnapshot = await cartRef.get();
 
-                if (result.success) {
-                    console.log('Cart cleared successfully.');
-                    localStorage.removeItem('cartItems'); // Clear local storage
-                } else {
-                    console.error('Failed to clear the cart:', result.error);
-                }
+                const deletePromises = cartSnapshot.docs.map(doc => doc.ref.delete());
+                await Promise.all(deletePromises);
+
+                console.log('Cart cleared successfully.');
+                localStorage.removeItem('cartItems'); // Clear local storage
 
                 document.getElementById('go-home').addEventListener('click', () => {
                     window.location.href = 'index.html';
                 });
-
             } catch (error) {
                 console.error('Error clearing cart after checkout:', error);
             }

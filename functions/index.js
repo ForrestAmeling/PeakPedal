@@ -27,6 +27,9 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 },
             });
 
+            // Generate metadata for items
+            const itemMetadata = items.map(item => `Bike: ${item.name}, Size: ${item.size}`).join('; ');
+
             // Create a checkout session
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -72,6 +75,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                     },
                     metadata: {
                         order_number: orderNumber,
+                        items: itemMetadata, // Add items metadata here
                     },
                 },
                 customer: customer.id,
@@ -103,34 +107,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
         } catch (error) {
             console.error('Error creating Stripe Checkout session:', error);
             res.status(500).send({ error: `Unable to create Stripe Checkout session: ${error.message}` });
-        }
-    });
-});
-
-exports.clearCartAfterCheckout = functions.https.onRequest((req, res) => {
-    cors(req, res, async () => {
-        res.set('Access-Control-Allow-Origin', '*');
-        res.set('Access-Control-Allow-Methods', 'GET, POST');
-        res.set('Access-Control-Allow-Headers', 'Content-Type');
-
-        if (req.method === 'OPTIONS') {
-            res.status(204).send('');
-            return;
-        }
-
-        const { userId } = req.body;
-
-        try {
-            const cartRef = admin.firestore().collection('Carts').doc(userId).collection('Items');
-            const cartSnapshot = await cartRef.get();
-
-            const deletePromises = cartSnapshot.docs.map(doc => doc.ref.delete());
-            await Promise.all(deletePromises);
-
-            res.status(200).send({ success: true });
-        } catch (error) {
-            console.error('Error clearing cart after checkout', error);
-            res.status(500).send({ error: 'Unable to clear cart after checkout' });
         }
     });
 });
