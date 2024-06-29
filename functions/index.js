@@ -109,6 +109,15 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
 
 exports.clearCartAfterCheckout = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
+        res.set('Access-Control-Allow-Origin', '*');
+        res.set('Access-Control-Allow-Methods', 'GET, POST');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
+        }
+
         const { userId } = req.body;
 
         try {
