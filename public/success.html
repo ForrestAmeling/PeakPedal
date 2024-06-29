@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <h1>Payment Successful!</h1>
+    <p>Your payment was processed successfully. Thank you for your purchase.</p>
+    <button id="go-home">Go to Home</button>
+
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const userId = localStorage.getItem('userId');
@@ -19,16 +27,15 @@
                 });
 
                 console.log('Cart cleared successfully.');
+                localStorage.removeItem('cartItems'); // Clear local storage
+                document.getElementById('go-home').addEventListener('click', () => {
+                    window.location.href = 'index.html';
+                });
             } catch (error) {
                 console.error('Error clearing cart after checkout:', error);
             }
         });
     </script>
-</head>
-
-<body>
-    <h1>Payment Successful!</h1>
-    <button onclick="window.location.href='index.html'">Home</button>
 </body>
 
 </html>
