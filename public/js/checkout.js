@@ -115,7 +115,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error updating cart count: ", error);
         }
     };
-
+    const generateOrderNumber = () => {
+        // This is a simple example of generating a unique order number
+        // You might want to use a more sophisticated approach
+        return 'ORDER-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+    };
     const createCheckoutSession = async () => {
         const { cartItems, tax } = await loadCartItems();
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
@@ -134,6 +138,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             phone: form.querySelector('input[name="phone"]').value
         };
 
+        const orderNumber = generateOrderNumber(); // Implement a function to generate unique order numbers
+
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
                 method: 'POST',
@@ -145,6 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     items: cartItems,
                     taxAmount: tax,
                     shippingDetails: shippingDetails,
+                    orderNumber: orderNumber,
                     success_url: window.location.origin + '/success.html',
                     cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
                 })

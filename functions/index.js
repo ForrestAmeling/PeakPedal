@@ -9,11 +9,25 @@ const stripe = require('stripe')(stripeSecret);
 
 exports.createCheckoutSession = functions.https.onRequest((req, res) => {
     cors(req, res, async () => {
-        const { items, taxAmount, shippingDetails, success_url, cancel_url } = req.body;
+        const { items, taxAmount, shippingDetails, success_url, cancel_url, orderNumber } = req.body;
 
         try {
-            console.log('Request body:', req.body);
+            // Create a Stripe customer
+            const customer = await stripe.customers.create({
+                email: shippingDetails.email,
+                name: shippingDetails.name,
+                phone: shippingDetails.phone,
+                address: {
+                    line1: shippingDetails.address.line1,
+                    line2: shippingDetails.address.line2,
+                    city: shippingDetails.address.city,
+                    state: shippingDetails.address.state,
+                    postal_code: shippingDetails.address.postal_code,
+                    country: shippingDetails.address.country,
+                },
+            });
 
+            // Create a checkout session
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 line_items: [
@@ -53,9 +67,14 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                             state: shippingDetails.address.state,
                             postal_code: shippingDetails.address.postal_code,
                             country: shippingDetails.address.country,
-                        }
-                    }
+                        },
+                        phone: shippingDetails.phone,
+                    },
+                    metadata: {
+                        order_number: orderNumber,
+                    },
                 },
+                customer: customer.id,
                 shipping_options: [{
                     shipping_rate_data: {
                         type: 'fixed_amount',
@@ -71,14 +90,13 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                             },
                             maximum: {
                                 unit: 'business_day',
-                                value: 7,
+                                value: 10,
                             },
                         },
                     },
                 }],
                 success_url: success_url,
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
-                customer_email: shippingDetails.email,
             });
 
             res.json({ url: session.url });
@@ -107,3 +125,4 @@ exports.clearCartAfterCheckout = functions.https.onRequest((req, res) => {
         }
     });
 });
+

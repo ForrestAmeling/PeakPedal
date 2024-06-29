@@ -4,23 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Success</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('userId');
+
+            try {
+                await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/clearCartAfterCheckout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId: userId })
+                });
+
+                console.log('Cart cleared successfully.');
+            } catch (error) {
+                console.error('Error clearing cart after checkout:', error);
+            }
+        });
+    </script>
 </head>
 
 <body>
-    <header class="top-header">
-        <a href="index.html">
-            <h1 class="logo">PeakPedal</h1>
-        </a>
-    </header>
-    <main>
-        <section class="confirmation">
-            <h2>Payment Successful!</h2>
-            <p>Thank you for your purchase. Your order will be processed shortly.</p>
-            <a href="index.html">Back to Home</a>
-        </section>
-    </main>
+    <h1>Payment Successful!</h1>
+    <button onclick="window.location.href='index.html'">Home</button>
 </body>
 
 </html>
