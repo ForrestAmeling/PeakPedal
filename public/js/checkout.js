@@ -115,11 +115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Error updating cart count: ", error);
         }
     };
+
     const generateOrderNumber = () => {
         // This is a simple example of generating a unique order number
         // You might want to use a more sophisticated approach
         return 'ORDER-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
     };
+
     const createCheckoutSession = async () => {
         const { cartItems, tax } = await loadCartItems();
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
@@ -163,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const data = await response.json();
+            localStorage.setItem('receiptUrl', data.url); // Store the receipt URL in local storage
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);

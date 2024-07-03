@@ -13,15 +13,25 @@
 <body>
     <h1>Payment Successful!</h1>
     <p>Your payment was processed successfully. Thank you for your purchase.</p>
+    <a id="download-receipt" href="#" target="_blank">Download Receipt</a>
     <button id="go-home">Go to Home</button>
+    <p id="error-message" style="color: red; display: none;">Failed to load the receipt. Please try again later.</p>
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const userId = localStorage.getItem('userId');
+            const receiptUrl = localStorage.getItem('receiptUrl');
 
             if (!userId) {
                 console.error('User ID not found in local storage.');
                 return;
+            }
+
+            if (receiptUrl) {
+                document.getElementById('download-receipt').href = receiptUrl;
+            } else {
+                console.error('Receipt URL not found in local storage.');
+                document.getElementById('error-message').style.display = 'block';
             }
 
             try {
