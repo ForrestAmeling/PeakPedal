@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId');
+    const receiptUrl = localStorage.getItem('receiptUrl'); // Retrieve the receipt URL from local storage
 
     if (!userId) {
         console.error('User ID not found in local storage.');
         return;
+    }
+
+    if (receiptUrl) {
+        document.getElementById('receipt-iframe').src = receiptUrl; // Set the receipt URL in the iframe
+    } else {
+        console.error('Receipt URL not found in local storage.');
     }
 
     try {

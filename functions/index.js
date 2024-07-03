@@ -99,7 +99,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
-            res.json({ url: session.url });
+            res.json({ url: session.url, receipt_url: session.receipt_url });
         } catch (error) {
             console.error('Error creating Stripe Checkout session:', error);
             res.status(500).send({ error: `Unable to create Stripe Checkout session: ${error.message}` });

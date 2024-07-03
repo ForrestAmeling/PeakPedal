@@ -117,8 +117,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const generateOrderNumber = () => {
-        // This is a simple example of generating a unique order number
-        // You might want to use a more sophisticated approach
         return 'ORDER-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
     };
 
@@ -140,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             phone: form.querySelector('input[name="phone"]').value
         };
 
-        const orderNumber = generateOrderNumber(); // Implement a function to generate unique order numbers
+        const orderNumber = generateOrderNumber();
 
         try {
             const response = await fetch('https://us-central1-peakpedal-9af93.cloudfunctions.net/createCheckoutSession', {
@@ -155,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     shippingDetails: shippingDetails,
                     orderNumber: orderNumber,
                     success_url: window.location.origin + '/success.html',
-                    cancel_url: window.location.origin + '/checkout.html' // Update to your cart page URL
+                    cancel_url: window.location.origin + '/checkout.html'
                 })
             });
 
@@ -165,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const data = await response.json();
-            localStorage.setItem('receiptUrl', data.url); // Store the receipt URL in local storage
+            localStorage.setItem('receiptUrl', data.receipt_url); // Save the receipt URL in local storage
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);
