@@ -184,16 +184,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
-    const billingAddressFields = document.getElementById('billing-address-fields');
+    // const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
+    // const billingAddressFields = document.getElementById('billing-address-fields');
 
-    billingSameAsShippingCheckbox.addEventListener('change', () => {
-        if (billingSameAsShippingCheckbox.checked) {
-            billingAddressFields.style.display = 'none';
-        } else {
-            billingAddressFields.style.display = 'block';
-        }
-    });
+    // billingSameAsShippingCheckbox.addEventListener('change', () => {
+    //     if (billingSameAsShippingCheckbox.checked) {
+    //         billingAddressFields.style.display = 'none';
+    //     } else {
+    //         billingAddressFields.style.display = 'block';
+    //     }
+    // });
 
     const salesTaxRates = {
         AL: 9.25,
