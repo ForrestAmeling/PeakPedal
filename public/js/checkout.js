@@ -163,7 +163,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const data = await response.json();
-            localStorage.setItem('receiptUrl', data.receipt_url); // Save the receipt URL in local storage
             window.location.href = data.url;
         } catch (error) {
             console.error('Error creating checkout session:', error);

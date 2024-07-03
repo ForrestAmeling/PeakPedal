@@ -536,6 +536,61 @@ main {
     font-size: 1.2rem;
 }
 
+/* Success page styles */
+.success-page {
+    background: url('assets/1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    color: #fff;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.success-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+}
+
+.success-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.success-container p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+.gradient-button {
+    display: inline-block;
+    width: 180px;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    line-height: 30px;
+    background: linear-gradient(to right, #ff7b00, #ffba00);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-button:hover {
+    background: linear-gradient(to right, #e65c00, #ffba00);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
     .overlay h2 {

@@ -57,6 +57,8 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                     }
                 ],
                 mode: 'payment',
+                customer: customer.id,
+                receipt_email: shippingDetails.email, // Set receipt email
                 payment_intent_data: {
                     shipping: {
                         name: shippingDetails.name,
@@ -74,7 +76,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                         order_number: orderNumber,
                     },
                 },
-                customer: customer.id,
                 shipping_options: [{
                     shipping_rate_data: {
                         type: 'fixed_amount',
@@ -99,7 +100,7 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 cancel_url: cancel_url || "https://peakpedal.store/checkout.html",
             });
 
-            res.json({ url: session.url, receipt_url: session.receipt_url });
+            res.json({ url: session.url });
         } catch (error) {
             console.error('Error creating Stripe Checkout session:', error);
             res.status(500).send({ error: `Unable to create Stripe Checkout session: ${error.message}` });
