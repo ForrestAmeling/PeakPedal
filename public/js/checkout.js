@@ -121,6 +121,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async () => {
+        if (!form.checkValidity()) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
         const { cartItems, tax } = await loadCartItems();
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
 
@@ -183,17 +188,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             removeItemFromCart(itemId);
         }
     });
-
-    // const billingSameAsShippingCheckbox = document.getElementById('billing-same-as-shipping');
-    // const billingAddressFields = document.getElementById('billing-address-fields');
-
-    // billingSameAsShippingCheckbox.addEventListener('change', () => {
-    //     if (billingSameAsShippingCheckbox.checked) {
-    //         billingAddressFields.style.display = 'none';
-    //     } else {
-    //         billingAddressFields.style.display = 'block';
-    //     }
-    // });
 
     const salesTaxRates = {
         AL: 9.25,
