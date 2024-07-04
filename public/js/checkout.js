@@ -121,11 +121,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const createCheckoutSession = async () => {
-        if (!form.checkValidity()) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-
         const { cartItems, tax } = await loadCartItems();
         const totalAmount = parseFloat(document.getElementById('order-total').textContent) * 100; // Convert to cents
 
@@ -175,8 +170,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    document.querySelector('.pay-now-button').addEventListener('click', async (event) => {
+    payNowButton.addEventListener('click', async (event) => {
         event.preventDefault();
+        if (!form.checkValidity()) {
+            alert('Please fill out all required fields correctly.');
+            return;
+        }
         createCheckoutSession();
     });
 

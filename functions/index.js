@@ -58,7 +58,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
                 ],
                 mode: 'payment',
                 customer: customer.id,
-                receipt_email: shippingDetails.email, // Set receipt email
                 payment_intent_data: {
                     shipping: {
                         name: shippingDetails.name,
